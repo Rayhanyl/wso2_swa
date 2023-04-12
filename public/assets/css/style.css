@@ -1,4 +1,24 @@
 @font-face {
+    font-family: "Raleway-black";
+    src: url("../font/Raleway/Raleway-Black.ttf");
+}
+
+@font-face {
+    font-family: "Raleway-bold";
+    src: url("../font/Raleway/Raleway-Bold.ttf");
+}
+
+@font-face {
+    font-family: "Raleway-reguler";
+    src: url("../font/Raleway/Raleway-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Raleway-light";
+    src: url("../font/Raleway/Raleway-Light.ttf");
+}
+
+@font-face {
     font-family: "Poppins-bold";
     src: url("../font/poppins/Poppins-Bold.ttf");
 }
@@ -6,395 +26,1202 @@
 @font-face {
     font-family: "Poppins-bold-italic";
     src: url("../font/poppins/Poppins-BoldItalic.ttf");
-}   
+}
+
 @font-face {
     font-family: "Poppins-reguler";
     src: url("../font/poppins/Poppins-Regular.ttf");
 }
+
 @font-face {
     font-family: "Poppins-semibold";
     src: url("../font/poppins/Poppins-SemiBold.ttf");
 }
+
+@font-face {
+    font-family: "Poppins-medium-italic";
+    src: url("../font/poppins/Poppins-MediumItalic.ttf");
+}
+
 @font-face {
     font-family: "Poppins-light";
     src: url("../font/poppins/Poppins-Light.ttf");
 }
+
 @font-face {
     font-family: "Poppins-medium";
     src: url("../font/poppins/Poppins-Medium.ttf");
 }
+
 @font-face {
     font-family: "Poppins-black";
     src: url("../font/poppins/Poppins-Black.ttf");
 }
-  
+
+hr.style-1 {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right,
+            rgba(0, 0, 0, 0),
+            rgba(0, 0, 0, 0.75),
+            rgba(0, 0, 0, 0));
+}
+
+hr.style-2 {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right,
+            rgb(247, 214, 163),
+            rgb(255, 164, 28),
+            rgb(247, 214, 163));
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.zoom {
+    transition: transform 0.2s;
+}
+
+.zoom:hover {
+    transform: scale(1.5);
+    /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-
-    .nav-font{
-        font-family: 'Poppins-bold';
+    .nav-font {
+        font-family: "Poppins-bold";
         font-size: 14px;
     }
-    .nav-btn-login{
-        color: #FFA41C;
-        font-family: 'Poppins-Bold';
+
+    .nav-btn-login {
+        color: #ffa41c;
+        font-family: "Poppins-Bold";
         font-size: 16px;
         line-height: 24px;
         margin: 5px;
     }
 
-    .footer{
-        padding: 40px;
-        height: auto;
-        color: #1B1C21;
+    .bg-footer {
+        color: #ffffff;
+        background-color: #003399;
     }
 
-    .footer img{
+    .footer {
+        padding: 40px;
+        height: auto;
+    }
+
+    .footer img {
         width: 220px;
         height: 80px;
     }
 
-    .footer-font-head{
+    .footer-font-head {
         font-size: 14px;
-        font-family: 'Poppins-Bold';
-        color: black;
+        font-family: "Poppins-Bold";
+        color: #ffffff;
         line-height: 28px;
     }
 
-    .footer-font-content{
+    .footer-font-content {
         font-size: 12px;
-        font-family: 'Poppins-Medium';
+        font-family: "Poppins-Medium";
         line-height: 14px;
     }
-    
-    .footer-font-address{
+
+    .footer-font-address {
         text-align: justify;
-        font-family: 'Poppins-Medium';
-    }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-
-    .nav-font{
-        font-family: 'Poppins-Medium';
-        font-size: 14px;
-        line-height: 27px;
-    }
-    .nav-btn-login{
-        color: #FFA41C;
-        font-family: 'Poppins-Bold';
-        font-size: 16px;
-        line-height: 24px;
-        margin: 5px;
+        font-family: "Poppins-Medium";
     }
 
-    .footer{
-        padding: 40px;
-        height: auto;
-        color: #1B1C21;
-    }
-
-    .footer img{
-        width: 220px;
-        height: 80px;
-    }
-
-    .footer img{
-        width: 150px;
-        height: 50px;
-    }
-
-    .footer-font-head{
-        font-size: 14px;
-        font-family: 'Poppins-Bold';
-        color: black;
-        line-height: 28px;
-    }
-    .footer-font-content{
-        font-size: 12px;
-        font-family: 'Poppins-Medium';
-        line-height: 14px;
-    }
-
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
- 
-    .nav-font{
-        font-family: 'Poppins-Medium';
-        font-size: 14px;
-        line-height: 27px;
-    }
-    .nav-btn-login{
-        color: #FFA41C;
-        font-family: 'Poppins-bold';
-        font-size: 16px;
-        line-height: 24px;
-        margin: 5px;
-    }
-
-    .footer{
-        padding: 40px;
-        height: auto;
-        color: #1B1C21;
-    }
-
-    .footer img{
-        width: 150px;
-        height: 50px;
-    }
-
-    .footer-font-head{
-        font-size: 14px;
-        font-family: 'Poppins-Bold';
-        color: black;
-        line-height: 28px;
-    }
-    .footer-font-content{
-        font-size: 12px;
-        font-family: 'Poppins-Medium';
-        line-height: 14px;
-    }
-
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
-    .nav-box-shadow{
-        background: #FFFFFF;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-font{
-        font-family: 'Poppins-medium';
-        font-size: 16px;
-    }
-    .nav-btn-login{
-        color: #FFA41C;
-        font-family: 'Poppins-bold';
-        font-size: 16px;
-        line-height: 24px;
-    }
-
-    .footer{
-        padding: 40px;
-        height: auto;
-        color: #1B1C21;
-    }
-
-    .footer img{
-        width: 220px;
-        height: 80px;
-    }
-
-    .footer-font-head{
-        text-align: end;
-        font-size: 14px;
-        font-family: 'Poppins-Bold';
-        color: black;
-        line-height: 28px;
-    }
-    .footer-font-content{
-        text-align: end;
-        font-size: 12px;
-        font-family: 'Poppins-Medium';
-        line-height: 14px;
-    }
-
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-
-    .nav-box-shadow{
-        background: #FFFFFF;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-font{
-        font-family: 'Poppins-medium';
-        font-size: 16px;
-    }
-
-    .nav-btn-login{
-        color: #FFA41C;
-        font-family: 'Poppins-bold';
-        font-size: 16px;
-        line-height: 24px;
-    }
-
-    .warp-conten{
-        height: auto;
-    }
-
-    .footer{
-        padding: 30px;
-        height: auto;
-        color: #1B1C21;
-        background-color: #FFFFFF;
-    }
-    
-    .footer img{
-        width: 180px;
-        height: 65px;
-    }
-
-    .footer-font-head{
-        text-align: end;
-        font-size: 16px;
-        font-family: 'Poppins-Bold';
-        color: black;
-        line-height: 32px;
-    }
-
-    .footer-font-content{
-        text-align: end;
-        font-size: 14px;
-        font-family: 'Poppins-Medium';
-        line-height: 16px;
-    }
-
-    .footer-font-address{
-        text-align: justify;
-        font-family: 'Poppins-Medium';
-    }
-    .footer-font-number{
-        font-family: 'Poppins-Medium';
-    }
-
-    .hero-text{
+    .hero-text {
         color: #ffca2c;
     }
 
-    .hero-head-font{
-        font-family: 'Poppins-Bold';
-        font-size: 45px;
+    .hero-head-font {
+        font-family: "Poppins-Bold";
+        font-size: 40px;
         line-height: 65px;
     }
 
-    .hero-description-font{
-        font-family: 'Poppins-Reguler';
-        font-size: 16px;
-        line-height: 27px;
+    .hero-description-font {
+        font-family: "Poppins-Reguler";
+        font-size: 12px;
+        line-height: 22px;
         text-align: justify;
     }
 
-    .btn-hero-daftar{
-        font-family: 'Poppins-Bold';
+    .btn-hero-daftar {
+        font-family: "Poppins-Bold";
         font-size: 16px;
         line-height: 24px;
         color: white;
     }
 
-    .testimonial-devider1-font{
-        font-size: 38px;
-        line-height: 63px;
-        font-family: 'Poppins-Bold';
-        text-align: center;
+    .partner {
+        margin-bottom: 120px;
     }
-    .testimonial-devider2-font{
-        font-size: 18px;
-        line-height: 32px;
-        font-family: 'Poppins-Light';
+
+    .body-testimonial {
+        margin-top: 10px;
+    }
+
+    .testimonial-devider1-font {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
         text-align: center;
     }
 
-    .testimonial-head-font{
-        font-size: 18px;
-        font-family: 'Poppins-bold-italic';
-    }
-
-    .testimonial-description-font{
-        font-family: 'Poppins-Light';
-        text-align: justify;
+    .testimonial-devider2-font {
         font-size: 14px;
-    }
-
-    .card-wrapper .card{
-        padding:0;
-    }
-
-    .services-devider1-font{
-        font-size: 38px;
-        line-height: 63px;
-        font-family: 'Poppins-Bold';
-        text-align: center;
-    }
-    .services-devider2-font{
-        font-size: 18px;
-        line-height: 32px;
-        font-family: 'Poppins-Light';
+        line-height: 24px;
+        font-family: "Poppins-Light";
         text-align: center;
     }
 
-    .services-font-content{
-        font-family: 'Poppins-Light';
-        font-size: 14px;
-        overflow: hidden;
-        text-align: justify;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        /* number of lines to show */
-        line-clamp: 4;
-        -webkit-box-orient: vertical;
-    }
-
-    .services-font-details{
+    .testimonial-head-font {
         font-size: 16px;
-        color: #FFA41C;
-        font-family: 'Poppins-Bold';
+        font-family: "Poppins-bold-italic";
     }
 
-    .partner-devider1-font{
+    .testimonial-description-font {
+        font-family: "Poppins-Light";
+        text-align: justify;
+        font-size: 12px;
+    }
+
+    #section-services {
+        background-color: #f8f8f8;
+    }
+
+    .services-devider1-font {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .services-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .partner-devider1-font {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .partner-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .nav-font {
+        font-family: "Poppins-Medium";
+        font-size: 14px;
+        line-height: 27px;
+    }
+
+    .nav-btn-login {
+        color: #ffa41c;
+        font-family: "Poppins-Bold";
+        font-size: 16px;
+        line-height: 24px;
+        margin: 5px;
+    }
+
+    .bg-footer {
+        color: #ffffff;
+        background-color: #003399;
+    }
+
+    .footer {
+        padding: 40px;
+        height: auto;
+    }
+
+    .footer img {
+        width: 220px;
+        height: 80px;
+    }
+
+    .footer img {
+        width: 150px;
+        height: 50px;
+    }
+
+    .footer-font-head {
+        font-size: 14px;
+        font-family: "Poppins-Bold";
+        color: #ffffff;
+        line-height: 28px;
+    }
+
+    .footer-font-content {
+        font-size: 12px;
+        font-family: "Poppins-Medium";
+        line-height: 14px;
+    }
+
+    .hero-text {
+        color: #ffca2c;
+    }
+
+    .hero-head-font {
+        font-family: "Poppins-Bold";
+        font-size: 45px;
+        line-height: 65px;
+    }
+
+    .hero-description-font {
+        font-family: "Poppins-Reguler";
+        font-size: 14px;
+        line-height: 22px;
+        text-align: justify;
+    }
+
+    .btn-hero-daftar {
+        font-family: "Poppins-Bold";
+        font-size: 16px;
+        line-height: 24px;
+        color: white;
+    }
+
+    .partner {
+        margin-bottom: 120px;
+    }
+
+    .body-testimonial {
+        margin-top: 25px;
+    }
+
+    .testimonial-devider1-font {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .testimonial-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .testimonial-head-font {
+        font-size: 16px;
+        font-family: "Poppins-bold-italic";
+    }
+
+    .testimonial-description-font {
+        font-family: "Poppins-Light";
+        text-align: justify;
+        font-size: 12px;
+    }
+
+    #section-services {
+        background-color: #f8f8f8;
+    }
+
+    .services-devider1-font {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .services-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .partner-devider1-font {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .partner-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .nav-font {
+        font-family: "Poppins-Medium";
+        font-size: 14px;
+        line-height: 27px;
+    }
+
+    .nav-btn-login {
+        color: #ffa41c;
+        font-family: "Poppins-bold";
+        font-size: 16px;
+        line-height: 24px;
+        margin: 5px;
+    }
+
+    .bg-footer {
+        color: #ffffff;
+        background-color: #003399;
+    }
+
+    .footer {
+        padding: 40px;
+        height: auto;
+    }
+
+    .footer img {
+        width: 150px;
+        height: 50px;
+    }
+
+    .footer-font-head {
+        font-size: 14px;
+        font-family: "Poppins-Bold";
+        color: #ffffff;
+        line-height: 28px;
+    }
+
+    .footer-font-content {
+        font-size: 12px;
+        font-family: "Poppins-Medium";
+        line-height: 14px;
+    }
+
+    .partner {
+        margin-bottom: 120px;
+    }
+
+    .body-testimonial {
+        margin-top: 25px;
+    }
+
+    .testimonial-devider1-font {
+        font-size: 30px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .testimonial-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    #section-services {
+        background-color: #f8f8f8;
+    }
+
+    .services-devider1-font {
+        font-size: 30px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .services-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .partner-devider1-font {
+        font-size: 30px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .partner-devider2-font {
+        font-size: 14px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .nav-box-shadow {
+        background: #ffffff;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-font {
+        font-family: "Poppins-medium";
+        font-size: 14px;
+    }
+
+    .nav-btn-login {
+        color: #ffa41c;
+        font-family: "Poppins-bold";
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .bg-footer {
+        color: #ffffff;
+        background-color: #003399;
+    }
+
+    .footer {
+        padding: 40px;
+        height: auto;
+    }
+
+    .footer img {
+        width: 220px;
+        height: 80px;
+    }
+
+    .footer-font-head {
+        text-align: end;
+        font-size: 14px;
+        font-family: "Poppins-Bold";
+        color: #ffffff;
+        line-height: 28px;
+    }
+
+    .footer-font-content {
+        text-align: end;
+        font-size: 12px;
+        font-family: "Poppins-Medium";
+        line-height: 14px;
+    }
+
+    .hero-text {
+        color: #ffca2c;
+    }
+
+    .hero-head-font {
+        font-family: "Poppins-Bold";
+        font-size: 38px;
+        line-height: 65px;
+    }
+
+    .hero-description-font {
+        font-family: "Poppins-Reguler";
+        font-size: 14px;
+        line-height: 27px;
+        text-align: justify;
+    }
+
+    .btn-hero-daftar {
+        font-family: "Poppins-Bold";
+        font-size: 16px;
+        line-height: 24px;
+        color: white;
+    }
+
+    .body-testimonial {
+        margin-top: 25px;
+    }
+
+    .testimonial-devider1-font {
+        font-size: 34px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .testimonial-devider2-font {
+        font-size: 16px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    #section-services {
+        background-color: #f8f8f8;
+    }
+
+    .services-devider1-font {
+        font-size: 34px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .services-devider2-font {
+        font-size: 16px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .partner-devider1-font {
+        font-size: 34px;
+        line-height: 30px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .partner-devider2-font {
+        font-size: 16px;
+        line-height: 24px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .font-widget-content1 {
+        font-size: 16px;
+        font-family: "Poppins-medium-italic";
+    }
+
+    .font-widget-content2 {
+        font-size: 28px;
+        font-family: "Poppins-bold";
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .page-login {
+        margin-top: 100px;
+        margin-bottom: 120px;
+    }
+
+    .nav-box-shadow {
+        background: #ffffff;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-font {
+        font-family: "Poppins-medium";
+        font-size: 16px;
+    }
+
+    .nav-btn-login {
+        color: rgb(255, 164, 28);
+        font-family: "Poppins-bold";
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .bg-footer {
+        color: #ffffff;
+        background-color: #003399;
+    }
+
+    .footer {
+        padding: 30px;
+        height: auto;
+    }
+
+    .footer img {
+        width: 180px;
+        height: 65px;
+    }
+
+    .footer-font-head {
+        text-align: end;
+        font-size: 16px;
+        font-family: "Poppins-Bold";
+        color: #ffffff;
+        line-height: 32px;
+    }
+
+    .footer-font-content {
+        text-align: end;
+        font-size: 14px;
+        font-family: "Poppins-Medium";
+        line-height: 16px;
+    }
+
+    .footer-font-address {
+        text-align: justify;
+        font-family: "Poppins-Medium";
+    }
+
+    .footer-font-number {
+        font-family: "Poppins-Medium";
+        font-size: 14px;
+    }
+
+    .hero-text {
+        color: #ffca2c;
+    }
+
+    .hero-head-font {
+        font-family: "Poppins-Bold";
+        font-size: 45px;
+        line-height: 65px;
+    }
+
+    .hero-description-font {
+        font-family: "Poppins-Reguler";
+        font-size: 16px;
+        line-height: 27px;
+        text-align: justify;
+    }
+
+    .btn-hero-daftar {
+        font-family: "Poppins-Bold";
+        font-size: 16px;
+        line-height: 24px;
+        color: white;
+    }
+
+    .hero {
+        margin-bottom: 90px;
+    }
+
+    .testimonial {
+        margin-bottom: 90px;
+    }
+
+    .partner {
+        margin-bottom: 120px;
+    }
+
+    .body-testimonial {
+        margin-top: 25px;
+    }
+
+    .testimonial-devider1-font {
         font-size: 38px;
         line-height: 63px;
-        font-family: 'Poppins-Bold';
+        font-family: "Poppins-Bold";
         text-align: center;
     }
-    .partner-devider2-font{
+
+    .testimonial-devider2-font {
         font-size: 18px;
         line-height: 32px;
-        font-family: 'Poppins-Light';
+        font-family: "Poppins-Light";
         text-align: center;
     }
+
+    #section-services {
+        background-color: #f8f8f8;
+        height: auto;
+    }
+
+    .services-devider1-font {
+        font-size: 38px;
+        line-height: 63px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .services-devider2-font {
+        font-size: 18px;
+        line-height: 32px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .partner-devider1-font {
+        font-size: 38px;
+        line-height: 63px;
+        font-family: "Poppins-Bold";
+        text-align: center;
+    }
+
+    .partner-devider2-font {
+        font-size: 18px;
+        line-height: 32px;
+        font-family: "Poppins-Light";
+        text-align: center;
+    }
+
+    .height-documentation {
+        min-height: 500px;
+        max-height: auto;
+    }
+
+    .documentation-bg-list-api {
+        background-color: #f8f9fb;
+        border-right: 1px solid rgb(173, 173, 173);
+        min-height: 500px;
+        max-height: auto;
+    }
+
+    .documentation-icon-search {
+        background-color: #ffffff;
+        display: flex;
+        align-items: center;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #ffca2c;
+        text-align: center;
+        white-space: nowrap;
+        border: 1px solid #ced4da;
+        border-radius: 0.375rem;
+    }
+
+    .hover-search:hover {
+        color: #003399;
+    }
+
+    .hover-list-api {
+        color: #003399;
+    }
+
+    .hover-list-api:hover {
+        background: rgba(255, 191, 0, 0.21);
+        border-radius: 10px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+        border: 1px solid rgba(0, 51, 153, 0.03);
+        color: #003399;
+    }
+
+    .hover-list-api.active {
+        background: rgba(255, 191, 0, 0.21);
+        border-radius: 10px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+        border: 1px solid rgba(0, 51, 153, 0.03);
+        color: #003399;
+    }
+
+    .documentation-list-api {
+        font-size: 16px;
+        font-family: "Poppins-SemiBold";
+    }
+
+    .card-documentation {
+        background: rgba(255, 202, 44, 0.11);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(2.4px);
+        -webkit-backdrop-filter: blur(2.4px);
+        border: 1px solid rgba(255, 202, 44, 0.03);
+    }
+
+    .height-configurasi {
+        min-height: 500px;
+        max-height: auto;
+    }
+
+    .configurasi-bg {
+        background-image: url("../images/question/bg-question.jpg");
+        background-size: cover;
+        object-fit: contain;
+        border-right: 1px solid rgb(235, 235, 235);
+        min-height: 500px;
+        max-height: auto;
+    }
+
+    .list-meu li {
+        font-size: 18px;
+        font-family: "Poppins-Medium";
+    }
+
+    .list-meu li:hover {
+        color: #003399;
+    }
+
+    .padding-title {
+        padding: 100px;
+    }
+
+    .font-hero-title1 {
+        font-family: "Raleway-Bold";
+        font-size: 70px;
+        line-height: 20px;
+        color: #38386e;
+    }
+
+    .font-hero-title2 {
+        font-family: "Raleway-Black";
+        font-size: 78px;
+        color: #38386e;
+    }
+
+    .font-hero-content {
+        font-size: 16px;
+        font-family: "Raleway-reguler";
+        padding: 80px;
+    }
+
+    .img-icon img {
+        background-size: cover;
+        object-fit: cover;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .section-aboutus-asabriapi {
+        padding-top: 150px;
+        padding-bottom: 150px;
+    }
+
+    .section-aboutus-widget {
+        padding-top: 50px;
+        padding-bottom: 150px;
+    }
+
+    .section-aboutus-industry {
+        padding-top: 50px;
+        padding-bottom: 150px;
+    }
+
+    .font-asabriapi-content1 {
+        font-size: 54px;
+        font-family: "Raleway-light";
+    }
+
+    .font-asabriapi-content2 {
+        font-size: 24px;
+        font-family: "Raleway-light";
+        text-align: left;
+    }
+
+    .font-widget-content1 {
+        font-size: 24px;
+        font-family: "Poppins-medium-italic";
+    }
+
+    .font-widget-content2 {
+        font-size: 32px;
+        font-family: "Poppins-bold";
+    }
+
+    .font-aboutus-industry {
+        font-size: 42px;
+        font-family: "Poppins-bold";
+        text-align: center;
+        color: #38386e;
+    }
+
+    .icon-card-idustry img {
+        width: 50%;
+        height: auto;
+    }
+
+    .font-industry-content {
+        margin-top: 10px;
+        font-size: 18px;
+        font-family: "Poppins-bold";
+        color: #000d41;
+    }
+
+    .count-app-img {
+        background: url('../images/application/count-app.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .height-app-min {
+        height: 200px;
+    }
+
+    .font-head-hero1 {
+        font-size: 28px;
+        font-family: "Poppins-bold";
+        color: #ffa41c;
+    }
+
 }
 
-hr.style-1{
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+.bg-form {
+    background: url("../images/authentication/bg-form1.png");
+    background-size: cover;
+    object-fit: contain;
 }
 
-.zoom{
-    transition: transform .2s; 
+.bg-invalid-code {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    height: auto;
 }
-.zoom:hover {
-    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+
+.img-invalid-code img {
+    background-size: cover;
+    object-fit: cover;
+    width: 40%;
+}
+
+.font-invalid-code {
+    font-size: 42px;
+    font-family: "Poppins-bold-italic";
+    color: rgb(255, 25, 0);
+}
+
+.font-register-termservice {
+    font-size: 13px;
+    font-family: "Poppins-Medium";
+    text-align: center;
+}
+
+.question-font-heading {
+    font-size: 48px;
+    font-family: "Poppins-Bold";
+}
+
+.bg-question {
+    background-image: url("../images/question/bg-question.jpg");
+    background-size: cover;
+    object-fit: contain;
+}
+
+.question-input-text {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #ffca2c;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #ced4da;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    /* border-radius: 0.375rem; */
+}
+
+.question-input-text1 {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #ffca2c;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #ced4da;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    /* border-radius: 0.37; */
+}
+
+.bx-log-in-circle {
+    font-size: 32px;
+}
+
+.bx-search {
+    font-size: 32px;
+}
+
+.mopishm-card {
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 
-/* pre.curl-text{
-    white-space: pre-line; font-size:12px; color:orange;
-} */
+.back-to-application {
+    color: black;
+    font-family: "Poppins-bold";
+    text-decoration: none;
+}
 
-#hero{
-    background-color: #FFFFFF;
-    height: calc(100vh - 84px);
+.back-to-application i {
+    font-size: 24px;
+    align-items: center;
+    vertical-align: sub;
 }
-#testimonial{
-    background-color: #f8f8f8;
-    height: calc(100vh - 84px);
+
+.card-shadow-app {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .180) !important;
 }
-#services{
-    background-color: #FFFFFF;
-    height: calc(100vh);
+
+.vertikal-hr {
+    border-left: 6px solid green;
+    height: 500px;
 }
-#partner{
-    background-color: #f8f8f8;
-    height: calc(90vh - 84px);
+
+.inner-shadow{
+    box-shadow: inset 0 0 10px #dfdfdf;
 }
+
+.font-list-subscription{
+    font-size: 24px;
+    font-family: 'Poppins-medium';
+    color: #000;
+}
+.api-list-link{
+    text-decoration: none;
+    font-family: 'Poppins-medium';
+    color: #000;
+    font-size: 24px;
+}
+.api-list-link i{
+    color: #000;
+    font-size: 32px;
+    vertical-align: sub;
+}
+
+.font-head-subs{
+    font-size: 48px;
+    font-family: 'Poppins-semibold';
+}
+
+.font-appname-subs{
+    font-size: 18px;
+    font-family: 'Poppins-semibold';
+    color: #FFA41C;
+}
+.table-orange{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.nav-managekey{
+    display: block;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+    color: var(--bs-nav-link-color);
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    font-size: 32px;
+    font-family: 'Poppins-bold';
+    color: #FFA41C;
+}
+
+.nav-managekey.active{
+    display: block;
+    border-bottom: 4px solid;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+    font-size: var(--bs-nav-link-font-size);
+    font-weight: var(--bs-nav-link-font-weight);
+    color: var(--bs-nav-link-color);
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    font-size: 32px;
+    font-family: 'Poppins-bold';
+}
+
+.btn-add-subs{
+    font-size: 16px;
+    font-family: 'Poppins-medium';
+    text-decoration: none;
+    color: #000;
+}
+
+.btn-icon-homepage i{
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+.btn-icon-homepage{
+    background-color: #FFA41C !important;
+    border-color: #FFA41C;
+}
+
+.btn-icon-homepage:hover{
+    background-color: #f8f8f8 !important;
+    border-color: #FFA41C;
+    color: #000;
+}
+
+.configuration-list-menu a{
+    text-decoration: none;
+    font-family: 'Poppins-medium';
+    color: #FFA41C;
+}
+
+.configuration-list-menu a:hover{
+    text-decoration: none;
+    font-family: 'Poppins-medium';
+    color: #003399;
+}
+
+.subs-status-icon i{
+    vertical-align: middle;
+}
+
+.link-get-client-id{
+    text-decoration: none;
+    color: #003399;
+    font-weight: bold;
+}
+.link-get-client-id i{
+    vertical-align: middle;
+}
+
+.description-api-homepage{
+    overflow: hidden;
+    text-align: justify;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.icon-position img{
+    vertical-align: middle;
+}
+
+.btn-icon-ip i{
+    vertical-align: middle;
+    font-size: 22px;
+}
+
+.permithttp{
+    font-size: 18px;
+}
+
+.deletehttp {
+    text-decoration: none;
+}
+
+.deletehttp i{
+    vertical-align: middle;
+}
+
+.permitip{
+    font-size: 18px;
+}
+
+.deleteaddress {
+    text-decoration: none;
+}
+
+.deleteaddress i{
+    vertical-align: middle;
+}
+
+.tryout-description{
+    overflow: hidden;
+    text-align: justify;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.card-height-tryout{
+    min-height: 240px;
+}
+
+
+

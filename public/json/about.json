@@ -1,0 +1,37 @@
+{
+    "list":[
+        
+        {
+            "id":"1",
+            "order":"flush-headingOne",
+            "order_flush":"flush-collapseOne",
+            "question":"Apa itu asabri ?",
+            "answere": "lorem ipsum dollor sit",
+            "created_at":"09-04-2023"
+        },
+        {
+            "id":"2",
+            "order":"flush-headingTwo",
+            "order_flush":"flush-collapseTwo",
+            "question":"Mengapa percaya kami ?",
+            "answere":null,
+            "created_at":"09-04-2023"
+        },
+        {
+            "id":"3",
+            "order":"flush-headingThree",
+            "order_flush":"flush-collapseThree",
+            "question":"Ada fitur apa saja di API ASABRI ?",
+            "answere":null,
+            "created_at":"09-04-2023"
+        },
+        {
+            "id":"4",
+            "order":"flush-headingFour",
+            "order_flush":"flush-collapseFour",
+            "question":"Bagaimana cara menggunakan API ASABRI",
+            "answere":null,
+            "created_at":"09-04-2023"
+        }
+    ]
+}
