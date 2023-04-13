@@ -94,9 +94,16 @@ class ApplicationController extends Controller
                 ->post($this->url. '/applications');
 
                 $data =json_decode($response->getBody()->getContents());   
+
+                if ($response->status() == '409') {
+                    Alert::warning('Warning', 'Application alredy exist with name '.$request->appname);
+                    return redirect()->back();
+                } else {
+                    Alert::success('Success', 'Berhasil membuat aplikasi, tunggu admin untuk approved');
+                    return redirect(route('application.page'));
+                }
                 
-                Alert::success('Success', 'Berhasil membuat aplikasi, tunggu admin untuk approved');
-                return redirect(route('application.page'));
+                
 
             } catch (\Exception $e) {
                 dd($e);

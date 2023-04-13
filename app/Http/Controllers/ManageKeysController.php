@@ -42,9 +42,9 @@ class ManageKeysController extends Controller
 
         $alldata = getUrl($this->url .'/applications/'.$id.'/oauth-keys');
         $data = collect($alldata->list)->where('keyType', 'SANDBOX')->first();
-        
+
         if ($data != null) {
-            $base64 = base64_encode($data->consumerKey.$data->consumerSecret);
+            $base64 = base64_encode($data->consumerKey.':'.$data->consumerSecret);
         }else{
             $base64 = '';
         }
@@ -79,7 +79,7 @@ class ManageKeysController extends Controller
         $data = collect($alldata->list)->where('keyType', 'PRODUCTION')->first();
         
         if ($data != null) {
-            $base64 = base64_encode($data->consumerKey.$data->consumerSecret);
+            $base64 = base64_encode($data->consumerKey.':'.$data->consumerSecret);
         }else{
             $base64 = '';
         }
@@ -204,9 +204,15 @@ class ManageKeysController extends Controller
     public function generateaccesstoken(Request $request){   
         try {
 
+            if($request->expiretoken != ''){
+                $expire =  $request->expiretoken;
+            }else{
+                $expire = '3600';
+            }
+
             $payloads = [
                 'consumerSecret' => $request->consumersecretkey,
-                'validityPeriod' => 3600,
+                'validityPeriod' => $expire,
                 'scopes' => [],
                 'revokeToken' => '',
             ];

@@ -152,7 +152,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-3 me-2">
                         <h6>User Access Token Expiry Time</h6>
                         <div class="form-group position-relative has-icon-right">
                             <input type="text" class="form-control" placeholder="N/A"
@@ -168,7 +168,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-3 mx-5">
+                        <h6>Application Token Expiry Time</h6>
+                        <div class="form-group position-relative has-icon-right">
+                            <input type="text" class="form-control" placeholder="N/A"
+                                name="additional[application_access_token_expiry_time]"
+                                value="{{ $data->additionalProperties->application_access_token_expiry_time ?? '' }}">
+                            <div class="form-control-icon">
+                                <i class="bi bi-hourglass-split"></i>
+                            </div>
+                            <div id="refreshtoken" class="form-text">
+                                <small>
+                                    Type Aapplication Refresh Token Expiry Time.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 ms-2">
                         <h6>Refresh Token Expiry Time</h6>
                         <div class="form-group position-relative has-icon-right">
                             <input type="text" class="form-control" placeholder="N/A"
@@ -188,7 +204,7 @@
                         <h6>Callback URL</h6>
                         <div class="form-group position-relative has-icon-right">
                             <input type="url" class="form-control" name="callback" pattern="https?://.+"
-                                value="{{ $data->callbackUrl ?? 'http://127.0.0.1:8000/TryOut/'.$application->applicationId. }}">
+                                value="{{ $data->callbackUrl ?? 'http://127.0.0.1:8000/TryOut/'.$application->applicationId }}">
                             <div class="form-control-icon">
                                 <i class="bi bi-link-45deg"></i>
                             </div>
@@ -320,6 +336,7 @@
                     <input type="hidden" name="consumersecretkey" value="{{ $data->consumerSecret ?? '' }}">
                     <input type="hidden" name="id" value="{{ $application->applicationId }}">
                     <input type="hidden" name="idmapping" value="{{ $data->keyMappingId ?? '' }}">
+                    <input type="hidden" name="expiretoken" value="{{ $data->additionalProperties->application_access_token_expiry_time ?? '' }}">
                 </form>
                 <div class="before-accesstoken">
                     <p class="fw-bold">Scopes</p>
