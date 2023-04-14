@@ -113,7 +113,7 @@
                                     <input class="form-check-input" type="checkbox"
                                         name="granttype[{{ $item }}]" role="switch"
                                         {{ isset($data->supportedGrantTypes) ? (in_array($item,$data->supportedGrantTypes) ? 'checked':'') : '' }}
-                                        {{ isset($data->supportedGrantTypes) ? '' : (($item == 'password' || $item == 'client_credentials') ? 'checked':'') }}>
+                                        {{ isset($data->supportedGrantTypes) ? '' : (($item == 'password' || $item == 'client_credentials' || $item == 'implicit' || $item == 'authorization_code') ? 'checked':'') }}>
                                     <label class="form-check-label">
                                         @foreach ($granttype as $key=>$label)
                                         @if ($key == $item)
@@ -201,10 +201,10 @@
                     <div class="col-sm-10">
                         <h6>Callback URL</h6>
                         <div class="form-group position-relative has-icon-right">
-                            <input type="url" class="form-control" name="callback" pattern="https?://.+"
-                                value="{{ $data->callbackUrl ?? 'http://127.0.0.1:8000/TryOut/'.$application->applicationId }}">
                             {{-- <input type="url" class="form-control" name="callback" pattern="https?://.+"
-                                value="{{ $data->callbackUrl ?? 'https://devportal.belajarwso2.com/TryOut/'.$application->applicationId }}"> --}}
+                                value="{{ $data->callbackUrl ?? 'http://127.0.0.1:8000/TryOut/'.$application->applicationId }}"> --}}
+                            <input type="url" class="form-control" name="callback" pattern="https?://.+"
+                                value="{{ $data->callbackUrl ?? 'https://devportal.belajarwso2.com/TryOut/'.$application->applicationId }}">
                             <div class="form-control-icon">
                                 <i class="bi bi-link-45deg"></i>
                             </div>
@@ -239,7 +239,7 @@
                                         CURL to Generate Access Token</button>
                             </div>
                             @else
-                            <div class="col-6 mx-auto d-grid gap-2">
+                            <div class="col-5 d-grid gap-2">
                                 <button class="btn btn-primary rounded-3 generate" type="submit"
                                 form="generatekey"><i class='bx bxs-key'></i>
                                 GENERATE KEY</button>

@@ -35,6 +35,7 @@ function getApiDocumentation($url_api)
         'Accept' => 'application/json',
     ])
     ->get($url_api);
+    
     if($response->status() == 200){
         return json_decode($response->getBody()->getContents());
     }
