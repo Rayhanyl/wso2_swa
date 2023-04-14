@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 mb-2">
-                            <h3>Welcome, <span class="text-warning">{{ session('firstname') }} {{ session('lastname') }}</span> !</h3>
+                            <h3 class="text-capitalize">Welcome, <span class="text-warning">{{ session('firstname') }} {{ session('lastname') }}</span> !</h3>
                             <p class="fw-light">Explore our API gallery and find out how our API fit to your business case.</p>
                         </div>
                         <div class="col-12 col-lg-12 my-3">
