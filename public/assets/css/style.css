@@ -1222,6 +1222,15 @@ hr.style-2 {
 .card-height-tryout{
     min-height: 240px;
 }
+.bg-curl{
+    background-color: #eeebeb;
+}
 
+.copy-curl-icon{
+    font-size: 32px;
+}
 
-
+.copy-curl-icon:hover{
+    color: #003399;
+    font-size: 32px;
+}

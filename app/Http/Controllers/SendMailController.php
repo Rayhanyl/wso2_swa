@@ -43,7 +43,7 @@ class SendMailController extends Controller
             'Accept' => '*/*',
         ])
         ->withBody(json_encode($payloads),'application/json')
-        ->post('https://194.233.88.81:9443/t/carbon.super/api/identity/recovery/v0.9/recover-password?type=EMAIL&notify=false');
+        ->post('https://apim.belajarwso2.com/t/carbon.super/api/identity/recovery/v0.9/recover-password?type=EMAIL&notify=false');
         $data = $response->getBody()->getContents();
         
         $mailData = [

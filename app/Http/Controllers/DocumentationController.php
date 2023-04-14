@@ -37,7 +37,7 @@ class DocumentationController extends Controller
 
         if ($listinline != null) {
             $response1 = Http::withOptions(['verify' => false])
-            ->get('https://194.233.88.81:9443/api/am/devportal/v2.1/apis/'.$request->id_api.'/documents/'.$listinline->documentId.'/content');
+            ->get('https://103.164.54.199:9443/api/am/devportal/v2.1/apis/'.$request->id_api.'/documents/'.$listinline->documentId.'/content');
             $inline = $response1->getBody()->getContents();
         }else{
             $inline = [];
@@ -45,7 +45,7 @@ class DocumentationController extends Controller
 
         if ($listmarkdown != null) {
             $response2 = Http::withOptions(['verify' => false])
-            ->get('https://194.233.88.81:9443/api/am/devportal/v2.1/apis/'.$request->id_api.'/documents/'.$listmarkdown->documentId.'/content');
+            ->get('https://103.164.54.199:9443/api/am/devportal/v2.1/apis/'.$request->id_api.'/documents/'.$listmarkdown->documentId.'/content');
             $markdown = $response2->getBody()->getContents();
         }else{
             $markdown = [];

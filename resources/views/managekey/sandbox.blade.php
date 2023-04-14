@@ -306,15 +306,30 @@
             </div>
             <div class="modal-body">
                 <p>The following cURL command shows how to generate an access token using the Password Grant type.</p>
-                <div id="oauth-basic">
-                    curl -k -X POST {{ $url }}/oauth2/token -d "grant_type=password&username=Username&password=Password"
-                    -H "Authorization: Basic <a id="userpasscurl" href="#">Base64(consumer-key:consumer-secret)</a>"
+                <div class="d-flex mb-3">
+                    <div class="col-10 bg-curl p-3 rounded">
+                        curl -k -X POST {{ $url }}/oauth2/token -d "grant_type=password&username={{ session('firstname') }}&password=Password"
+                        -H "Authorization: Basic <a id="userpasscurl" class="text-primary">Base64(consumer-key:consumer-secret)</a>"
+                    </div>
+                    <div id="oauth-basic" style="display:none;">curl -k -X POST {{ $url }}/oauth2/token -d "grant_type=password&username={{ session('username') }}&password=Password" -H "Authorization: Basic {{ $base64 }}"</div>
+                    <div class="col-2 copy-curl-icon ms-3">
+                        <a type="button" onclick="copyCurloauthbasic()"><i class='bx bx-copy-alt'></i></a>
+                    </div>
                 </div>
-                <p>In a similar manner, you can generate an access token using the Client Credentials grant type with
-                    the following cURL command.</p>
-                <div id="oauth-credentials">
-                    curl -k -X POST {{ $url }}/oauth2/token -d "grant_type=client_credentials"
-                    -H "Authorization: Basic <a id="credentialcurl" href="#">Base64(consumer-key:consumer-secret)</a>"
+                <div class="my-2">
+                    <p>In a similar manner, you can generate an access token using the Client Credentials grant type with
+                        the following cURL command.</p>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="col-10 bg-curl p-3 rounded">
+                        curl -k -X POST {{ $url }}/oauth2/token -d "grant_type=client_credentials"
+                        -H "Authorization: Basic <a id="credentialcurl" class="text-primary">Base64(consumer-key:consumer-secret)</a>"
+                    </div>
+                    <div id="oauth-credentials" style="display:none;">curl -k -X POST {{ $url }}/oauth2/token -d "grant_type=client_credentials" -H "Authorization: Basic {{ $base64 }}"
+                    </div>
+                    <div class="col-2 copy-curl-icon ms-3">
+                        <a type="button" onclick="copyCurlcredential()"><i class='bx bx-copy-alt'></i></a>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -416,7 +431,7 @@
                         the page is refreshed. )</p>
                     <div>
                         <label for="text-apikey"></label>
-                        <textarea name="token" id="text-apikey" cols="70" rows="10" disabled>
+                        <textarea name="token" id="text-apikey" cols="100" rows="10" disabled>
                         </textarea>
                     </div>
                     <div>
@@ -427,7 +442,6 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary btn-apikeys" form="form-apikeys">
-
                     Generate
                 </button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -514,6 +528,36 @@
         }
     });
 
+    function copyCurloauthbasic() {
+        var copyText = document.getElementById("oauth-basic").textContent;
+        navigator.clipboard.writeText(copyText)
+            .then(function() {
+                Swal.fire(
+                    'Already Copied',
+                    '',
+                    'success'
+                );
+            })
+            .catch(function(err) {
+                console.error('Unable to copy text to clipboard', err);
+            });
+    }
+    
+    function copyCurlcredential() {
+        var copyText = document.getElementById("oauth-credentials").textContent;
+        navigator.clipboard.writeText(copyText)
+            .then(function() {
+                Swal.fire(
+                    'Already Copied',
+                    '',
+                    'success'
+                );
+            })
+            .catch(function(err) {
+                console.error('Unable to copy text to clipboard', err);
+            });
+    }
+
     function copyConsumerKey() {
         var copyText = document.getElementById("consumerkey");
         copyText.select();
@@ -586,197 +630,198 @@
 
     $('#pills-none-tab').on('click',function(){
             reset();
-        }); 
-        $('#pills-apiaddress-tab').on('click',function(){
-            reset();
-        }); 
-        $('#pills-http-tab').on('click',function(){
-            reset();
-        });
-        $('#infinitevalidity').on('click',function(){
-            resetvalidity();
-        });
+    }); 
 
-        function resetvalidity(){
-            $('#validityPeriod').val('');
-        }
-        function reset(){
-            $('.boxaddress').html('');
-            $('#addip').val('');
-            $('.boxhttp').html('');
-            $('#addhttp').val('');
-        }
+    $('#pills-apiaddress-tab').on('click',function(){
+        reset();
+    }); 
 
-        // API ADDRESS
+    $('#pills-http-tab').on('click',function(){
+        reset();
+    });
 
-        function isValidIPv6(ip) {
-            let ipv6Pattern = /^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8]))?$/;
-            return ipv6Pattern.test(ip);
-        }
+    $('#infinitevalidity').on('click',function(){
+        resetvalidity();
+    });
 
-        function isValidIPv4(ip) {
-            let ipv4Pattern = /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$/;
-            return ipv4Pattern.test(ip);
-        }
+    function resetvalidity(){
+        $('#validityPeriod').val('');
+    }
 
-        $('.addip').on('click',function(e){
-            e.preventDefault();
-            let valip = $('.textaddress').val();
-                if (valip == '') {
-                    Swal.fire(
-                        'Cannot be empty',
-                        '',
-                        'warning'
-                    )
-                }else if (!isValidIPv6(valip) && !isValidIPv4(valip)){
-                    Swal.fire(
-                        'Invalid IP address',
-                        '',
-                        'warning'
-                    )
-                }else{
-                    $('.boxaddress').append(`<div class="col-3 deletboxipaddress my-3"><p class="permitip">${valip}<a type="button" class="btn-sm text-danger mx-3 deleteaddress"><i class='bx bx-trash'></i></a></p></div>`);
-                    $('.textaddress').val('');
-                }
-        });
+    function reset(){
+        $('.boxaddress').html('');
+        $('#addip').val('');
+        $('.boxhttp').html('');
+        $('#addhttp').val('');
+    }
 
+    // API ADDRESS
+    function isValidIPv6(ip) {
+        let ipv6Pattern = /^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8]))?$/;
+        return ipv6Pattern.test(ip);
+    }
 
-        
-        $(document).on('click','.deleteaddress', function(){
-            $(this).parents('.deletboxipaddress').remove();
-        });
+    function isValidIPv4(ip) {
+        let ipv4Pattern = /^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$/;
+        return ipv4Pattern.test(ip);
+    }
 
-        // Array to string IPADDRESS
-        function arraytostringip(ipaddresses){
-            let ipaddress = '';
-            ipaddresses.forEach((element,i) => {
-                if(i > 0 ){
-                    ipaddress += ',' + element;
-                }else{
-                    ipaddress = element;
-                }
-            });
-            return ipaddress;
-        }
+    $('.addip').on('click',function(e){
+        e.preventDefault();
+        let valip = $('.textaddress').val();
+            if (valip == '') {
+                Swal.fire(
+                    'Cannot be empty',
+                    '',
+                    'warning'
+                )
+            }else if (!isValidIPv6(valip) && !isValidIPv4(valip)){
+                Swal.fire(
+                    'Invalid IP address',
+                    '',
+                    'warning'
+                )
+            }else{
+                $('.boxaddress').append(`<div class="col-3 d-flex deletboxipaddress"><div><p class="permitip">${valip}</p></div><div><a type="button" class="btn-sm text-danger mx-3 deleteaddress"><i class='bx bx-trash'></i></a></div></div>`);
+                $('.textaddress').val('');
+            }
+    });
 
-        // HTTP REFERER
-        $('.addhttp').on('click',function(e){
-            e.preventDefault();
-            let valhttp = $('.texthttp').val();
-                if (valhttp == '') {
-                    Swal.fire(
-                        'Cannot be empty',
-                        '',
-                        'warning'
-                    )
-                } else {
-                    $('.boxhttp').append(`<div class="col-3 deletboxhttp"><p class="permithttp">${valhttp}<a type="button" class="btn-sm deletehttp text-danger mx-3"><i class='bx bx-trash'></i></a> </div>`);
-                    $('.texthttp').val('');
-                }
-        });
+    $(document).on('click','.deleteaddress', function(){
+        $(this).parents('.deletboxipaddress').remove();
+    });
 
-        $(document).on('click','.deletehttp', function(){
-            $(this).parents('.deletboxhttp').remove();
-        });
-
-        // Array to string HTTP REFERRER
-        function arraytostringhttp(httpreferrers){
-            let httpreferer = '';
-            httpreferrers.forEach((element,i) => {
-                if(i > 0 ){
-                    httpreferer += ',' + element;
-                }else{
-                    httpreferer = element;
-                }
-            });
-            return httpreferer;
-        }
-
-        // GENERATE APIKEY
-        $("#infinitevalidity").change(function() {
-            if($(this).prop('checked')) {
-                $('.periodapikey').hide();
-            } else {
-                $('.periodapikey').show();
+    // Array to string IPADDRESS
+    function arraytostringip(ipaddresses){
+        let ipaddress = '';
+        ipaddresses.forEach((element,i) => {
+            if(i > 0 ){
+                ipaddress += ',' + element;
+            }else{
+                ipaddress = element;
             }
         });
+        return ipaddress;
+    }
 
-        $(document).ready(function() {
-            $('.result-apikeys').hide();
+    // HTTP REFERER
+    $('.addhttp').on('click',function(e){
+        e.preventDefault();
+        let valhttp = $('.texthttp').val();
+            if (valhttp == '') {
+                Swal.fire(
+                    'Cannot be empty',
+                    '',
+                    'warning'
+                )
+            } else {
+                $('.boxhttp').append(`<div class="col-3 d-flex deletboxhttp"><div><p class="permithttp">${valhttp}</p></div><div><a type="button" class="btn-sm text-danger mx-3 deletehttp"><i class='bx bx-trash'></i></a></div></div>`);
+                $('.texthttp').val('');
+            }
+    });
+
+    $(document).on('click','.deletehttp', function(){
+        $(this).parents('.deletboxhttp').remove();
+    });
+
+    // Array to string HTTP REFERRER
+    function arraytostringhttp(httpreferrers){
+        let httpreferer = '';
+        httpreferrers.forEach((element,i) => {
+            if(i > 0 ){
+                httpreferer += ',' + element;
+            }else{
+                httpreferer = element;
+            }
+        });
+        return httpreferer;
+    }
+
+    // GENERATE APIKEY
+    $("#infinitevalidity").change(function() {
+        if($(this).prop('checked')) {
+            $('.periodapikey').hide();
+        } else {
+            $('.periodapikey').show();
+        }
+    });
+
+    $(document).ready(function() {
+        $('.result-apikeys').hide();
+    });
+    
+    const myModalApikey = document.getElementById('generateapikey')
+    myModalApikey.addEventListener('hidden.bs.modal', event => {
+        $('.btn-apikeys').show();
+        $('.before-apikeys').show();
+        $('.result-apikeys').hide();
+    });
+
+    $(document).on('submit','#form-apikeys', function(e){
+        let httpreferrers = [];
+        let ipaddresses = [];
+
+        $('.permitip').each(function(i, obj) {
+            ipaddresses.push($(this).html());
+        });
+        $('.permithttp').each(function(i, obj) {
+            httpreferrers.push($(this).html());
         });
         
-        const myModalApikey = document.getElementById('generateapikey')
-        myModalApikey.addEventListener('hidden.bs.modal', event => {
-            $('.btn-apikeys').show();
-            $('.before-apikeys').show();
-            $('.result-apikeys').hide();
+        let arripaddress = arraytostringip(ipaddresses);
+        let arrhttpreferers = arraytostringhttp(httpreferrers);
+        let formdata = new FormData(this);
+        
+        formdata.append('ipaddresses',arripaddress);
+        formdata.append('httpreferrers',arrhttpreferers);
+
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: formdata,
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            beforeSend: function() {
+                $('.btn-apikeys').html(`<i class='bx bx-cog bx-spin'></i> Loading`).attr('disabled', true);
+            },
+            success: function(data) {
+                $('.before-apikeys').hide();
+                $('.result-apikeys').show();
+                $('#text-apikey').val(data.data.apikey);
+                $('#text-valitytime').val(data.data.validityTime);
+                $('.btn-apikeys').hide();
+                $('.btn-apikeys').html(`<i class='bx bx-cog bx-rotate-180'></i> Generate`).attr('disabled', false);
+            }
         });
+    });
 
-        $(document).on('submit','#form-apikeys', function(e){
-            let httpreferrers = [];
-            let ipaddresses = [];
+    // Copy text APIKEY
+    function copyApikey() {
+        var copyText = document.getElementById("text-apikey");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        navigator.clipboard.writeText(copyText.value);
+        Swal.fire(
+        'Already Copied',
+        '',
+        'success'
+        )
+    }
 
-            $('.permitip').each(function(i, obj) {
-                ipaddresses.push($(this).html());
-            });
-            $('.permithttp').each(function(i, obj) {
-                httpreferrers.push($(this).html());
-            });
-            
-            let arripaddress = arraytostringip(ipaddresses);
-            let arrhttpreferers = arraytostringhttp(httpreferrers);
-            let formdata = new FormData(this);
-            
-            formdata.append('ipaddresses',arripaddress);
-            formdata.append('httpreferrers',arrhttpreferers);
-
-            e.preventDefault();
-            $.ajax({
-                url: $(this).attr('action'),
-                method: $(this).attr('method'),
-                data: formdata,
-                processData: false,
-                dataType: 'json',
-                contentType: false,
-                beforeSend: function() {
-                    $('.btn-apikeys').html(`<i class='bx bx-cog bx-spin'></i> Loading`).attr('disabled', true);
-                },
-                success: function(data) {
-                    $('.before-apikeys').hide();
-                    $('.result-apikeys').show();
-                    $('#text-apikey').val(data.data.apikey);
-                    $('#text-valitytime').val(data.data.validityTime);
-                    $('.btn-apikeys').hide();
-                    $('.btn-apikeys').html(`<i class='bx bx-cog bx-rotate-180'></i> Generate`).attr('disabled', false);
-                }
-            });
+    $(document).ready(function() {
+        $('input[type=radio][name=view]').change(function() {
+            if (this.value === 'oauth2-view') {
+                $('#sandbox-oauth-page').show();
+                $('#sandbox-apikey-page').hide();
+            }
+            else if (this.value === 'apikey-view') {
+                $('#sandbox-oauth-page').hide();
+                $('#sandbox-apikey-page').show();
+            }
         });
-
-        // Copy text APIKEY
-        function copyApikey() {
-            var copyText = document.getElementById("text-apikey");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
-            navigator.clipboard.writeText(copyText.value);
-            Swal.fire(
-            'Already Copied',
-            '',
-            'success'
-            )
-        }
-
-        $(document).ready(function() {
-            $('input[type=radio][name=view]').change(function() {
-                if (this.value === 'oauth2-view') {
-                    $('#sandbox-oauth-page').show();
-                    $('#sandbox-apikey-page').hide();
-                }
-                else if (this.value === 'apikey-view') {
-                    $('#sandbox-oauth-page').hide();
-                    $('#sandbox-apikey-page').show();
-                }
-            });
-        });
+    });
 
 
     </script>

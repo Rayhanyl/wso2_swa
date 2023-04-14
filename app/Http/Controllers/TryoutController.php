@@ -56,9 +56,9 @@ class TryoutController extends Controller
         if ($swagger !== [] ) {
 
             if (isset ($swagger->swagger)) {
-                $swagger->securityDefinitions->default->authorizationUrl = "https://194.233.88.81:9443/oauth2/authorize";
+                $swagger->securityDefinitions->default->authorizationUrl = "https://apim.belajarwso2.com/oauth2/authorize";
             }else{
-                $swagger->components->securitySchemes->default->flows->implicit->authorizationUrl = "https://194.233.88.81:9443/oauth2/authorize";
+                $swagger->components->securitySchemes->default->flows->implicit->authorizationUrl = "https://apim.belajarwso2.com/oauth2/authorize";
             }   
         }
 
@@ -76,9 +76,9 @@ class TryoutController extends Controller
         if ($swagger !== [] ) {
 
             if (isset ($swagger->swagger)) {
-                $swagger->securityDefinitions->default->authorizationUrl = "https://194.233.88.81:9443/oauth2/authorize";
+                $swagger->securityDefinitions->default->authorizationUrl = "https://apim.belajarwso2.com/oauth2/authorize";
             }else{
-                $swagger->components->securitySchemes->default->flows->implicit->authorizationUrl = "https://194.233.88.81:9443/oauth2/authorize";
+                $swagger->components->securitySchemes->default->flows->implicit->authorizationUrl = "https://apim.belajarwso2.com/oauth2/authorize";
             }   
         }
 

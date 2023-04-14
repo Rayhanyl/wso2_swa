@@ -142,7 +142,7 @@ class AuthenticationController extends Controller
                         [
                             [
                                 "key" => "callback",
-                                "value" => "https://194.233.88.81:9443/authenticationendpoint/login.do"
+                                "value" => "https://apim.belajarwso2.com/authenticationendpoint/login.do"
                             ]
                         ]
                 ];
@@ -190,7 +190,7 @@ class AuthenticationController extends Controller
             'Accept' => '*/*',
         ])
         ->withBody(json_encode($payloads),'application/json')
-        ->post('https://194.233.88.81:9443/t/carbon.super/api/identity/recovery/v0.9/validate-code');
+        ->post('https://apim.belajarwso2.com/t/carbon.super/api/identity/recovery/v0.9/validate-code');
         $data = json_decode($response->getBody()->getContents());
         $status = $response->status();
         $confirmation = $request->confirmation;
@@ -228,7 +228,7 @@ class AuthenticationController extends Controller
                 'Accept' => '*/*',
             ])
             ->withBody(json_encode($payloads),'application/json')
-            ->post('https://194.233.88.81:9443/t/carbon.super/api/identity/recovery/v0.9/set-password');
+            ->post('https://apim.belajarwso2.com/t/carbon.super/api/identity/recovery/v0.9/set-password');
             $data = json_decode($response->getBody()->getContents());
         
             if ($response->status() == '200') {

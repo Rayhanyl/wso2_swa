@@ -25,7 +25,7 @@
                               @enderror
                             </div>
                             
-                            <div class="mb-3 @error('password') is-invalid @enderror">
+                            <div class="form-group mb-3 @error('password') is-invalid @enderror">
                               <label for="password" class="form-label">Password</label>
                               <input type="password" class="form-control" id="password" name="password" required>
                               <div id="password" class="form-text">We'll never share your password with anyone else.</div>

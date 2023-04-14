@@ -31,7 +31,8 @@ class ManageKeysController extends Controller
 
     public function sandbox_page(Request $request,$id){
 
-        $url = $this->getUrlToken();
+        // $url = $this->getUrlToken();
+        $url = 'apim.belajarwso2.com';
 
         $application = getUrl($this->url .'/applications/'. $id);
         if ($application == null){
@@ -66,7 +67,8 @@ class ManageKeysController extends Controller
 
     public function production_page(Request $request,$id){
 
-        $url = $this->getUrlToken();
+        // $url = $this->getUrlToken();
+        $url = 'apim.belajarwso2.com';
 
         $application = getUrl($this->url .'/applications/'. $id);
         if ($application == null){
