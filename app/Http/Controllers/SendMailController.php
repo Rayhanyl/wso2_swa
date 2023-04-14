@@ -50,6 +50,7 @@ class SendMailController extends Controller
             "name" => $user['http://wso2.org/claims/username'],
             "date" => Carbon::now(),
             "code" => $data,
+            // "url" => 'http://devportal.belajarwso2.com/',
             "url" => 'http://127.0.0.1:8000/',
         ];
 

@@ -8,11 +8,11 @@
           </div>
           <div class="page-login col-12 col-lg-5" data-aos="fade-down" data-aos-duration="1000">
               <div class="row">
-                   <div class="col-12 fw-bold text-center fs-3 my-3">
+                   <div class="col-12 fw-bold text-center fs-3 mb-3 mt-2">
                       Create your account
                    </div>
                    <div class="col-12 my-2">
-                      <form class="row g-3" method="post" action="{{ route ('register') }}">
+                      <form class="row gx-3 gy-2" method="post" action="{{ route ('register') }}">
                           @csrf
                           <div class="col-md-6 @error('firstname') is-invalid @enderror">
                             <label for="firstname" class="form-label">First Name</label>
@@ -42,16 +42,22 @@
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                          <div class="col-12 @error('password') is-invalid @enderror">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Masukan password anda">
+                          <label for="password" class="form-label">Password</label>
+                          <div class="col-12 input-group @error('password') is-invalid @enderror">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Masukan password anda" style="border-right:0px solid">
+                            <span class="input-group-text bg-white">
+                              <i type="button" id="toggle-password" onclick="togglePassword()" class='bx bx-low-vision'></i>
+                            </span>
                             @error('password')
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                          <div class="col-12 @error('password_confirmation') is-invalid @enderror">
-                            <label for="password_confirmation" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirmasi password anda">
+                          <label for="password_confirmation" class="form-label">Confirm Password</label>
+                          <div class="col-12 input-group  @error('password_confirmation') is-invalid @enderror">
+                            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirmasi password anda" style="border-right:0px solid">
+                            <span class="input-group-text bg-white">
+                              <i type="button" id="toggle-password-confirm" onclick="toggleConfirm()" class='bx bx-low-vision'></i>
+                            </span>
                             @error('password_confirmation')
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -59,9 +65,6 @@
                           <div class="col-12 text-center">
                             <button type="submit" class="btn btn-warning rounded-4 text-white fw-bold px-5 py-2">Create your account</button>
                           </div>
-                          {{-- <div class="col-12 d-grid gap-2">
-                              <button type="submit" class="btn btn-warning nav-btn-login text-light rounded-4 " type="button">Create your account</button>
-                          </div> --}}
                         </form>
                    </div>
                    <div class="col-12 my-3">
@@ -81,6 +84,28 @@
       </div>
   </div>
 </div>
+
+<script>
+  function togglePassword() {
+      var passwordField = document.getElementById("password");
+      var toggleBtn = document.getElementById("toggle-password");
+      if (passwordField.type === "password") {
+          passwordField.type = "text";
+      } else {
+          passwordField.type = "password";
+      }
+  }
+
+  function toggleConfirm() {
+      var passwordField = document.getElementById("password_confirmation");
+      var toggleBtn = document.getElementById("toggle-password-confirm");
+      if (passwordField.type === "password") {
+          passwordField.type = "text";
+      } else {
+          passwordField.type = "password";
+      }
+  }
+</script>
 
 @endsection
 

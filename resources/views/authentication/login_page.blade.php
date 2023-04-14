@@ -25,16 +25,18 @@
                               @enderror
                             </div>
                             
-                            <div class="form-group mb-3 @error('password') is-invalid @enderror">
-                              <label for="password" class="form-label">Password</label>
-                              <input type="password" class="form-control" id="password" name="password" required>
-                              <div id="password" class="form-text">We'll never share your password with anyone else.</div>
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group mb-2 @error('password') is-invalid @enderror">
+                                <input type="password" class="form-control" id="password" name="password" required style="border-right:0px solid">
+                                <span class="input-group-text bg-white">
+                                    <i type="button" id="toggle-password" onclick="togglePassword()" class='bx bx-low-vision'></i>
+                                </span>
                               @error('password')
                               <span class="text-danger">{{ $message }}</span>
                               @enderror
                             </div>
-                            
-                            <div class="mb-3 d-flex justify-content-center">
+                            <div id="password" class="form-text">We'll never share your password with anyone else.</div>
+                            <div class="mb-3 mt-2 d-flex justify-content-center">
                                 <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
                             </div>
                             <div class="text-center my-2">
@@ -70,6 +72,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("password");
+        var toggleBtn = document.getElementById("toggle-password");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+</script>
+
 
 @endsection
 

@@ -58,14 +58,12 @@
                     </div>
                     <div class="col-sm-5">
                         <h6>Consumer Secret</h6>
-                        <div class="form-group position-relative has-icon-right">
+                        <div class="input-group position-relative has-icon-right">
                             <input type="password" class="form-control" name="secretkey" id="secretkey"
-                                value="{{ $data->consumerSecret ?? '' }}" placeholder="N/A" readonly>
-                            <div class="form-control-icon">
-                                <i type="button" id="toggle-secret-key" onclick="toggleSecretKey()"
-                                    class="bi bi-eye"></i>
-                                <i type="button" onclick="copySecretKey()" class="bi bi-clipboard"></i>
-                            </div>
+                                value="{{ $data->consumerSecret ?? '' }}" placeholder="N/A" readonly style="border-right:0px solid">
+                            <span class="input-group-text bg-white">
+                                <i type="button" id="toggle-password" onclick="toggleSecretKey()" class='bx bx-low-vision'></i>
+                            </span>
                         </div>
                     </div>
                     @else
@@ -205,6 +203,8 @@
                         <div class="form-group position-relative has-icon-right">
                             <input type="url" class="form-control" name="callback" pattern="https?://.+"
                                 value="{{ $data->callbackUrl ?? 'http://127.0.0.1:8000/TryOut/'.$application->applicationId }}">
+                            {{-- <input type="url" class="form-control" name="callback" pattern="https?://.+"
+                                value="{{ $data->callbackUrl ?? 'https://devportal.belajarwso2.com/TryOut/'.$application->applicationId }}"> --}}
                             <div class="form-control-icon">
                                 <i class="bi bi-link-45deg"></i>
                             </div>
