@@ -6,6 +6,7 @@
                     <th class="text-center">API</th>
                     <th class="text-center">Version</th>
                     <th class="text-center">Subscription Status</th>
+                    <th class="text-center">Subscription Type</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
@@ -21,6 +22,13 @@
                             @foreach ($item->throttlingPolicies as $items)
                             <option data-status="{{$items}}" value="{{$items}}">{{$items}}</option>
                             @endforeach
+                        </select>
+                    </td>
+                    <td class="text-center">
+                        <select class="form-select form-sm status-subscription" name="subs_type" aria-label="Choice Subscription Type">
+                            <option selected disabled>-- Select --</option>
+                            <option>Pre paid</option>
+                            <option>Post paid</option>
                         </select>
                     </td>
                     <td class="text-center">

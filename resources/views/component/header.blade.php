@@ -37,7 +37,7 @@
                         <a href="{{ route ('about.us.page') }}" class="nav-item nav-link nav-font mx-2 reset-local-storage">About Us</a>
                         <a href="{{ route ('question.answer.page') }}" class="nav-item nav-link nav-font mx-2 reset-local-storage">Q&A</a>
                         @if (getToken())
-                        <a href="{{ route ('configuration.page') }}" class="nav-item nav-link nav-font mx-2 reset-local-storage">Configuration</a>
+                        {{-- <a href="{{ route ('configuration.page') }}" class="nav-item nav-link nav-font mx-2 reset-local-storage">Configuration</a> --}}
                         @endif
                     </div>
                     <div class="navbar-nav ms-auto">

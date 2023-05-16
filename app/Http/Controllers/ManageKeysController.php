@@ -33,7 +33,7 @@ class ManageKeysController extends Controller
 
         // $url = $this->getUrlToken();
         $url = 'apim.belajarwso2.com';
-
+        
         $application = getUrl($this->url .'/applications/'. $id);
         if ($application == null){
             

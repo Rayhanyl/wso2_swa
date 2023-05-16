@@ -15,7 +15,7 @@ class HomepageController extends Controller
     public function homePage(){
 
         $tags = 'frontend';
-        $listapi = getApiDocumentation($this->url . '/apis?query=tag:'.$tags.'&limit=6');
+        $listapi = getApiDocumentation($this->url .'/apis?query=tag:'.$tags.'&limit=6');
 
         return view('home.home_page', compact('listapi'));
     }
