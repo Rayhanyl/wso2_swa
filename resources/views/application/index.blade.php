@@ -22,7 +22,7 @@
                                                 </div>
                                                 <div class="col-8 text-center">
                                                     <div class="fw-bold" style="font-size: 14px;">
-                                                        Application
+                                                        Application Total
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
                                                         {{ $application->count }}

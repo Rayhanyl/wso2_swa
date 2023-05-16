@@ -20,7 +20,7 @@
                                 </div>
                                 <div class="col-8 text-center">
                                     <div class="fw-bold" style="font-size: 18px;">
-                                        Total Subscription
+                                        Subscription
                                     </div>
                                     <div class="fw-bold text-center" style="font-size: 24px;">
                                         {{ $subscription->count }}
