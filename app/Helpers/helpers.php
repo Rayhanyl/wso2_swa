@@ -74,3 +74,22 @@ function getUrlEmails($url)
     }
     return [];
 }
+
+function getUrlReport()
+{
+    $url_report = env('GET_REPORT');
+    return $url_report;
+}
+
+function getUrlReports($url_report)
+{
+        $response = Http::withOptions(['verify' => false])
+        ->withHeaders([
+            'Accept' => 'application/json',
+        ])
+        ->get($url_report);
+    if($response->status() == 200){
+        return json_decode($response->getBody()->getContents());
+    }
+    return [];
+}

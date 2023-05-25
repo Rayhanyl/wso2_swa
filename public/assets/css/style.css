@@ -1057,6 +1057,11 @@ hr.style-2 {
     height: 500px;
 }
 
+.vertical-hr-2 {
+    border-left: 1px solid rgb(197, 197, 197);
+    height: 35px;
+}
+
 .inner-shadow{
     box-shadow: inset 0 0 10px #dfdfdf;
 }
@@ -1233,4 +1238,28 @@ hr.style-2 {
 .copy-curl-icon:hover{
     color: #003399;
     font-size: 32px;
+}
+
+.text-summary{
+    font-family: "Poppins-semibold";
+    font-size: 18px;
+}
+.text-child-sumary{
+    font-size: 28px;
+}
+.img-summary{
+    width:  40px;
+    height: 40px;
+}
+
+.text-usage{
+    font-family: "Poppins-semibold";
+    font-size: 18px;
+}
+.text-child-usage{
+    font-size: 28px;
+}
+.img-usage{
+    width:  40px;
+    height: 40px;
 }

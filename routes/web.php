@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     SubscriptionController,
     TryoutController,
     ManageKeysController,
+    UsageapiController,
 };
 
 /*
@@ -75,5 +76,11 @@ Route::middleware(['haslogin'])->group(function () {
     Route::post('/Accesstoken' ,[ManageKeysController::class, 'generateaccesstoken'])->name('accesstoken');
     Route::post('/ApiKeys' ,[ManageKeysController::class, 'genapikey'])->name('genapikey');
     Route::get('/Logout', [AuthenticationController::class, 'logout'])->name('logout');  
+    Route::get('/MonthlyReportSummary', [UsageapiController::class, 'customer_monthly_report_summary_page'])->name('customer.monthly.report.summary.page');
+    Route::get('/ReportResultApiCustomer', [UsageapiController::class, 'customer_result_api_summary_report'])->name('customer.result.api.summary.report');
+    Route::get('/ReportDetailCustomer/{app}/{api}', [UsageapiController::class, 'customer_detail_logs_report'])->name('customer.detail.logs.report');
+    Route::get('/ApiResourceUsageSummary', [UsageapiController::class, 'customer_api_resource_usage_summary_page'])->name('customer.api.resource.usage.summary.page');
+    Route::get('/UsageResultResourceCustomer', [UsageapiController::class, 'customer_result_resource_summary_usage'])->name('customer.result.resource.summary.usage');
+    Route::get('/UsageDetailCustomer/{resources}/{api}', [UsageapiController::class, 'customer_detail_logs_usage'])->name('customer.detail.logs.usage');
 });
 
