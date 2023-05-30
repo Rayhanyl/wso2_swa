@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 my-5 text-center">
-            <h1>Monthly Report Summary</h1>
+            <h1>API Resource Usage Summary</h1>
         </div>
         <div class="col-12 mb-5">
             <div class="card card-shadow-app rounded-4">
@@ -14,7 +14,7 @@
                             <div class="col-12">
                                 <h5>API-M ASABRI</h5>
                             </div>
-                            <form class="row g-4" action="#" method="GET">
+                            <form class="row g-4" action="{{ route ('admin.api.resource.usage.summary.page') }}" method="GET">
                                 <div class="col-12 col-lg-6">
                                     <label for="year" class="form-label">Year</label>
                                     <select id="year" name="year" class="form-select" required>
@@ -29,14 +29,17 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <label for="application" class="form-label">Customer</label>
-                                    <select id="application" name="application" class="form-select">
-                                        <option>All</option>
+                                    <label for="api" class="form-label">API Name</label>
+                                    <select id="api-usage-resource" name="api" class="form-select">
+                                        <option value="All">All</option>
+                                        @foreach ($apis->list as $items)
+                                        <option value="{{ $items->id }}">{{$items->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <label for="api_name" class="form-label">API Name</label>
-                                    <select id="api_name" name="api_name" class="form-select">
+                                    <label for="resources" class="form-label">Resources</label>
+                                    <select id="resources" name="resources" class="form-select">
                                         <option>All</option>
                                     </select>
                                 </div>
@@ -57,40 +60,28 @@
                             <div class="col-3 col-lg-3">
                                 <div class="row">
                                     <div class="col-2">
-                                        <img class="img-summary"
+                                        <img class="img-usage"
                                             src="{{ asset ('assets/images/application/icon-create.png') }}"
                                             alt="Picture">
                                     </div>
                                     <div class="col-10">
-                                        <p class="text-summary">Total Customer: <span class="text-child-sumary text-primary">&nbsp;</span> </p>
+                                        <p class="text-summary">Total APIs: <span class="text-child-sumary text-primary">&nbsp;{{ $total }}</span> </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-3">
                                 <div class="row">
                                     <div class="col-2">
-                                        <img class="img-summary"
+                                        <img class="img-usage"
                                             src="{{ asset ('assets/images/application/icon-create.png') }}"
                                             alt="Picture">
                                     </div>
                                     <div class="col-10">
-                                        <p class="text-summary">Total APIs: <span class="text-child-sumary text-primary">&nbsp;</span> </p>
+                                        <p class="text-usage">Request Count: <span class="text-child-usage text-primary">&nbsp;{{ $count }}</span> </p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3 col-lg-3">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <img class="img-summary"
-                                            src="{{ asset ('assets/images/application/icon-create.png') }}"
-                                            alt="Picture">
-                                    </div>
-                                    <div class="col-10">
-                                        <p class="text-summary">Request Count: <span class="text-child-sumary text-primary">&nbsp;</span> </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3 col-lg-3 text-end">
+                            <div class="col-6 col-lg-6 text-end">
                                 <button class="btn btn-primary mx-2 ">
                                     <i style="font-size:18px;" class='bx bx-download'></i>
                                     <span class="d-none d-md-inline ml-1">Download</span>
@@ -100,19 +91,30 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped" id="data-table-usage-admin" style="width:100%">
+                    <table class="table table-striped" id="data-table-api-usage-admin" style="width:100%">
                         <thead class="table-orange">
                             <tr>
-                                <th>Customer</th>
                                 <th>API Name</th>
                                 <th>Version</th>
-                                <th>Application Name</th>
-                                <th>Application Owner</th>
+                                <th>Resource Path</th>
+                                <th>API Method</th>
                                 <th>Request Count</th>
                                 <th>Logs</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @forelse ( $data as $item)
+                            <tr>
+                                <td>{{ $item->apiName }}</td>
+                                <td>{{ $item->apiVersion }}</td>
+                                <td>{{ $item->resource }}</td>
+                                <td>{{ $item->apiMethod }}</td>
+                                <td>{{ $item->requestCount }}</td>
+                                <td>
+                                    <a href="{{ route ('admin.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource }}" class="btn btn-primary btn-sm" >Details</a>
+                                </td>
+                            </tr>
+                            @empty
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -120,9 +122,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
                             </tr>
-
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -134,7 +135,8 @@
 @push('script')
     <script>
         $(document).ready(function () {
-            $('#data-table-usage-admin').DataTable({
+            
+            $('#data-table-api-usage-admin').DataTable({
                 responsive: true,
                 lengthMenu: [
                     [5, 25, 50, -1],
@@ -142,8 +144,43 @@
                 ],
             });
 
+            getResource($('#api-usage-resource').val());
             getMonth($('#year').val());
+            
         });
+
+        function getResource(params) {
+            let api_id = params;
+            $.ajax({
+                type: "GET",
+                url: "{{ route('admin.result.resource.summary.usage') }}",
+                dataType: 'html',
+                data: {
+                    api_id,
+                },
+                beforeSend: function() {
+                    $('#resources').html('');
+                },
+                success: function(data) {
+
+                    let resource_list = JSON.parse(data);
+                    resource_list = resource_list.data.data;
+                    let resources = '';
+                    resources += `<option value="All">All</option>`
+                    resource_list.forEach(item => {
+                        resources += `<option value='${item.resource}'>${item.resource}</option>`;  
+                    });
+                    $('#resources').html(resources);
+
+                },
+                complete: function() {
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                    $('#resources').html(pesan);
+                },
+            });
+        }
 
         function  getMonth(params) {
             let year = params;
@@ -177,10 +214,17 @@
             });
         }
 
+        
+        $(document).on('change', '#api-usage-resource', function(e) {
+            e.preventDefault();
+            getResource($(this).val());
+        });
+
         $(document).on('change', '#year', function(e) {
             e.preventDefault();
             getMonth($(this).val());
         });
+
     </script>
 @endpush
 

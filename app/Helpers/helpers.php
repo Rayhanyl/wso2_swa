@@ -93,3 +93,22 @@ function getUrlReports($url_report)
     }
     return [];
 }
+
+function getUrlBilling()
+{
+    $url_billing = env('GET_BILLING');
+    return $url_billing;
+}
+
+function getUrlBillings($url_billing)
+{
+        $response = Http::withOptions(['verify' => false])
+        ->withHeaders([
+            'Accept' => 'application/json',
+        ])
+        ->get($url_billing);
+    if($response->status() == 200){
+        return json_decode($response->getBody()->getContents());
+    }
+    return [];
+}

@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
 
-
-class UsageapiController extends Controller
+class CustomerController extends Controller
 {
 
     public function __construct(){   
@@ -26,6 +25,8 @@ class UsageapiController extends Controller
             session()->forget('token');
             return redirect(route('login.page'));
         }
+
+        $years = getUrlReports($this->url_report . '/report/years?username='.session('username') );
         
         $app_id = $request->application;
         $api_id = $request->api_name;
@@ -59,7 +60,7 @@ class UsageapiController extends Controller
             }
         }
 
-        return view('customer.reportapi.index',compact('application','total','count','data'));
+        return view('customer.reportapi.index',compact('application','total','count','data','years','year'));
     }
 
     public function customer_result_api_summary_report(Request $request){
@@ -86,20 +87,6 @@ class UsageapiController extends Controller
 
     public function customer_api_resource_usage_summary_page(Request $request){
 
-        $months = [
-            1 => 'January',
-            2 => 'February',
-            3 => 'March',
-            4 => 'April',
-            5 => 'Mei',
-            6 => 'June',
-            7 => 'July',
-            8 => 'August',
-            9 => 'September',
-            10 => 'October',
-            11 => 'November',
-            12 => 'December',
-        ];
         
         $api = getUrlReports($this->url_report . '/report/apis?username='.session('username') );
         $years = getUrlReports($this->url_report . '/report/years?username='.session('username') );
@@ -136,17 +123,38 @@ class UsageapiController extends Controller
             }
         }
 
-        return view('customer.usageresource.index',compact('api','api_id','total','count','data','months','month','years','year'));
+        return view('customer.usageresource.index',compact('api','api_id','total','count','data','month','years','year'));
     }
+
     public function customer_result_resource_summary_usage(Request $request){
         
         $resources = getUrlReports($this->url_report . '/report/resources?username='.session('username').'&apiId='.$request->api_id );
         return response()->json(['status' => 'success', 'data' => $resources]);
     }
 
-    public function customer_detail_logs_usage(Request $request,$resources,$api){
+    public function customer_result_month_summary_usage(Request $request){
 
-        
-        return view('customer.usageresource.detailusage');
+        $years = getUrlReports($this->url_report . '/report/months?year='.$request->year.'&username='.session('username') );
+        return response()->json(['status' => 'success', 'data' => $years]);
     }
+
+    public function customer_detail_logs_usage(Request $request){
+
+        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?username='.session('username').'&resource='.$request->resource.'&apiId='.$request->api_id );
+        $data  = $resources->data->content;
+        $resources = $request->resource;
+        
+        if(count($data) >= 1){
+            $api_name = $data[0]->apiName;
+        }
+
+
+        return view('customer.usageresource.detailusage',compact('data','resources','api_name'));
+    }
+
+    public function customer_dashboard_page(){
+
+        return view('customer.dashboard.index');
+    }
+    
 }

@@ -32,6 +32,15 @@ class AuthenticationController extends Controller
 
         $username = base64_encode($request->username);
         $userinfo =  getUrlEmails($this->url_email .'/pi-info/'. $username);
+        $data = collect($userinfo->basic);
+
+        $exploded = explode(',', $data['http://wso2.org/claims/role']);
+        if (in_array('Internal/admin',$exploded)) {
+            $role = 'admin';
+        }else{
+            $role = 'customer';
+        }
+        
         
         if ($userinfo != null) {
             $user = (array) $userinfo->basic;
@@ -71,11 +80,12 @@ class AuthenticationController extends Controller
                 ->post($this->url_login. '/oauth2/token');
 
                 $data = json_decode($response->getBody()->getContents());
-                
                 if ($response->status() == 200)
                 {
+
                     $request->session()->put('token', $data->access_token);
                     $request->session()->put('idtoken', $data->id_token);
+                    $request->session()->put('role', $role);
                     $request->session()->put('firstname', $user['http://wso2.org/claims/givenname']);
                     $request->session()->put('lastname', $user['http://wso2.org/claims/lastname']);
                     $request->session()->put('email', $user['http://wso2.org/claims/emailaddress']);

@@ -13,7 +13,8 @@ use App\Http\Controllers\{
     SubscriptionController,
     TryoutController,
     ManageKeysController,
-    UsageapiController,
+    CustomerController,
+    AdminController,
 };
 
 /*
@@ -76,11 +77,23 @@ Route::middleware(['haslogin'])->group(function () {
     Route::post('/Accesstoken' ,[ManageKeysController::class, 'generateaccesstoken'])->name('accesstoken');
     Route::post('/ApiKeys' ,[ManageKeysController::class, 'genapikey'])->name('genapikey');
     Route::get('/Logout', [AuthenticationController::class, 'logout'])->name('logout');  
-    Route::get('/MonthlyReportSummary', [UsageapiController::class, 'customer_monthly_report_summary_page'])->name('customer.monthly.report.summary.page');
-    Route::get('/ReportResultApiCustomer', [UsageapiController::class, 'customer_result_api_summary_report'])->name('customer.result.api.summary.report');
-    Route::get('/ReportDetailCustomer/{app}/{api}', [UsageapiController::class, 'customer_detail_logs_report'])->name('customer.detail.logs.report');
-    Route::get('/ApiResourceUsageSummary', [UsageapiController::class, 'customer_api_resource_usage_summary_page'])->name('customer.api.resource.usage.summary.page');
-    Route::get('/UsageResultResourceCustomer', [UsageapiController::class, 'customer_result_resource_summary_usage'])->name('customer.result.resource.summary.usage');
-    Route::get('/UsageDetailCustomer/{resources}/{api}', [UsageapiController::class, 'customer_detail_logs_usage'])->name('customer.detail.logs.usage');
+
+    Route::get('/CustomerMonthlyReportSummary', [CustomerController::class, 'customer_monthly_report_summary_page'])->name('customer.monthly.report.summary.page');
+    Route::get('/CustomerReportResultApi', [CustomerController::class, 'customer_result_api_summary_report'])->name('customer.result.api.summary.report');
+    Route::get('/CustomerReportDetail/{app}/{api}', [CustomerController::class, 'customer_detail_logs_report'])->name('customer.detail.logs.report');
+    Route::get('/CustomerApiResourceUsageSummary', [CustomerController::class, 'customer_api_resource_usage_summary_page'])->name('customer.api.resource.usage.summary.page');
+    Route::get('/CustomerUsageResultResource', [CustomerController::class, 'customer_result_resource_summary_usage'])->name('customer.result.resource.summary.usage');
+    Route::get('/CustomerUsageResultMonth', [CustomerController::class, 'customer_result_month_summary_usage'])->name('customer.result.month.summary.usage');
+    Route::get('/CustomerUsageDetail', [CustomerController::class, 'customer_detail_logs_usage'])->name('customer.detail.logs.usage');
+    Route::get('/CustomerDashboard', [CustomerController::class, 'customer_dashboard_page'])->name('customer.dashboard.page');
+    
+    Route::get('/AdminMonthlyReportSummary', [AdminController::class, 'admin_monthly_report_summary_page'])->name('admin.monthly.report.summary.page');
+    Route::get('/AdminApiResourceUsageSummary', [AdminController::class, 'admin_api_resource_usage_summary_page'])->name('admin.api.resource.usage.summary.page');
+    Route::get('/AdminUsageDetail', [AdminController::class, 'admin_detail_logs_usage'])->name('admin.detail.logs.usage');
+    Route::get('/AdminUsageResultMonth', [AdminController::class, 'admin_result_month_summary_usage'])->name('admin.result.month.summary.usage');
+    Route::get('/AdminUsageResultResource', [AdminController::class, 'admin_result_resource_summary_usage'])->name('admin.result.resource.summary.usage');
+    Route::get('/AdminInvoicePage', [AdminController::class, 'admin_invoice_page'])->name('admin.invoice.page');
+    Route::get('/AdminPaymentPage', [AdminController::class, 'admin_payment_page'])->name('admin.payment.page');
+
 });
 

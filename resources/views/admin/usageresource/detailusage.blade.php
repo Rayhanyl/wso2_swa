@@ -8,7 +8,7 @@
             <h1>Log Detail</h1>
         </div>
         <div class="col-12 my-2">
-            <a class="back-to-application" href="{{ route ('customer.api.resource.usage.summary.page') }}"><i class='bx bx-chevron-left'></i> Back to usage</a>
+            <a class="back-to-application" href="{{ route ('admin.api.resource.usage.summary.page') }}"><i class='bx bx-chevron-left'></i> Back to usage</a>
         </div>
         <div class="col-12 mb-5">
             <div class="card card-shadow-app rounded-4">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped" id="data-table-log-detail-resource-customer" style="width:100%">
+                    <table class="table table-striped" id="data-table-log-detail-resource-admin" style="width:100%">
                         <thead class="table-orange">
                             <tr>
                                 <th>Application</th>
@@ -56,7 +56,7 @@
 @push('script')
 <script>
     $(document).ready(function () {
-        $('#data-table-log-detail-resource-customer').DataTable({
+        $('#data-table-log-detail-resource-admin').DataTable({
             responsive: true,
             lengthMenu: [
                 [5, 25, 50, -1],

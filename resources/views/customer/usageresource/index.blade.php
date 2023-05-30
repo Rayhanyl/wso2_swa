@@ -25,10 +25,7 @@
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="month" class="form-label">Month</label>
-                                    <select id="month" name="month" class="form-select" required>
-                                        @foreach ($months as $key => $item)
-                                        <option value="{{ $key }}" {{ $month == $key ? 'selected':'' }}>{{ $item }}</option>
-                                        @endforeach
+                                    <select id="month-usage" name="month" class="form-select" required>
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
@@ -114,7 +111,7 @@
                                 <td>{{ $item->apiMethod }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
-                                    <a href="{{ route ('customer.detail.logs.usage',['resources'=>$item->resource,'api'=>$item->apiId]) }}" class="btn btn-primary btn-sm" >Details</a>
+                                    <a href="{{ route ('customer.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource }}" class="btn btn-primary btn-sm" >Details</a>
                                 </td>
                             </tr>
                             @empty
@@ -149,6 +146,7 @@
         });
 
         getResource($('#api-usage-resource').val());
+        getMonth($('#year').val());
     });
 
     function getResource(params) {
@@ -184,10 +182,49 @@
         });
     }
 
+    function  getMonth(params) {
+        let year = params;
+        $.ajax({
+            type: "GET",
+            url: "{{ route('customer.result.month.summary.usage') }}",
+            dataType: 'html',
+            data: {
+                year,
+            },
+            beforeSend: function() {
+                $('#month-usage').html('');
+            },
+            success: function(data) {
+                let month_list = JSON.parse(data);
+                console.log(month_list);
+                month_list = month_list.data.data;
+                let month = '';
+                // month += `<option>All</option>`
+                month_list.forEach(item => {
+                    month += `<option value='${item.monthNumber}'>${item.monthName}</option>`;  
+                });
+                $('#month-usage').html(month);
+            },
+            complete: function() {
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                $('#month-usage').html(pesan);
+            },
+        });
+    }
+
     $(document).on('change', '#api-usage-resource', function(e) {
         e.preventDefault();
         getResource($(this).val());
     });
+
+    $(document).on('change', '#year', function(e) {
+        e.preventDefault();
+        getMonth($(this).val());
+    });
+
+
 
 </script>
 @endpush

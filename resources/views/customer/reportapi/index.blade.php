@@ -18,30 +18,14 @@
                                 <div class="col-12 col-lg-6">
                                     <label for="year" class="form-label">Year</label>
                                     <select id="year" name="year" class="form-select" required>
-                                        <option value="2023">2023</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2020">2020</option>
-                                        <option value="2019">2019</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2017">2017</option>
+                                        @foreach ($years->data as $items)
+                                            <option value="{{ $items->year }}" {{ $year == $items->year ? 'selected':'' }}>{{ $items->year }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="month" class="form-label">Month</label>
-                                    <select id="month" name="month" class="form-select" required>
-                                        <option value="1">January</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">Mei</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
+                                    <select id="month-usage" name="month" class="form-select" required>
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
@@ -159,6 +143,8 @@
                 [10, 25, 50, 'All'],
             ],
         });
+
+        getMonth($('#year').val());
     });
 
     
@@ -193,6 +179,43 @@
                 $('#api_name').html(pesan);
             },
         });
+    });
+
+    function  getMonth(params) {
+        let year = params;
+        $.ajax({
+            type: "GET",
+            url: "{{ route('customer.result.month.summary.usage') }}",
+            dataType: 'html',
+            data: {
+                year,
+            },
+            beforeSend: function() {
+                $('#month-usage').html('');
+            },
+            success: function(data) {
+                let month_list = JSON.parse(data);
+                console.log(month_list);
+                month_list = month_list.data.data;
+                let month = '';
+                // month += `<option>All</option>`
+                month_list.forEach(item => {
+                    month += `<option value='${item.monthNumber}'>${item.monthName}</option>`;  
+                });
+                $('#month-usage').html(month);
+            },
+            complete: function() {
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                $('#month-usage').html(pesan);
+            },
+        });
+    }
+
+    $(document).on('change', '#year', function(e) {
+        e.preventDefault();
+        getMonth($(this).val());
     });
 
 </script>
