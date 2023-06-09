@@ -41,7 +41,6 @@ class AuthenticationController extends Controller
             $role = 'customer';
         }
         
-        
         if ($userinfo != null) {
             $user = (array) $userinfo->basic;
         }else{
@@ -82,7 +81,6 @@ class AuthenticationController extends Controller
                 $data = json_decode($response->getBody()->getContents());
                 if ($response->status() == 200)
                 {
-
                     $request->session()->put('token', $data->access_token);
                     $request->session()->put('idtoken', $data->id_token);
                     $request->session()->put('role', $role);
@@ -108,6 +106,9 @@ class AuthenticationController extends Controller
             'lastname'              => 'required',
             'userlogin'             => 'required|min:6',
             'email'                 => 'required|email:rfc,dns',
+            'telephone'             => 'required',
+            'address'               => 'required',
+            'organization'          => 'required',
             'password'              => 'required|confirmed|min:6',
             'password_confirmation' => 'required|min:6',
 
@@ -116,6 +117,9 @@ class AuthenticationController extends Controller
             'lastname'              => 'Tidak boleh kosong',
             'userlogin'             => 'Username minimal 6 karakter',
             'email'                 => 'Masukan email yang valid',
+            'telephone'             => 'Tidak boleh kosong',
+            'address'               => 'Tidak boleh kosong',
+            'organization'          => 'Tidak boleh kosong',
             'password'              => 'Password tidak sama',
             'password_confirmation' => 'Password tidak sama',
         ]);
@@ -145,6 +149,18 @@ class AuthenticationController extends Controller
                                 [
                                     "uri" => "http://wso2.org/claims/lastname",
                                     "value" => $request->lastname
+                                ],
+                                [
+                                    "uri" => "http://wso2.org/claims/organization",
+                                    "value" => $request->organization
+                                ],
+                                [
+                                    "uri" => "http://wso2.org/claims/telephone",
+                                    "value" => $request->telephone
+                                ],
+                                [
+                                    "uri" => "http://wso2.org/claims/addresses",
+                                    "value" => $request->address
                                 ],
                             ],
                         ],

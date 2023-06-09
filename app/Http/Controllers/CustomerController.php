@@ -42,14 +42,15 @@ class CustomerController extends Controller
         
         } else {
 
-            if ($app_id == null || $app_id == 'All') {
+            if ($app_id == null && $app_id == 'All') {
          
                 $montlysummary = getUrlReports($this->url_report . '/report/monthly-summary?username='.$username.'&year='.$year.'&month='.$month);
             
+            }elseif ($api_id == 'All'){    
+                $montlysummary = getUrlReports($this->url_report . '/report/monthly-summary?applicationId='.$app_id.'&year='.$year.'&month='.$month.'&username='.$username);
             } else {
-    
                 $montlysummary = getUrlReports($this->url_report . '/report/monthly-summary?applicationId='.$app_id.'&apiId='.$api_id.'&year='.$year.'&month='.$month.'&username='.$username);
-            
+                
             }
             if ($montlysummary->status == 'success' ) {
             
@@ -75,7 +76,7 @@ class CustomerController extends Controller
         $api_id = $api;
         $username = session('username');
         $detail = getUrlReports($this->url_report . '/report/monthly-summary/details?username='.$username.'&applicationId='.$app_id.'&apiId='.$api_id);
-        $data  = $detail->data->content;
+        $data  = $detail->data->details->content;
 
         if (count($data) >= 1){
             $api  = $data[0]->apiName;
@@ -140,21 +141,35 @@ class CustomerController extends Controller
 
     public function customer_detail_logs_usage(Request $request){
 
+
         $resources = getUrlReports($this->url_report . '/report/resource-summary/details?username='.session('username').'&resource='.$request->resource.'&apiId='.$request->api_id );
         $data  = $resources->data->content;
         $resources = $request->resource;
         
         if(count($data) >= 1){
             $api_name = $data[0]->apiName;
+        }else{
+             $api_name = [];
         }
-
 
         return view('customer.usageresource.detailusage',compact('data','resources','api_name'));
     }
 
     public function customer_dashboard_page(){
 
-        return view('customer.dashboard.index');
+        $total_report = getUrlReports($this->url_report .'/dashboard/total-report?username='.session('name'));
+        $usage_api = getUrlReports($this->url_report .'/dashboard/api-usage?filter=year');
+        return view('customer.dashboard.index',compact('total_report'));
+    }
+
+    public function customer_payment_page(){
+
+        return view('customer.transaction.payment.index');
+    }
+
+    public function customer_payment_history_page(){
+
+        return view('customer.transaction.payment.payment_history');
     }
     
 }

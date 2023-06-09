@@ -11,15 +11,12 @@
                 <div class="card-body">
                     <div class="row justify-content-center p-3">
                         <div class="col-10">
-                            <div class="col-12">
-                                <h5>API-M ASABRI</h5>
-                            </div>
-                            <form class="row g-4" action="#" method="GET">
+                            <form class="row g-4" action="{{ route ('admin.monthly.report.summary.page') }}" method="GET">
                                 <div class="col-12 col-lg-6">
                                     <label for="year" class="form-label">Year</label>
                                     <select id="year" name="year" class="form-select" required>
                                         @foreach ($years->data as $item)
-                                            <option value="{{ $item->year }}">{{ $item->year }}</option>
+                                            <option value="{{ $item->year }}" {{ $year == $item->year ? 'selected':'' }}>{{ $item->year }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -29,15 +26,17 @@
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                    <label for="application" class="form-label">Customer</label>
-                                    <select id="application" name="application" class="form-select">
-                                        <option>All</option>
+                                    <label for="customer" class="form-label">Customer</label>
+                                    <select id="customer" name="customer" class="form-select">
+                                            <option value="All">All</option>
+                                        @foreach ($customers->data->content as $item)
+                                            <option value="{{ $item->organizationName }}" {{ $customer == $item->organizationName ? 'selected':'' }}>{{ $item->organizationName }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-12 col-lg-6">
                                     <label for="api_name" class="form-label">API Name</label>
                                     <select id="api_name" name="api_name" class="form-select">
-                                        <option>All</option>
                                     </select>
                                 </div>
                                 <div class="col-12 text-center">
@@ -62,7 +61,7 @@
                                             alt="Picture">
                                     </div>
                                     <div class="col-10">
-                                        <p class="text-summary">Total Customer: <span class="text-child-sumary text-primary">&nbsp;</span> </p>
+                                        <p class="text-summary">Total Customer: <span class="text-child-sumary text-primary">&nbsp;{{ $customercount ?? '0' }}</span> </p>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +73,7 @@
                                             alt="Picture">
                                     </div>
                                     <div class="col-10">
-                                        <p class="text-summary">Total APIs: <span class="text-child-sumary text-primary">&nbsp;</span> </p>
+                                        <p class="text-summary">Total APIs: <span class="text-child-sumary text-primary">&nbsp;{{ $total ?? '0' }}</span> </p>
                                     </div>
                                 </div>
                             </div>
@@ -86,15 +85,22 @@
                                             alt="Picture">
                                     </div>
                                     <div class="col-10">
-                                        <p class="text-summary">Request Count: <span class="text-child-sumary text-primary">&nbsp;</span> </p>
+                                        <p class="text-summary">Request Count: <span class="text-child-sumary text-primary">&nbsp;{{ $count ?? '0' }}</span> </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-3 col-lg-3 text-end">
-                                <button class="btn btn-primary mx-2 ">
+                                @if (empty($data))
+                                <a href="#" class="btn btn-primary mx-2 disabled">
                                     <i style="font-size:18px;" class='bx bx-download'></i>
                                     <span class="d-none d-md-inline ml-1">Download</span>
-                                </button>
+                                </a>
+                                @else
+                                <a href="{{ route ('admin.monthly.report.summary.pdf',['year'=>$year,'month'=>$month,'customer'=>$customer,'api_name'=>$api_name]) }}" class="btn btn-primary mx-2 {{ empty($data) ? 'disabled':'' }}">
+                                    <i style="font-size:18px;" class='bx bx-download'></i>
+                                    <span class="d-none d-md-inline ml-1">Download</span>
+                                </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -113,16 +119,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($data as $item)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-
+                                <td class="text-capitalize">{{ $item->organization }}</td>
+                                <td class="text-capitalize">{{ $item->apiName }}</td>
+                                <td class="text-capitalize">{{ $item->apiVersion }}</td>
+                                <td class="text-capitalize">{{ $item->applicationName }}</td>
+                                <td class="text-capitalize">{{ $item->applicationOwner }}</td>
+                                <td>{{ $item->requestCount }}</td>
+                                <td>
+                                    <a href="{{ route ('admin.detail.logs.report',['app'=>$item->applicationId,'api'=>$item->apiId,'month'=>$month,'year'=>$year]) }}" class="btn btn-primary btn-sm" >Details</a>
+                                </td>
+                            </tr>        
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -141,7 +150,7 @@
                     [10, 25, 50, 'All'],
                 ],
             });
-
+            getApiName($('#customer').val());
             getMonth($('#year').val());
         });
 
@@ -177,9 +186,45 @@
             });
         }
 
+        function  getApiName(params) {
+            let organization = params;
+            $.ajax({
+                type: "GET",
+                url: "{{ route('admin.api.name.report.summary') }}",
+                dataType: 'html',
+                data: {
+                    organization,
+                },
+                beforeSend: function() {
+                    $('#api_name').html('');
+                },
+                success: function(data) {
+                    let api_list = JSON.parse(data);
+                    api_list = api_list.data.data;
+                    let api = '';
+                    api += `<option value="All">All</option>`
+                    api_list.forEach(item => {
+                        api += `<option value='${item.apiUUID}'>${item.apiName}</option>`;  
+                    });
+                    $('#api_name').html(api);
+                },
+                complete: function() {
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                    $('#api_name').html(pesan);
+                },
+            });
+        }
+
         $(document).on('change', '#year', function(e) {
             e.preventDefault();
             getMonth($(this).val());
+        });
+
+        $(document).on('change', '#customer', function(e) {
+            e.preventDefault();
+            getApiName($(this).val());
         });
     </script>
 @endpush

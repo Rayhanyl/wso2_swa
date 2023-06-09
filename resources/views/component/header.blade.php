@@ -25,7 +25,7 @@
         <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light nav-box-shadow">
             <div class="container">
                 <a href="" class="navbar-brand">
-                    <img src="{{ asset ('assets/images/logo/asabri.png') }}" height="58" alt="Navbar Logo">
+                    <img src="{{ asset ('assets/images/logo/swamedia.png') }}" height="58" alt="Navbar Logo">
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
@@ -37,61 +37,66 @@
                             class="nav-item nav-link nav-font mx-2 reset-local-storage">Home</a>
                         @endif
                         @if (getToken())
-                        <a href="{{ route ('customer.dashboard.page') }}"
+                        @if (session('role') == 'admin')
+                        <a href="{{ route ('admin.dashboard.page') }}"
                             class="nav-item nav-link nav-font mx-2 reset-local-storage">Dashboard</a>
+                        @else
+                        <a href="{{ route ('customer.dashboard.page') }}"
+                        class="nav-item nav-link nav-font mx-2 reset-local-storage">Dashboard</a>
+                        @endif
                         <div class="dropdown">
-                            <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle"
-                            id="dropdownAppLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            App
+                            <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle" id="dropdownAppLink"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                App
                             </a>
                             <ul class="dropdown-menu" aria-describedby="dropdownAppLink">
                                 <li class="dropdown-item">
                                     <a href="{{ route ('application.page') }}"
-                                    class="nav-item nav-link nav-font mx-2 reset-local-storage">Application</a>
+                                        class="nav-item nav-link nav-font mx-2 reset-local-storage">Application</a>
                                 </li>
                                 <li class="dropdown-item">
                                     <a href="{{ route ('documentation.page') }}"
-                                    class="nav-item nav-link nav-font mx-2 reset-local-storage">Documentation</a>
+                                        class="nav-item nav-link nav-font mx-2 reset-local-storage">Documentation</a>
                                 </li>
                             </ul>
                         </div>
                         @if (getToken() && session('role') == 'admin')
                         <div class="dropdown">
-                            <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle"
-                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Summary
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                 <li><a class="dropdown-item"
-                                    href="{{ route ('admin.monthly.report.summary.page') }}">Report Admin</a></li>
+                                        href="{{ route ('admin.monthly.report.summary.page') }}">Report Admin</a></li>
                                 <li><a class="dropdown-item"
-                                        href="{{ route ('admin.api.resource.usage.summary.page') }}">Usage Admin</a></li>
-                                <li><a class="dropdown-item"
-                                        >Error Summary</a></li>
-                                <li><a class="dropdown-item"
-                                        >Backend API Usage</a></li>
+                                        href="{{ route ('admin.api.resource.usage.summary.page') }}">Usage Admin</a>
+                                </li>
+                                <li><a href="{{ route ('admin.error.summary.page') }}" class="dropdown-item">Error
+                                        Summary</a></li>
+                                <li><a href="{{ route ('admin.backend.api.usage.page') }}" class="dropdown-item">Backend
+                                        API Usage</a></li>
                             </ul>
                         </div>
                         <div class="dropdown">
                             <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle"
-                            id="dropdownTransactionLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Transaction
+                                id="dropdownTransactionLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Transaction
                             </a>
                             <ul class="dropdown-menu" aria-describedby="dropdownTransactionLink">
                                 <li class="dropdown-item">
-                                    <a
-                                    class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
+                                    <a class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
                                 </li>
                                 <li class="dropdown-item">
                                     <a href="{{ route ('admin.invoice.page') }}"
-                                    class="nav-item nav-link nav-font mx-2 reset-local-storage">Invoice</a>
+                                        class="nav-item nav-link nav-font mx-2 reset-local-storage">Invoice</a>
                                 </li>
                             </ul>
                         </div>
                         @else
                         <div class="dropdown">
-                            <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle"
-                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle" id="dropdownMenuLink"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Summary
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -103,12 +108,13 @@
                         </div>
                         <div class="dropdown">
                             <a class="nav-link nav-font mx-2 reset-local-storage dropdown-toggle"
-                            id="dropdownTransactionLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            Transaction
+                                id="dropdownTransactionLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                Transaction
                             </a>
                             <ul class="dropdown-menu" aria-describedby="dropdownTransactionLink">
                                 <li class="dropdown-item">
-                                    <a class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
+                                    <a href="{{ route ('customer.payment.page') }}"
+                                        class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
                                 </li>
                                 <li class="dropdown-item">
                                     <a class="nav-item nav-link nav-font mx-2 reset-local-storage">Invoice</a>

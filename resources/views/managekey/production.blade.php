@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="my-4">
-                <div class="font-head-subs">Managekeys</div>
+                <div class="font-head-subs">Manage keys</div>
                 <div class="font-appname-subs my-2">{{ $application->name }}</div>
             </div>
             <div class="col-12 my-3">
@@ -31,7 +31,7 @@
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="view" id="apikey-view" value="apikey-view">
-                    <label class="form-check-label" for="apikey-view">APIkey</label>
+                    <label class="form-check-label" for="apikey-view">API key</label>
                   </div>
             </div>
             <div class="production-oauth-page" id="production-oauth-page">

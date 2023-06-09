@@ -10,7 +10,7 @@
             <div class="page-login col-12 col-lg-5">
                 <div class="row">
                      <div class="col-12 fw-bold text-center fs-3 my-3">
-                        Welcome To ASABRI API !
+                        Welcome To SWAMEDIA API !
                      </div>
                      <div class="col-12 my-2">
                         <form class="row" action="{{ route ('authentication') }}"

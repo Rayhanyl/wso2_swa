@@ -1062,56 +1062,59 @@ hr.style-2 {
     height: 35px;
 }
 
-.inner-shadow{
+.inner-shadow {
     box-shadow: inset 0 0 10px #dfdfdf;
 }
 
-.font-list-subscription{
+.font-list-subscription {
     font-size: 24px;
     font-family: 'Poppins-medium';
     color: #000;
 }
-.api-list-link{
+
+.api-list-link {
     text-decoration: none;
     font-family: 'Poppins-medium';
     color: #000;
     font-size: 24px;
 }
-.api-list-link i{
+
+.api-list-link i {
     color: #000;
     font-size: 32px;
     vertical-align: sub;
 }
 
-.font-head-subs{
+.font-head-subs {
     font-size: 48px;
     font-family: 'Poppins-semibold';
 }
 
-.font-appname-subs{
+.font-appname-subs {
     font-size: 18px;
     font-family: 'Poppins-semibold';
     color: #FFA41C;
 }
-.table-orange{
+
+.table-orange {
     background-color: #ffffff;
     color: #000000;
 }
 
-.nav-managekey{
+.nav-managekey {
     display: block;
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);
     color: var(--bs-nav-link-color);
     text-decoration: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
     font-size: 32px;
     font-family: 'Poppins-bold';
     color: #FFA41C;
 }
 
-.nav-managekey.active{
+.nav-managekey.active {
     display: block;
     border-bottom: 4px solid;
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
@@ -1119,60 +1122,61 @@ hr.style-2 {
     font-weight: var(--bs-nav-link-font-weight);
     color: var(--bs-nav-link-color);
     text-decoration: none;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
     font-size: 32px;
     font-family: 'Poppins-bold';
 }
 
-.btn-add-subs{
+.btn-add-subs {
     font-size: 16px;
     font-family: 'Poppins-medium';
     text-decoration: none;
     color: #000;
 }
 
-.btn-icon-homepage i{
+.btn-icon-homepage i {
     vertical-align: middle;
     font-size: 20px;
 }
 
-.btn-icon-homepage{
+.btn-icon-homepage {
     background-color: #FFA41C !important;
     border-color: #FFA41C;
 }
 
-.btn-icon-homepage:hover{
+.btn-icon-homepage:hover {
     background-color: #f8f8f8 !important;
     border-color: #FFA41C;
     color: #000;
 }
 
-.configuration-list-menu a{
+.configuration-list-menu a {
     text-decoration: none;
     font-family: 'Poppins-medium';
     color: #FFA41C;
 }
 
-.configuration-list-menu a:hover{
+.configuration-list-menu a:hover {
     text-decoration: none;
     font-family: 'Poppins-medium';
     color: #003399;
 }
 
-.subs-status-icon i{
+.subs-status-icon i {
     vertical-align: middle;
 }
 
-.link-get-client-id{
+.link-get-client-id {
     text-decoration: none;
     color: #003399;
     font-weight: bold;
 }
-.link-get-client-id i{
+
+.link-get-client-id i {
     vertical-align: middle;
 }
 
-.description-api-homepage{
+.description-api-homepage {
     overflow: hidden;
     text-align: justify;
     text-overflow: ellipsis;
@@ -1182,16 +1186,17 @@ hr.style-2 {
     line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-.icon-position img{
+
+.icon-position img {
     vertical-align: middle;
 }
 
-.btn-icon-ip i{
+.btn-icon-ip i {
     vertical-align: middle;
     font-size: 22px;
 }
 
-.permithttp{
+.permithttp {
     font-size: 18px;
 }
 
@@ -1199,11 +1204,11 @@ hr.style-2 {
     text-decoration: none;
 }
 
-.deletehttp i{
+.deletehttp i {
     vertical-align: middle;
 }
 
-.permitip{
+.permitip {
     font-size: 18px;
 }
 
@@ -1211,11 +1216,11 @@ hr.style-2 {
     text-decoration: none;
 }
 
-.deleteaddress i{
+.deleteaddress i {
     vertical-align: middle;
 }
 
-.tryout-description{
+.tryout-description {
     overflow: hidden;
     text-align: justify;
     text-overflow: ellipsis;
@@ -1224,42 +1229,54 @@ hr.style-2 {
     line-clamp: 3;
     -webkit-box-orient: vertical;
 }
-.card-height-tryout{
+
+.card-height-tryout {
     min-height: 240px;
 }
-.bg-curl{
+
+.bg-curl {
     background-color: #eeebeb;
 }
 
-.copy-curl-icon{
+.copy-curl-icon {
     font-size: 32px;
 }
 
-.copy-curl-icon:hover{
+.copy-curl-icon:hover {
     color: #003399;
     font-size: 32px;
 }
 
-.text-summary{
+.text-summary {
     font-family: "Poppins-semibold";
     font-size: 18px;
 }
-.text-child-sumary{
+
+.text-child-sumary {
     font-size: 28px;
 }
-.img-summary{
-    width:  40px;
+
+.img-summary {
+    width: 40px;
     height: 40px;
 }
 
-.text-usage{
+.text-usage {
     font-family: "Poppins-semibold";
     font-size: 18px;
 }
-.text-child-usage{
+
+.text-child-usage {
     font-size: 28px;
 }
-.img-usage{
-    width:  40px;
+
+.img-usage {
+    width: 40px;
     height: 40px;
+}
+
+.card-legend-chart {
+    min-height: 150px;
+    max-height: 150px;
+    font-size: 13px;
 }

@@ -10,7 +10,7 @@
                         </div>
                         <div class="col-12 px-4 py-2">
                             <p class="footer-font-address">
-                                Gedung Kantor Pusat PT. ASABRI (Persero) <br>
+                                Gedung Kantor Pusat PT. SWAMEDIA (Persero) <br>
                                 Jl. Mayjen Sutoyo, No. 11      
                             </p>
                         </div>
@@ -68,7 +68,7 @@
                         Please contact us at
                         <br>
                         <a href="#" class="text-warning">
-                            helpdesk@apiasabri.id
+                            helpdesk@SWAMEDIA.id
                         </a>
                     </p>
                 </div>

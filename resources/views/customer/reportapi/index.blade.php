@@ -12,7 +12,7 @@
                     <div class="row justify-content-center p-3">
                         <div class="col-10">
                             <div class="col-12">
-                                <h5>API-M ASABRI</h5>
+                                <h5>API-M SWAMEDIA</h5>
                             </div>
                             <form class="row g-4" action="{{ route ('customer.monthly.report.summary.page') }}" method="GET">
                                 <div class="col-12 col-lg-6">

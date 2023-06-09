@@ -12,7 +12,7 @@
                     <div class="row justify-content-center p-3">
                         <div class="col-10">
                             <div class="col-12">
-                                <h5>API-M ASABRI</h5>
+                                <h5>API-M SWAMEDIA</h5>
                             </div>
                             <form class="row g-4" action="{{ route ('customer.api.resource.usage.summary.page') }}" method="GET">
                                 <div class="col-12 col-lg-6">
@@ -111,7 +111,7 @@
                                 <td>{{ $item->apiMethod }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
-                                    <a href="{{ route ('customer.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource }}" class="btn btn-primary btn-sm" >Details</a>
+                                    <a href="{{ route ('customer.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource}}" class="btn btn-primary btn-sm" >Details</a>
                                 </td>
                             </tr>
                             @empty
@@ -199,7 +199,6 @@
                 console.log(month_list);
                 month_list = month_list.data.data;
                 let month = '';
-                // month += `<option>All</option>`
                 month_list.forEach(item => {
                     month += `<option value='${item.monthNumber}'>${item.monthName}</option>`;  
                 });

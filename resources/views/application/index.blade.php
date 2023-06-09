@@ -109,7 +109,7 @@
             <div class="card rounded-4">
                 <div class="card-body">
                     <h3>Application list</h3>
-                    <p>Creating an Asabri application is easy and straightforward. So why wait? Join the Asabri revolution today and start building your application.</p>
+                    <p>Creating a Swamedia application is easy and straightforward. So why wait? Join the Swamedia revolution today and start building your application.</p>
                     <a href="{{ route ('create.application.page') }}" class="btn btn-primary rounded-4 add-icon-app">Create application</a>
                     <hr>
                     <div class="table-responsive">

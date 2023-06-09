@@ -10,7 +10,7 @@
                             This is
                         </div>
                         <div class="font-hero-title2">
-                            ASABRI
+                            SWAMEDIA
                         </div>
                     </div>
                     <div class="col-12 col-lg-8" data-aos="fade-left" data-aos-duration="1000">
@@ -41,9 +41,9 @@
                         <img class="w-100" src="{{ asset ('assets/images/aboutus/asabriapi.png') }}" alt="Picture Asabri API">
                     </div>
                     <div class="col-12 col-lg-6" data-aos="fade-down-left" data-aos-duration="1000"> 
-                        <p class="font-asabriapi-content1">ASABRI API</p>
+                        <p class="font-asabriapi-content1">SWAMEDIA API</p>
                         <p class="font-asabriapi-content2">
-                            Asabri API is your one-stop solution for all your financial needs. With our API, you can access a wide range of financial services, including payments, transfers, and more. Our API is designed to be easy to use, secure, and reliable, so you can focus on what you do best.
+                            SWAMEDIA API is your one-stop solution for all your financial needs. With our API, you can access a wide range of financial services, including payments, transfers, and more. Our API is designed to be easy to use, secure, and reliable, so you can focus on what you do best.
                         </p>
                     </div>
                 </div>

@@ -4,13 +4,12 @@
 <div class="container">
     <div class="row">
         <div class="col-12 my-5 text-center">
-            <h1>Invoice</h1>
-            <h3>Pemakaian API PT. ASABRI</h3>
+            <h1>Invoice Administrator</h1>
         </div>
         <div class="col-12 mb-5" style="min-height: 160px">
             <div class="card card-shadow-app rounded-4">
                 <div class="card-header text-end">
-                    <a class="btn btn-warning text-white fw-bold">Create Invoice</a>
+                    <a href="{{ route ('admin.create.invoice.page') }}" class="btn btn-warning text-white fw-bold">Create Invoice</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped" id="data-table-invoice-admin" style="width:100%">

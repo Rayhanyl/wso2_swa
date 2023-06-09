@@ -11,9 +11,6 @@
                 <div class="card-body">
                     <div class="row justify-content-center p-3">
                         <div class="col-10">
-                            <div class="col-12">
-                                <h5>API-M ASABRI</h5>
-                            </div>
                             <form class="row g-4" action="{{ route ('admin.api.resource.usage.summary.page') }}" method="GET">
                                 <div class="col-12 col-lg-6">
                                     <label for="year" class="form-label">Year</label>
@@ -82,10 +79,17 @@
                                 </div>
                             </div>
                             <div class="col-6 col-lg-6 text-end">
-                                <button class="btn btn-primary mx-2 ">
+                                @if (empty($data))
+                                <a href="#" class="btn btn-primary mx-2 disabled">
                                     <i style="font-size:18px;" class='bx bx-download'></i>
                                     <span class="d-none d-md-inline ml-1">Download</span>
-                                </button>
+                                </a>
+                                @else
+                                <a href="{{ route ('admin.api.resource.usage.summary.pdf',['year'=>$year,'month'=>$month,'resources'=>$resources,'api_id'=>$api_id]) }}" class="btn btn-primary mx-2 {{ empty($data) ? 'disabled':'' }}">
+                                    <i style="font-size:18px;" class='bx bx-download'></i>
+                                    <span class="d-none d-md-inline ml-1">Download</span>
+                                </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -111,7 +115,7 @@
                                 <td>{{ $item->apiMethod }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
-                                    <a href="{{ route ('admin.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource }}" class="btn btn-primary btn-sm" >Details</a>
+                                    <a href="{{ route ('admin.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource }}&year={{ $year }}&month={{ $month }}" class="btn btn-primary btn-sm" >Details</a>
                                 </td>
                             </tr>
                             @empty

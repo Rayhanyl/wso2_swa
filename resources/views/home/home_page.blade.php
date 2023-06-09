@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row p-5">
                 <div class="col-12 col-lg-6 p-5" data-aos="fade-right" data-aos-duration="1000">
-                    <p class="hero-head-font">Welcome to <strong class="hero-text">ASABRI</strong>  API !</p>
+                    <p class="hero-head-font">Welcome to <strong class="hero-text">SWAMEDIA</strong>  API !</p>
                     <p class="hero-description-font">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa excepturi vero eveniet. Esse cupiditate illo architecto ratione nemo quaerat adipisci.
                     </p>
@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="body-testimonial col-12" data-aos="fade-up" data-aos-duration="1000">
-                    <p class="testimonial-devider1-font">What ASABRI customer are saying</p>
+                    <p class="testimonial-devider1-font">What SWAMEDIA customer are saying</p>
                     <p class="testimonial-devider2-font">Explore our API gallery and find out how our API fit to your business case.</p>
                 </div>
                 <div class="col-12 my-5 py-3">

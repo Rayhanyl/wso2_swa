@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forget Password Page ASABRI</title>
+    <title>Forget Password Page SWAMEDIA</title>
 </head>
 <body>
     <table align="center" border="0" cellpadding="0" cellspacing="0" style="width:100%">

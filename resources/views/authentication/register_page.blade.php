@@ -35,10 +35,31 @@
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
+                          <div class="col-12 @error('organization') is-invalid @enderror">
+                            <label for="organization" class="form-label">Organization</label>
+                            <input type="text" class="form-control text-capitalize" id="organization" name="organization" placeholder="Masukan nama organisasi anda">
+                            @error('organization')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div>
                           <div class="col-12 @error('email') is-invalid @enderror">
                             <label for="email" class="form-label">Email</label>
                             <input type="text" class="form-control" id="email" name="email" placeholder="Masukan email anda">
                             @error('email')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div>
+                          <div class="col-12 @error('telephone') is-invalid @enderror">
+                            <label for="telephone" class="form-label">Telephone</label>
+                            <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Masukan nomer telephone anda">
+                            @error('telephone')
+                              <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                          </div>
+                          <div class="col-12 @error('address') is-invalid @enderror">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" name="address" id="address" cols="10" rows="5"></textarea>
+                            @error('address')
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
