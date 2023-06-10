@@ -34,6 +34,7 @@ class CustomerController extends Controller
         $month = $request->month;
         $username = session('username');
 
+
         if ($year == null && $month == null) {
 
             $total = 0;
@@ -42,7 +43,7 @@ class CustomerController extends Controller
         
         } else {
 
-            if ($app_id == null && $app_id == 'All') {
+            if ($app_id == 'All' && $api_id == 'All') {
          
                 $montlysummary = getUrlReports($this->url_report . '/report/monthly-summary?username='.$username.'&year='.$year.'&month='.$month);
             

@@ -3,6 +3,15 @@
 
 <div class="container">
     <div class="row">
+        @if ($years->data == [])
+        <div class="col-12 my-5 p-5" style="min-height:310px;">
+            <div class="card card-shadow-app rounded-4">
+                <div class="card-body">
+                    <h1>Data belum tersedia</h1>
+                </div>
+            </div>
+        </div>
+        @else
         <div class="col-12 my-5 text-center">
             <h1>Monthly Report Summary</h1>
         </div>
@@ -109,11 +118,11 @@
                     <table class="table table-striped" id="data-table-usage-admin" style="width:100%">
                         <thead class="table-orange">
                             <tr>
+                                <th>Application Owner</th>
                                 <th>Customer</th>
                                 <th>API Name</th>
                                 <th>Version</th>
                                 <th>Application Name</th>
-                                <th>Application Owner</th>
                                 <th>Request Count</th>
                                 <th>Logs</th>
                             </tr>
@@ -121,11 +130,11 @@
                         <tbody>
                             @foreach ($data as $item)
                             <tr>
+                                <td class="text-capitalize">{{ $item->applicationOwner }}</td>
                                 <td class="text-capitalize">{{ $item->organization }}</td>
                                 <td class="text-capitalize">{{ $item->apiName }}</td>
                                 <td class="text-capitalize">{{ $item->apiVersion }}</td>
                                 <td class="text-capitalize">{{ $item->applicationName }}</td>
-                                <td class="text-capitalize">{{ $item->applicationOwner }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
                                     <a href="{{ route ('admin.detail.logs.report',['app'=>$item->applicationId,'api'=>$item->apiId,'month'=>$month,'year'=>$year]) }}" class="btn btn-primary btn-sm" >Details</a>
@@ -137,6 +146,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
 

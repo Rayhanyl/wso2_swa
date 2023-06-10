@@ -111,6 +111,7 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/AdminInvoicePage', [AdminController::class, 'admin_invoice_page'])->name('admin.invoice.page');
     Route::get('/AdminCreateInvoicePage', [AdminController::class, 'admin_create_invoice_page'])->name('admin.create.invoice.page');
     Route::get('/AdminPaymentPage', [AdminController::class, 'admin_payment_page'])->name('admin.payment.page');
-
+    
+    Route::get('/ErrorPage', [AdminController::class, 'error_page'])->name('error.page');
 });
 

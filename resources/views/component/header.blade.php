@@ -25,7 +25,7 @@
         <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light nav-box-shadow">
             <div class="container">
                 <a href="" class="navbar-brand">
-                    <img src="{{ asset ('assets/images/logo/swamedia.png') }}" height="58" alt="Navbar Logo">
+                    <img src="{{ asset ('assets/images/logo/x10s.png') }}" height="58" alt="Navbar Logo">
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>

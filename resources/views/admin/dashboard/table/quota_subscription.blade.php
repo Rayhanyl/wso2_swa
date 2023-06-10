@@ -18,18 +18,30 @@
                 <tbody>
                     @foreach ($quota_subs->data->content as $item)
                     <tr>
-                        <td>Swamedia</td>
-                        <td>Pizzahack</td>
-                        <td>Period Monthly</td>
-                        <td>30 days</td>
+                        <td class="text-capitalize">{{ $item->organization ?? 'No organization' }} - ({{ $item->applicationOwner }})</td>
+                        <td class="text-capitalize">{{ $item->apiName }}</td>
+                        <td>
+                            @if ($item->typeSubscription == 'quota')
+                                Quota
+                            @else
+                                Time
+                            @endif
+                        </td>
+                        <td>
+                            @if ($item->typeSubscription == 'quota')
+                                {{ $item->quota }} Hit
+                            @else
+                                {{ $item->quota }} Days
+                            @endif
+                        </td>
                         <td>
                             @if ($item->typeSubscription == 'quota')
                             <div class="progress" dir="rtl">
-                                <div class="progress-bar bg-danger" role="progressbar" aria-label="Example with label" style="width: 50%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">50-</div>
+                                <div class="progress-bar {{ $item->remaining < 1 ? 'bg-danger':'bg-primary' }} fw-bold" role="progressbar" aria-label="Example with label" style="width: {{ $item->percentage }}%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{{ $item->remaining < 0 ? '0':$item->remaining }}</div>
                             </div>
                             @else
                             <div class="progress" dir="rtl">
-                                <div class="progress-bar bg-danger" role="progressbar" aria-label="Example with label" style="width: 50%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">50 Days</div>
+                                <div class="progress-bar {{ $item->remaining < 1 ? 'bg-danger':'bg-primary' }} fw-bold" dir="ltr" role="progressbar" aria-label="Example with label" style="width: {{ $item->percentage }}%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">{{ $item->remaining }} Days</div>
                             </div>
                             @endif
                         </td>

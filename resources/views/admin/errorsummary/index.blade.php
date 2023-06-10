@@ -57,6 +57,7 @@
                     <table class="table table-bordered table-striped" id="admin-data-table-error-summary" style="width:100%">
                         <thead class="table-orange">
                             <tr>
+                                <th rowspan="2" style="vertical-align:middle;">API Name</th>
                                 <th rowspan="2" style="vertical-align:middle;">Resource</th>
                                 <th colspan="5" style="text-align:center;">Response Code</th>
                                 <th rowspan="2" style="vertical-align:middle;">Total Request</th>
@@ -72,6 +73,7 @@
                         <tbody>
                             @foreach ($data as $item)
                             <tr>
+                                <td>{{ $item->apiName }}</td>
                                 <td>{{ $item->apiResourceTemplate }} &nbsp; [{{ $item->apiMethod }}]</td>
                                 <td>{{ round($item->count1xx) ?? '0' }}{{ $view_type == 'true' ? '%':'' }}</td>
                                 <td>{{ round($item->count2xx) ?? '0' }}{{ $view_type == 'true' ? '%':'' }}</td>

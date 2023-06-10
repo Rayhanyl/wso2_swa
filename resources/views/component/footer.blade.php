@@ -6,7 +6,7 @@
                 <div class="col-12 col-lg-4 bg-light text-dark rounded">
                     <div class="row">
                         <div class="col-12 px-4 text-start">
-                            <img class="img-footer" src="{{ asset ('assets/images/logo/asabri.png') }}" alt="Footer Logo">
+                            <img class="img-footer" src="{{ asset ('assets/images/logo/x10s.png') }}" alt="Footer Logo">
                         </div>
                         <div class="col-12 px-4 py-2">
                             <p class="footer-font-address">
@@ -67,7 +67,7 @@
                     <p class="footer-font-content">
                         Please contact us at
                         <br>
-                        <a href="#" class="text-warning">
+                        <a class="text-warning">
                             helpdesk@SWAMEDIA.id
                         </a>
                     </p>
@@ -81,7 +81,8 @@
 <script src="https://unpkg.com/swagger-ui-dist@4.5.0/swagger-ui-bundle.js" crossorigin></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.js"></script>
-<script src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+<script src="{{ asset ('assets/js/datatables.min.js') }}"></script>
+{{-- <script src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>

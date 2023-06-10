@@ -3,6 +3,15 @@
 
 <div class="container">
     <div class="row">
+        @if ($years->data == [])
+        <div class="col-12 my-5 p-5" style="min-height:310px;">
+            <div class="card card-shadow-app rounded-4">
+                <div class="card-body">
+                    <h1>Data belum tersedia</h1>
+                </div>
+            </div>
+        </div>
+        @else
         <div class="col-12 my-5 text-center">
             <h1>API Resource Usage Summary</h1>
         </div>
@@ -133,6 +142,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
 

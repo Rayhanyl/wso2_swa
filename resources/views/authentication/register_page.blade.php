@@ -28,14 +28,14 @@
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                          <div class="col-12 @error('userlogin') is-invalid @enderror">
+                          <div class="col-6 @error('userlogin') is-invalid @enderror">
                             <label for="userlogin" class="form-label">Username</label>
                             <input type="text" class="form-control" id="userlogin" name="userlogin" placeholder="Masukan username anda">
                             @error('userlogin')
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                          <div class="col-12 @error('organization') is-invalid @enderror">
+                          <div class="col-6 @error('organization') is-invalid @enderror">
                             <label for="organization" class="form-label">Organization</label>
                             <input type="text" class="form-control text-capitalize" id="organization" name="organization" placeholder="Masukan nama organisasi anda">
                             @error('organization')
