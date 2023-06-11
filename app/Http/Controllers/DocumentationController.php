@@ -8,13 +8,11 @@ use Illuminate\Support\Facades\Redis;
 class DocumentationController extends Controller
 {
 
-    public function __construct()
-    {   
+    public function __construct(){   
         $this->url_api = getUrlApi();
     }
 
     public function documentationPage (){
-
         return view('documentation.index');
     }
 

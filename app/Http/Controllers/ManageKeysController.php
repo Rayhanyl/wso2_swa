@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\Validator;
 class ManageKeysController extends Controller
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->url = getUrlApi();
     }
 
-    private function getUrlToken ()
-    {
+    private function getUrlToken (){
         $token = session('idtoken');
         $tokenParts = explode(".", $token);  
         $tokenHeader = base64_decode($tokenParts[0]);
@@ -140,16 +138,17 @@ class ManageKeysController extends Controller
 
             if ($response->status() == '409') {
 
-                Alert::warning('Warning', 'Error 409!');
+                Alert::toast('Error 409!', 'warning');
+                // Alert::warning('Warning', 'Error 409!');
                 return back()->with('warning', 'Error 409!');
             }
             if ($response->status() == ('200' || '201')) {
-
-                Alert::success('Success', 'Berhasil generate oauthkey !');
+                Alert::toast('Successfully generated oauthkey !', 'success');
+                // Alert::success('Success', 'Berhasil generate oauthkey !');
                 return back()->with('success', 'Successful Generate OauthKeys!');
             }
-
-            Alert::warning('Warning', 'Somthing Wrong With Data!');
+            Alert::toast('Somthing Wrong With Data!', 'danger');
+            // Alert::warning('Warning', 'Somthing Wrong With Data!');
             return back()->with('warning', 'Somthing Wrong With Data!');
             
         } catch (\Exception $e) {
@@ -190,12 +189,12 @@ class ManageKeysController extends Controller
             $data =json_decode($response->getBody()->getContents());
 
             if ($response->status() == ('200' || '201')) {
-
-                Alert::success('Success', 'Berhasil update oauthkey !');
+                Alert::toast('Successful Update OauthKeys!', 'success');
+                // Alert::success('Success', 'Berhasil update oauthkey !');
                 return back()->with('success', 'Successful Update OauthKeys!');
             }
-
-            Alert::warning('Warning', 'Somthing Wrong With Data!');
+            Alert::toast('Somthing Wrong With Data!', 'danger');
+            // Alert::warning('Warning', 'Somthing Wrong With Data!');
             return back()->with('warning', 'Somthing Wrong With Data!');
 
         } catch (\Exception $e) {
@@ -237,7 +236,8 @@ class ManageKeysController extends Controller
             if($response->status() == ('200' || '201') ){
                 return response()->json(['status' => 'success', 'data' => $data]);
             }
-                Alert::warning('Warning', 'Somthing Wrong With Data!');
+                Alert::toast('Somthing Wrong With Data!', 'danger');
+                // Alert::warning('Warning', 'Somthing Wrong With Data!');
                 return back()->with('warning', 'Somthing Wrong With Data!');
 
         } catch (\Exception $e) {
@@ -275,14 +275,15 @@ class ManageKeysController extends Controller
 
             if ($response->status() == '409') {
 
-                Alert::warning('Warning', 'Error 409!');
+                Alert::toast('Error 409!', 'danger');
+                // Alert::warning('Warning', 'Error 409!');
                 return back()->with('warning', 'Error 409!');
             }
             if ($response->status() == ('200' || '201')) {
                 return response()->json(['status' => 'success', 'data' => $data]);
             }
-
-            Alert::warning('Warning', 'Somthing Wrong With Data!');
+            Alert::toast('Somthing Wrong With Data!', 'danger');
+            // Alert::warning('Warning', 'Somthing Wrong With Data!');
             return back()->with('warning', 'Somthing Wrong With Data!');
         } catch (\Exception $e) {
             dd($e);

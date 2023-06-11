@@ -10,18 +10,17 @@ use Illuminate\Support\Facades\Http;
 
 class SendMailController extends Controller
 {
-    public function __construct()
-    {
+    
+    public function __construct(){
         $this->url = getUrlEmail();
     }
 
-    public function sendmail(Request $request)
-    {
+    public function sendmail(Request $request){
         $username = base64_encode($request->username);
         $userinfo =  getUrlEmails($this->url .'/pi-info/'. $username);
         if ($userinfo == null) {
-
-            Alert::warning('Warning', 'Username tidak ditemukan !');
+            Alert::toast('Username not found!', 'warning');
+            // Alert::warning('Warning', 'Username tidak ditemukan !');
             return back()->with('warning', 'User tidak ada');
         }
         
@@ -55,7 +54,8 @@ class SendMailController extends Controller
         ];
 
         Mail::to($user['http://wso2.org/claims/emailaddress'])->send(new Email($mailData));
-        Alert::success('Success', 'Silahkan cek email anda');
+        Alert::toast('Please check your e-mail', 'success');
+        // Alert::success('Success', 'Silahkan cek email anda');
         return redirect(route ('login.page'))->with('success', 'Berhasil mengirim email');
     }
 }

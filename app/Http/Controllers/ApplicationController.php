@@ -10,8 +10,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ApplicationController extends Controller
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->url = getUrlApi();
     }
 
@@ -57,8 +56,7 @@ class ApplicationController extends Controller
         return view('application.create_app', compact('sharedquota'));
     }
 
-    public function store_application(Request $request)
-    {   
+    public function store_application(Request $request){   
         $validator = Validator::make($request->all(), [
             'appname'           => 'required',
             'shared'            => 'required',
@@ -70,7 +68,8 @@ class ApplicationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            Alert::warning('Warning', 'Kolom harus terisi semua');
+            Alert::toast('All fields must be filled in', 'warning');
+            // Alert::warning('Warning', 'Kolom harus terisi semua');
             return redirect()->back()->withErrors($validator)->withInput()->with('warning', 'Field not complete!');
         }else{
             
@@ -96,10 +95,12 @@ class ApplicationController extends Controller
                 $data =json_decode($response->getBody()->getContents());   
 
                 if ($response->status() == '409') {
-                    Alert::warning('Warning', 'Application alredy exist with name '.$request->appname);
+                    Alert::toast('Application alredy exists with name '.$request->appname, 'warning');
+                    // Alert::warning('Warning', 'Application alredy exist with name '.$request->appname);
                     return redirect()->back();
                 } else {
-                    Alert::success('Success', 'Berhasil membuat aplikasi, tunggu admin untuk approved');
+                    Alert::toast('Successfully made the application, wait for the admin to be approved', 'success');
+                    // Alert::success('Success', 'Successfully made the application, wait for the admin to be approved');
                     return redirect(route('application.page'));
                 }
                 
@@ -111,8 +112,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function edit_application(Request $request, $id)
-    {
+    public function edit_application(Request $request, $id){
         if (session('token') == null) {
             session()->forget('token');
             return redirect(route('login.page'));
@@ -124,8 +124,7 @@ class ApplicationController extends Controller
         return view('application.edit_app', compact('application','options'));
     }
 
-    public function update_application(Request $request, $id)
-    {
+    public function update_application(Request $request, $id){
 
         $validator = Validator::make($request->all(), [
             'shared'            => 'required',
@@ -133,7 +132,8 @@ class ApplicationController extends Controller
         ]);
 
         if ($validator->fails()) {
-            Alert::warning('Warning', 'Isi kolom sesuai dengan ketentuan');
+            Alert::toast('Fill in the fields according to the conditions', 'warning');
+            // Alert::warning('Warning', 'Isi kolom sesuai dengan ketentuan');
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
 
@@ -156,8 +156,9 @@ class ApplicationController extends Controller
                 ->put($this->url.'/applications/'. $id);
         
                 $data =json_decode($response->getBody()->getContents());
-
-                Alert::success('Success', 'Berhasil memperbaharui data');
+                
+                Alert::toast('Successfully updated application data', 'success');
+                // Alert::success('Success', 'Berhasil memperbaharui data');
                 return redirect(route('application.page'));
 
             } catch (\Exception $e) {
@@ -167,8 +168,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function delete_application(Request $request, $id)
-    {
+    public function delete_application(Request $request, $id){
         try {
 
             $response = Http::withOptions(['verify' => false])
@@ -181,17 +181,17 @@ class ApplicationController extends Controller
     
             if($response->status() == 200)
             {
-
-                Alert::success('Success', 'Berhasil menghapus aplikasi');
+                Alert::toast('Successfully removed the app', 'success');
+                // Alert::success('Success', 'Berhasil menghapus aplikasi');
                 return back()->with('success', 'Successful Delete Application!');
             } 
 
-            Alert::danger('Danger', 'Gagal menghapus aplikasi');
+            Alert::toast('Failed to remove the app', 'danger');
+            // Alert::danger('Danger', 'Gagal menghapus aplikasi');
             return back()->with('error', 'Failed Delete Application');
         } catch (\Exception $e) {
             dd($e);
         }
     }
     
-
 }

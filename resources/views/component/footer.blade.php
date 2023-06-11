@@ -3,29 +3,8 @@
     <div class="container">
         <div class="footer p-4">
             <div class="row">
-                <div class="col-12 col-lg-4 bg-light text-dark rounded">
-                    <div class="row">
-                        <div class="col-12 px-4 text-start">
-                            <img class="img-footer" src="{{ asset ('assets/images/logo/x10s.png') }}" alt="Footer Logo">
-                        </div>
-                        <div class="col-12 px-4 py-2">
-                            <p class="footer-font-address">
-                                Gedung Kantor Pusat PT. SWAMEDIA (Persero) <br>
-                                Jl. Mayjen Sutoyo, No. 11      
-                            </p>
-                        </div>
-                        <div class="col-6 col-lg-5 px-4">
-                            <p class="footer-font-number">
-                                <i class='bx bxs-phone'></i> (021) 8094140
-                            </p>
-                        </div>
-                        <div class="col-6 col-lg-7 px-4 text-start">
-                            <p class="footer-font-number">
-                                <i class='bx bx-support'></i> 150043
-                            </p>
-                        </div>
-                    </div>
-                    
+                <div class="col-12 col-lg-4">
+
                 </div>
                 <div class="col-6 col-sm-3 col-lg-2">
                     <p class="footer-font-head">

@@ -45,8 +45,8 @@ class AuthenticationController extends Controller
             $user = (array) $userinfo->basic;
         }else{
 
-            Alert::warning('Warning', 'Username tidak ada');
-            return redirect()->back()->with('warning', 'Username tidak ada');
+            Alert::warning('Warning', 'Username doesnt exist');
+            return redirect()->back()->with('warning', 'Username doesnt exist');
         }
          
         $validator = Validator::make($request->all(), [
@@ -89,16 +89,15 @@ class AuthenticationController extends Controller
                     $request->session()->put('email', $user['http://wso2.org/claims/emailaddress']);
                     $request->session()->put('username', $user['http://wso2.org/claims/username']);
 
-                    Alert::success('Success', 'User berhasil login');
+                    Alert::toast('Successful login', 'success');
                     return redirect(route('application.page'))->with('success', 'Successful User Login!');
                 }
 
-                Alert::warning('Warning', 'Password anda salah !');
+                Alert::warning('Warning', 'Your password is wrong!');
                 return redirect()->back()->with('warning', 'Wrong Password');
         }
-    }
+    } 
 
-    
     public function register(Request $request){
         $validator = Validator::make($request->all(), [
 
@@ -185,8 +184,8 @@ class AuthenticationController extends Controller
                     Alert::warning('Warning', $data->description);
                     return back()->with('warning', $data->description);
                 } else {
-                    
-                    Alert::success('Membuat akun', 'Berhasil membuat akun');
+                    Alert::toast('Account created successfully', 'success');
+                    // Alert::success('Membuat akun', 'Account created successfully');
                     return redirect(route('login.page'))->with('success', 'Successful User Registration!');
                 }
 
@@ -201,8 +200,7 @@ class AuthenticationController extends Controller
 
     }
 
-    public function newpassword(Request $request)
-    {
+    public function newpassword(Request $request){
         $payloads = [
             'code' => $request->confirmation,
             'step' => '',
@@ -228,8 +226,7 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function resetpassword(Request $request)
-    {
+    public function resetpassword(Request $request){
         $validator = Validator::make($request->all(), [
 
             'password'    => 'required|confirmed|min:6',
@@ -268,8 +265,7 @@ class AuthenticationController extends Controller
         }
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request){
         $request->session()->forget('token');
         return redirect(route('home.page'));
     }

@@ -40,7 +40,7 @@
                                                     <img width="50" height="50" src="{{ asset ('assets/images/application/icon-create.png') }}" alt="">
                                                 </div>
                                                 <div class="col-8 text-center">
-                                                    <div class="fw-bold" style="font-size: 14px;">
+                                                    <div class="fw-bold" style="font-size: 13px;">
                                                         Application Created
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
@@ -59,7 +59,7 @@
                                                     <img width="50" height="50" src="{{ asset ('assets/images/application/icon-approved.png') }}" alt="">
                                                 </div>
                                                 <div class="col-8 text-center">
-                                                    <div class="fw-bold" style="font-size: 14px;">
+                                                    <div class="fw-bold" style="font-size: 12px;">
                                                         Application Approved
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
@@ -78,7 +78,7 @@
                                                     <img width="50" height="50" src="{{ asset ('assets/images/application/icon-rejected.png') }}" alt="">
                                                 </div>
                                                 <div class="col-8 text-center">
-                                                    <div class="fw-bold" style="font-size: 14px;">
+                                                    <div class="fw-bold" style="font-size: 13px;">
                                                         Application Rejected
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
@@ -109,7 +109,7 @@
             <div class="card rounded-4">
                 <div class="card-body">
                     <h3>Application list</h3>
-                    <p>Creating a Swamedia application is easy and straightforward. So why wait? Join the Swamedia revolution today and start building your application.</p>
+                    <p>Creating a application is easy and straightforward. So why wait? Join the revolution today and start building your application.</p>
                     <a href="{{ route ('create.application.page') }}" class="btn btn-primary rounded-4 add-icon-app">Create application</a>
                     <hr>
                     <div class="table-responsive">

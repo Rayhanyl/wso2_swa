@@ -7,8 +7,7 @@ use Illuminate\Support\Facades\Http;
 class HomepageController extends Controller
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         $this->url = getUrlApi();
     }
 
@@ -20,9 +19,7 @@ class HomepageController extends Controller
         return view('home.home_page', compact('listapi'));
     }
 
-    
-    public function loadimgapi(Request $request)
-    {
+    public function loadimgapi(Request $request){
         $response = Http::withOptions(['verify' => false])
         ->withHeaders([
             'Accept' => '*/*',

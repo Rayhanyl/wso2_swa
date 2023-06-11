@@ -23,8 +23,7 @@ class ConfigurationController extends Controller
         return view('configuration.faq.create');
     }
 
-    public function faqs_store(Request $request)
-    {
+    public function faqs_store(Request $request){
         $faqs = json_decode(Storage::get($this->json_file), true);
         $faq = [
             'id' => count($faqs) + 1,

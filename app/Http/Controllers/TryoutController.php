@@ -8,13 +8,12 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class TryoutController extends Controller
 {
-    public function __construct()
-    {
+
+    public function __construct(){
         $this->url = getUrlApi();
     }
 
-    private function getUrlToken ()
-    {
+    private function getUrlToken (){
         $token = session('idtoken');
         $tokenParts = explode(".", $token);  
         $tokenHeader = base64_decode($tokenParts[0]);
@@ -85,8 +84,7 @@ class TryoutController extends Controller
         return $swagger;
     }
 
-    public function sandbox_form(Request $request)
-    {
+    public function sandbox_form(Request $request){
         if($request->ajax()){
 
             $url = $this->getUrlToken();
@@ -125,8 +123,8 @@ class TryoutController extends Controller
         }
         return abort(404);
     }
-    public function production_form(Request $request)
-    {
+
+    public function production_form(Request $request){
         if($request->ajax()){
 
             $url = $this->getUrlToken();

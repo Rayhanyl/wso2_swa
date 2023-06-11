@@ -8,8 +8,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class SubscriptionController extends Controller
 {
-    public function __construct()
-    {
+
+    public function __construct(){
         $this->url = getUrlApi();
     }
 
@@ -28,7 +28,6 @@ class SubscriptionController extends Controller
         }
 
         $subscription = getUrl($this->url .'/subscriptions?applicationId='. $id);
-
         $approved = collect($subscription->list)->where('status','UNBLOCKED')->all();
         $approved_count = count($approved);
         $rejected = collect($subscription->list)->where('status','REJECTED')->all();
@@ -39,8 +38,7 @@ class SubscriptionController extends Controller
         return view('subscription.index', compact('application','subscription','approved_count','rejected_count','created_count'));
     }
 
-    // public function create_subscription_page(Request $request, $id)
-    // {        
+    // public function create_subscription_page(Request $request, $id){        
     //     $application = getUrl($this->url .'/applications/'. $id);
 
     //     if ($application->applicationId == null) {
@@ -63,8 +61,7 @@ class SubscriptionController extends Controller
     //     return view('subscription.create_subscription', compact('application','notsubscription'));
     // }
 
-    public function add_subscription(Request $request)
-    {
+    public function add_subscription(Request $request){
         if($request->ajax()){
 
             $application = getUrl($this->url .'/applications/'. $request->id_app);
@@ -91,8 +88,7 @@ class SubscriptionController extends Controller
         return abort(404);
     }
 
-    public function store_subscription(Request $request)
-    {
+    public function store_subscription(Request $request){
         $validator = Validator::make($request->all(), [
             'applicationid'      => 'required',
             'apiid'              => 'required',
@@ -129,8 +125,7 @@ class SubscriptionController extends Controller
         }
     }
 
-    public function edit_subscription(Request $request)
-    {
+    public function edit_subscription(Request $request){
         if($request->ajax()){
 
             $subs = getUrl($this->url .'/subscriptions/'. $request->id_subs);
@@ -139,8 +134,7 @@ class SubscriptionController extends Controller
         return abort(404);
     }
 
-    public function update_subscription(Request $request)
-    {
+    public function update_subscription(Request $request){
         try {
 
             $payloads = [
@@ -159,8 +153,9 @@ class SubscriptionController extends Controller
             ->put($this->url. '/subscriptions/'. $request->subsid);
 
             $data =json_decode($response->getBody()->getContents());
-
-            Alert::success('Success', 'Berhasil memperbaharui subscribe API');
+            
+            Alert::toast('Successfully updated subscribe API', 'success');
+            // Alert::success('Success', 'Berhasil memperbaharui subscribe API');
             return redirect()->route('subscription.page', $request->appid);
             
         } catch (\Exception $e) {
@@ -168,8 +163,7 @@ class SubscriptionController extends Controller
         }
     }
 
-    public function delete_subscription(Request $request, $id)
-    {
+    public function delete_subscription(Request $request, $id){
         try {
 
             $response = Http::withOptions(['verify' => false])
@@ -182,11 +176,13 @@ class SubscriptionController extends Controller
     
             if($response->status() == 200)
             {   
-                Alert::success('Success', 'Berhasil menghapus subscription');
+                Alert::success('Successfully deleted subscription', 'success');
+                // Alert::success('Success', 'Berhasil menghapus subscription');
                 return back()->with('success', 'Successful Delete Subscription!');
             } 
 
-            Alert::danger('Danger', 'Gagal menghapus subscription');
+            Alert::toast('Failed to delete subscription', 'danger');
+            // Alert::danger('Danger', 'Gagal menghapus subscription');
             return back()->with('error', 'Failed Delete Subscription');
         } catch (\Exception $e) {
             dd($e);
