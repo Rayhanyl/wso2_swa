@@ -654,11 +654,12 @@ hr.style-2 {
     .footer-font-address {
         text-align: justify;
         font-family: "Poppins-Medium";
+        font-size:12px;
     }
 
     .footer-font-number {
         font-family: "Poppins-Medium";
-        font-size: 14px;
+        font-size: 10px;
     }
 
     .hero-text {

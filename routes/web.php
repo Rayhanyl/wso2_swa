@@ -79,12 +79,16 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/Logout', [AuthenticationController::class, 'logout'])->name('logout');  
 
     Route::get('/CustomerMonthlyReportSummary', [CustomerController::class, 'customer_monthly_report_summary_page'])->name('customer.monthly.report.summary.page');
+    Route::get('/CustomerDownloadPDFReportSummary', [CustomerController::class, 'customer_monthly_report_summary_pdf'])->name('customer.monthly.report.summary.pdf');
     Route::get('/CustomerReportResultApi', [CustomerController::class, 'customer_result_api_summary_report'])->name('customer.result.api.summary.report');
-    Route::get('/CustomerReportDetail/{app}/{api}', [CustomerController::class, 'customer_detail_logs_report'])->name('customer.detail.logs.report');
+    Route::get('/CustomerReportDetail/{app}/{api}/{year}/{month}', [CustomerController::class, 'customer_detail_logs_report'])->name('customer.detail.logs.report');
+    Route::get('/CustomerDpwnloadPDFReportDetail', [CustomerController::class, 'customer_detail_logs_report_pdf'])->name('customer.detail.logs.report.pdf');
     Route::get('/CustomerApiResourceUsageSummary', [CustomerController::class, 'customer_api_resource_usage_summary_page'])->name('customer.api.resource.usage.summary.page');
+    Route::get('/CustomerDownloadPDFApiResourceUsageSummary/{year}/{month}/{resources}/{api_id}', [CustomerController::class, 'customer_api_resource_usage_summary_pdf'])->name('customer.api.resource.usage.summary.pdf');
     Route::get('/CustomerUsageResultResource', [CustomerController::class, 'customer_result_resource_summary_usage'])->name('customer.result.resource.summary.usage');
     Route::get('/CustomerUsageResultMonth', [CustomerController::class, 'customer_result_month_summary_usage'])->name('customer.result.month.summary.usage');
     Route::get('/CustomerUsageDetail', [CustomerController::class, 'customer_detail_logs_usage'])->name('customer.detail.logs.usage');
+    Route::get('/CustomerDownloadPDFUsageDetail', [CustomerController::class, 'customer_detail_logs_usage_pdf'])->name('customer.details.logs.pdf');
     Route::get('/CustomerDashboard', [CustomerController::class, 'customer_dashboard_page'])->name('customer.dashboard.page');
     Route::get('/CustomerPaymentPage', [CustomerController::class, 'customer_payment_page'])->name('customer.payment.page');
     Route::get('/CustomerPaymentHistoryPage', [CustomerController::class, 'customer_payment_history_page'])->name('customer.payment.history.page');

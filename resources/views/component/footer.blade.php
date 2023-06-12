@@ -3,8 +3,21 @@
     <div class="container">
         <div class="footer p-4">
             <div class="row">
-                <div class="col-12 col-lg-4">
-
+                <div class="col-12 col-lg-4 bg-light text-dark rounded">
+                    <div class="row">
+                        <div class="col-12">
+                            <img style="height:70px;width:85px;" src="{{ asset ('assets/images/logo/x10s.png') }}" alt="Footer Logo">
+                        </div>
+                        <div class="col-12 footer-font-address my-2">
+                            Jl. Sido Mulyo No.29, Sukaluyu, Kec. Cibeunying Kaler, Kota Bandung, Jawa Barat 40123.
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <i class='bx bxs-phone'></i> (021) 8094140
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <i class='bx bx-support'></i> 150043
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6 col-sm-3 col-lg-2">
                     <p class="footer-font-head">

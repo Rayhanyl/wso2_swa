@@ -33,7 +33,7 @@
                                     <select id="application" name="application" class="form-select">
                                         <option>All</option>
                                         @foreach ($application->list as $items)
-                                        <option value="{{ $items->applicationId }}">{{$items->name}}</option>
+                                        <option value="{{ $items->applicationId }}" {{ $app_id == $items->applicationId ? 'selected':'' }}>{{$items->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -82,10 +82,17 @@
                                 </div>
                             </div>
                             <div class="col-6 col-lg-6 text-end">
-                                <button class="btn btn-primary mx-2 ">
+                                @if (empty($data))
+                                <a href="#" class="btn btn-primary mx-2 disabled">
                                     <i style="font-size:18px;" class='bx bx-download'></i>
                                     <span class="d-none d-md-inline ml-1">Download</span>
-                                </button>
+                                </a>
+                                @else
+                                <a href="{{ route ('customer.monthly.report.summary.pdf')}}?year={{ $year }}&month={{ $month }}&api={{ $api_id }}&app={{ $app_id }}" class="btn btn-primary mx-2 {{ empty($data) ? 'disabled':'' }}">
+                                    <i style="font-size:18px;" class='bx bx-download'></i>
+                                    <span class="d-none d-md-inline ml-1">Download</span>
+                                </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -111,7 +118,7 @@
                                 <td>{{ $item->applicationOwner }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
-                                    <a href="{{ route ('customer.detail.logs.report',['app'=>$item->applicationId,'api'=>$item->apiId]) }}" class="btn btn-primary btn-sm" >Details</a>
+                                    <a href="{{ route ('customer.detail.logs.report',['app'=>$item->applicationId,'api'=>$item->apiId,'year'=>$year,'month'=>$month]) }}" class="btn btn-primary btn-sm" >Details</a>
                                 </td>
                             </tr>
                             @empty
@@ -124,7 +131,6 @@
                                 <td></td>
                             </tr>
                             @endforelse
-
                         </tbody>
                     </table>
                 </div>
@@ -135,6 +141,7 @@
 
 @push('script')
 <script>
+
     $(document).ready(function () {
         $('#data-table-usage-customer').DataTable({
             responsive: true,
@@ -143,10 +150,8 @@
                 [10, 25, 50, 'All'],
             ],
         });
-
         getMonth($('#year').val());
     });
-
     
     $(document).on('change', '#application', function(e) {
         e.preventDefault();
@@ -167,7 +172,7 @@
                 let apis = '';
                 apis += `<option>All</option>`
                 api_list.forEach(item => {
-                    apis += `<option value='${item.apiId}'>${item.apiInfo.name}</option>`;  
+                    apis += `<option value='${item.apiId}' ${select}>${item.apiInfo.name}</option>`;  
                 });
                 $('#api_name').html(apis);
 
@@ -195,12 +200,12 @@
             },
             success: function(data) {
                 let month_list = JSON.parse(data);
-                console.log(month_list);
                 month_list = month_list.data.data;
                 let month = '';
-                // month += `<option>All</option>`
+                const months = {{ $month ?? 1 }};
                 month_list.forEach(item => {
-                    month += `<option value='${item.monthNumber}'>${item.monthName}</option>`;  
+                    const select = months == item.monthNumber ? 'selected':'' ;
+                    month += `<option value='${item.monthNumber}' ${select}>${item.monthName}</option>`;  
                 });
                 $('#month-usage').html(month);
             },

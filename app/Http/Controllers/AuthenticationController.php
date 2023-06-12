@@ -32,21 +32,20 @@ class AuthenticationController extends Controller
 
         $username = base64_encode($request->username);
         $userinfo =  getUrlEmails($this->url_email .'/pi-info/'. $username);
-        $data = collect($userinfo->basic);
 
+        if ($userinfo != null) {
+            $user = (array) $userinfo->basic;
+        }else{
+            Alert::toast('Username doesnt exist', 'warning');
+            return redirect()->back()->with('warning', 'Username doesnt exist');
+        }
+
+        $data = collect($userinfo->basic);
         $exploded = explode(',', $data['http://wso2.org/claims/role']);
         if (in_array('Internal/admin',$exploded)) {
             $role = 'admin';
         }else{
             $role = 'customer';
-        }
-        
-        if ($userinfo != null) {
-            $user = (array) $userinfo->basic;
-        }else{
-
-            Alert::warning('Warning', 'Username doesnt exist');
-            return redirect()->back()->with('warning', 'Username doesnt exist');
         }
          
         $validator = Validator::make($request->all(), [
@@ -80,7 +79,7 @@ class AuthenticationController extends Controller
 
                 $data = json_decode($response->getBody()->getContents());
                 if ($response->status() == 200)
-                {
+                {   
                     $request->session()->put('token', $data->access_token);
                     $request->session()->put('idtoken', $data->id_token);
                     $request->session()->put('role', $role);
@@ -88,12 +87,12 @@ class AuthenticationController extends Controller
                     $request->session()->put('lastname', $user['http://wso2.org/claims/lastname']);
                     $request->session()->put('email', $user['http://wso2.org/claims/emailaddress']);
                     $request->session()->put('username', $user['http://wso2.org/claims/username']);
-
                     Alert::toast('Successful login', 'success');
                     return redirect(route('application.page'))->with('success', 'Successful User Login!');
                 }
 
-                Alert::warning('Warning', 'Your password is wrong!');
+                Alert::toast('Your password is wrong!','warning');
+                // Alert::warning('Warning', 'Your password is wrong!');
                 return redirect()->back()->with('warning', 'Wrong Password');
         }
     } 

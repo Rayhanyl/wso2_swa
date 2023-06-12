@@ -33,7 +33,7 @@
                                     <select id="api-usage-resource" name="api" class="form-select">
                                         <option value="All">All</option>
                                         @foreach ($api->data as $items)
-                                        <option value="{{ $items->apiId }}" {{ $api_id == $items->apiId ? 'selected':'' }}>{{$items->apiName}}</option>
+                                        <option value="{{ $items->apiUUID }}" {{ $api_id == $items->apiUUID ? 'selected':'' }}>{{$items->apiName}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -82,10 +82,17 @@
                                 </div>
                             </div>
                             <div class="col-6 col-lg-6 text-end">
-                                <button class="btn btn-primary mx-2 ">
+                                @if (empty($data))
+                                <a href="#" class="btn btn-primary mx-2 disabled">
                                     <i style="font-size:18px;" class='bx bx-download'></i>
                                     <span class="d-none d-md-inline ml-1">Download</span>
-                                </button>
+                                </a>
+                                @else
+                                <a href="{{ route ('customer.api.resource.usage.summary.pdf',['year'=>$year,'month'=>$month,'resources'=>$resources,'api_id'=>$api_id]) }}" class="btn btn-primary mx-2 {{ empty($data) ? 'disabled':'' }}">
+                                    <i style="font-size:18px;" class='bx bx-download'></i>
+                                    <span class="d-none d-md-inline ml-1">Download</span>
+                                </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -111,7 +118,7 @@
                                 <td>{{ $item->apiMethod }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
-                                    <a href="{{ route ('customer.detail.logs.usage') }}?api_id={{ $item->apiId }}&resource={{ $item->resource}}" class="btn btn-primary btn-sm" >Details</a>
+                                    <a href="{{ route ('customer.detail.logs.usage') }}??api_id={{ $item->apiId }}&resource={{ $item->resource }}&year={{ $year }}&month={{ $month }}" class="btn btn-primary btn-sm" >Details</a>
                                 </td>
                             </tr>
                             @empty
@@ -196,11 +203,12 @@
             },
             success: function(data) {
                 let month_list = JSON.parse(data);
-                console.log(month_list);
                 month_list = month_list.data.data;
                 let month = '';
+                const months = {{ $month ?? 1 }};
                 month_list.forEach(item => {
-                    month += `<option value='${item.monthNumber}'>${item.monthName}</option>`;  
+                    const select = months == item.monthNumber ? 'selected':'' ;
+                    month += `<option value='${item.monthNumber}' ${select}>${item.monthName}</option>`;  
                 });
                 $('#month-usage').html(month);
             },
@@ -223,9 +231,6 @@
         getMonth($(this).val());
     });
 
-
-
 </script>
 @endpush
-
 @endsection

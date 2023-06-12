@@ -19,10 +19,10 @@
                             <p>Application: <span class="text-primary">{{ $app }}</span></p>
                         </div>
                         <div class="col-12 col-lg-6 text-end my-auto">
-                            <button class="btn btn-primary mx-2 ">
+                            <a href="{{ route ('customer.detail.logs.report.pdf')}}?api={{ $api_id }}&app={{ $app_id }}&year={{ $year }}&month={{ $month }}" class="btn btn-primary mx-2 ">
                                 <i style="font-size:18px;" class='bx bx-download'></i>
                                 <span class="d-none d-md-inline ml-1">Download</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

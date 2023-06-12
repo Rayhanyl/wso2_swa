@@ -178,14 +178,13 @@
                 },
                 success: function(data) {
                     let month_list = JSON.parse(data);
-                    console.log(month_list);
                     month_list = month_list.data.data;
                     let month = '';
-                    // month += `<option>All</option>`
+                    const months = {{ $month ?? 1 }};
                     month_list.forEach(item => {
-                        month += `<option value='${item.monthNumber}'>${item.monthName}</option>`;  
+                        const select = months == item.monthNumber ? 'selected':'' ;
+                        month += `<option value='${item.monthNumber}' ${select}>${item.monthName}</option>`;  
                     });
-                    $('#month-usage').html(month);
                 },
                 complete: function() {
                 },
