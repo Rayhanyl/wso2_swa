@@ -90,6 +90,13 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/CustomerUsageDetail', [CustomerController::class, 'customer_detail_logs_usage'])->name('customer.detail.logs.usage');
     Route::get('/CustomerDownloadPDFUsageDetail', [CustomerController::class, 'customer_detail_logs_usage_pdf'])->name('customer.details.logs.pdf');
     Route::get('/CustomerDashboard', [CustomerController::class, 'customer_dashboard_page'])->name('customer.dashboard.page');
+    Route::get('/CustomerDoughnutChartApiUsage', [CustomerController::class, 'customer_doughnut_chart_api_usage'])->name('customer.doughtnut_chart_api_usage');
+    Route::get('/CustomerDoughnutChartResponseCount', [CustomerController::class, 'customer_doughnut_chart_response_count'])->name('customer.doughtnut.chart.response.count');
+    Route::get('/CustomerDoughnutChartApplicationUsage', [CustomerController::class, 'customer_doughnut_chart_application_usage'])->name('customer.doughtnut.chart.application.usage');
+    Route::get('/CustomerTableQuotaSubscription', [CustomerController::class, 'customer_table_quota_subscription'])->name('customer.table.quota.subscription');
+    Route::get('/CustomerBarChartTopApiUsage', [CustomerController::class, 'customer_bar_chart_top_usage'])->name('customer.bar.chart.top.usage');
+    Route::get('/CustomerBarChartTopFaultOvertime', [CustomerController::class, 'customer_bar_chart_fault_overtime'])->name('customer.bar.chart.fault.overtime');
+    Route::get('/CustomerTableTopFaultOvertime', [CustomerController::class, 'customer_table_fault_overtime'])->name('customer.table.fault.overtime');
     Route::get('/CustomerPaymentPage', [CustomerController::class, 'customer_payment_page'])->name('customer.payment.page');
     Route::get('/CustomerPaymentHistoryPage', [CustomerController::class, 'customer_payment_history_page'])->name('customer.payment.history.page');
 
@@ -112,6 +119,9 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/AdminErrorSummary', [AdminController::class, 'admin_error_summary_page'])->name('admin.error.summary.page');
     Route::get('/AdminDownloadPDFErrorSummary', [AdminController::class, 'admin_error_summary_pdf'])->name('admin.error.summary.pdf');
     Route::get('/AdminDashboardPage', [AdminController::class, 'admin_dashboard_page'])->name('admin.dashboard.page');
+    Route::get('/AdminDoughnutChartApiUsage', [AdminController::class, 'admin_doughnut_chart_api_usage'])->name('admin.doughtnut_chart_api_usage');
+    Route::get('/AdminDoughnutChartResponseCount', [AdminController::class, 'admin_doughnut_chart_response_count'])->name('admin.doughtnut.chart.response.count');
+    Route::get('/AdminDoughnutChartApplicationUsage', [AdminController::class, 'admin_doughnut_chart_application_usage'])->name('admin.doughtnut.chart.application.usage');
     Route::get('/AdminTableQuotaSubscription', [AdminController::class, 'admin_table_quota_subscription'])->name('admin.table.quota.subscription');
     Route::get('/AdminBarChartTopApiUsage', [AdminController::class, 'admin_bar_chart_top_usage'])->name('admin.bar.chart.top.usage');
     Route::get('/AdminBarChartTopFaultOvertime', [AdminController::class, 'admin_bar_chart_fault_overtime'])->name('admin.bar.chart.fault.overtime');

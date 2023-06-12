@@ -458,6 +458,18 @@ class AdminController extends Controller
 
     public function admin_dashboard_page(Request $request){
 
+        $periode = [
+            'year',
+            'month',
+            'week',
+            'today',
+        ];
+        $total_report = getUrlReports($this->url_report . '/dashboard/total-report' );
+        $data_report = $total_report->data;
+        return view('admin.dashboard.index',compact('data_report','total_report','periode'));
+    }
+
+    public function admin_doughnut_chart_api_usage(Request $request){
         $top = 10;
         $color =[
             'rgb(255, 99, 132,1)',
@@ -472,22 +484,6 @@ class AdminController extends Controller
             'rgb(70, 130, 180,1)',
         ];
 
-        $bordercolor =[
-            'rgb(255, 99, 132, 0.2)',
-            'rgb(54, 162, 235, 0.2)',
-            'rgb(255, 205, 86, 0.2)',
-            'rgb(150, 149, 237, 0.2)',
-            'rgb(46, 139, 87, 0.2)',
-            'rgb(255, 165, 0, 0.2)',
-            'rgb(218, 112, 214, 0.2)',
-            'rgb(0, 128, 128, 0.2)',
-            'rgb(255, 192, 203, 0.2)',
-            'rgb(70, 130, 180, 0.2)',
-        ];
-
-        $total_report = getUrlReports($this->url_report . '/dashboard/total-report' );
-        $data_report = $total_report->data;
-
         $api_usage = getUrlReports($this->url_report . '/dashboard/percentage-report?byApi=true&top='.$top );
         if ($api_usage->data->byApi == []) {
             $apiname = ['No Data Available'];
@@ -496,7 +492,23 @@ class AdminController extends Controller
             $apiname = collect($api_usage->data->byApi)->pluck('apiName')->all();
             $usage_count = collect($api_usage->data->byApi)->pluck('rowCount')->all();
         }
-    
+        return view('admin.dashboard.doughnut.api_usage',compact('apiname','usage_count','color'));
+    }
+
+    public function admin_doughnut_chart_response_count(Request $request){
+        $top = 10;  
+        $color =[
+            'rgb(255, 99, 132,1)',
+            'rgb(54, 162, 235,1)',
+            'rgb(255, 205, 86,1)',
+            'rgb(150, 149, 237,1)',
+            'rgb(46, 139, 87,1)',
+            'rgb(255, 165, 0,1)',
+            'rgb(218, 112, 214,1)',
+            'rgb(0, 128, 128,1)',
+            'rgb(255, 192, 203,1)',
+            'rgb(70, 130, 180,1)',
+        ];
         $response_code = getUrlReports($this->url_report . '/dashboard/percentage-report?byResponseCode=true&top='.$top );
         if ($response_code->data->byResponseCode == []) {
             $response_name = ['No Data Available'];
@@ -506,6 +518,23 @@ class AdminController extends Controller
             $response_count = collect($response_code->data->byResponseCode)->pluck('rowCount')->all();
         }
 
+        return view('admin.dashboard.doughnut.response_count',compact('response_name','response_count','color'));
+    }
+
+    public function admin_doughnut_chart_application_usage(Request $request){
+        $top = 10;
+        $color =[
+            'rgb(255, 99, 132,1)',
+            'rgb(54, 162, 235,1)',
+            'rgb(255, 205, 86,1)',
+            'rgb(150, 149, 237,1)',
+            'rgb(46, 139, 87,1)',
+            'rgb(255, 165, 0,1)',
+            'rgb(218, 112, 214,1)',
+            'rgb(0, 128, 128,1)',
+            'rgb(255, 192, 203,1)',
+            'rgb(70, 130, 180,1)',
+        ];
         $application = getUrlReports($this->url_report . '/dashboard/percentage-report?byApplication=true&top='.$top );
         if ($application->data->byApplication == []) {
             $application_name = ['No Data Available'];
@@ -514,8 +543,7 @@ class AdminController extends Controller
             $application_name = collect($application->data->byApplication)->pluck('applicationName')->all();
             $application_count = collect($application->data->byApplication)->pluck('rowCount')->all();
         }
- 
-        return view('admin.dashboard.index',compact('data_report','apiname','usage_count','response_name','response_count','application_name','application_count','color','bordercolor'));
+        return view('admin.dashboard.doughnut.application_usage',compact('application_name','application_count','color'));
     }
 
     public function admin_table_quota_subscription(Request $request){
@@ -532,8 +560,14 @@ class AdminController extends Controller
     }
 
     public function admin_bar_chart_top_usage(Request $request){
+        
+        $time = $request->periodTop;
+        if (empty($time)) {
+            $top_api_usage = getUrlReports($this->url_report . '/dashboard/api-usage?filter=year&top=10' );
+        }else{
+            $top_api_usage = getUrlReports($this->url_report . '/dashboard/api-usage?filter='.$time.'&top=10' );
+        }
 
-        $top_api_usage = getUrlReports($this->url_report . '/dashboard/api-usage?filter=year&top=10' );
         $color = [
             'rgb(255, 99, 132,1)',
             'rgb(54, 162, 235,1)',
@@ -591,9 +625,7 @@ class AdminController extends Controller
         return view('admin.dashboard.bar.api_usage',compact('x_data_api_usage','datasets_api_usage'));
     }
 
-    public function admin_bar_chart_fault_overtime(Request $request){
-        
-        $fault_overtime_chart = getUrlReports($this->url_report . '/dashboard/api-fault?filter=year' );
+    public function admin_bar_chart_fault_overtime(Request $request) {
         $color = [
             'rgb(255, 99, 132,1)',
             'rgb(54, 162, 235,1)',
@@ -619,7 +651,14 @@ class AdminController extends Controller
             'rgb(255, 192, 203, 0.5)',
             'rgb(70, 130, 180, 0.5)',
         ];
-        
+    
+        $time = $request->periodFault;
+        if (empty($time)) {
+            $fault_overtime_chart = getUrlReports($this->url_report . '/dashboard/api-fault?filter=year');
+        } else {
+            $fault_overtime_chart = getUrlReports($this->url_report . '/dashboard/api-fault?filter='. $time);
+        }
+    
         if (empty($fault_overtime_chart->data)) {
             $x_data_fault_overtime = ['No Data'];
             $count_data = [1];
@@ -635,7 +674,6 @@ class AdminController extends Controller
         } else {
             $top_api_names = collect($fault_overtime_chart->data)->pluck('apiName')->all();
             $x_data_fault_overtime = collect($fault_overtime_chart->data[0]->data)->pluck('x')->all();
-        
             $datasets_fault_overtime = collect($fault_overtime_chart->data)->map(function ($item, $index) use ($top_api_names, $color, $bordercolor) {
                 $count_data = collect($item->data)->pluck('totalFault')->all();
                 return [
@@ -647,12 +685,18 @@ class AdminController extends Controller
                 ];
             })->all();
         }
-
-        return view('admin.dashboard.bar.api_fault_overtime',compact('x_data_fault_overtime','datasets_fault_overtime'));
+    
+        return view('admin.dashboard.bar.api_fault_overtime', compact('x_data_fault_overtime', 'datasets_fault_overtime'));
     }
 
     public function admin_table_fault_overtime(Request $request){
-        $fault_table = getUrlReports($this->url_report . '/dashboard/api-fault/details?filter=year' );
+
+        $time = $request->periodFault;
+        if (empty($time)) {
+            $fault_table = getUrlReports($this->url_report . '/dashboard/api-fault/details?filter=year' );
+        }else{
+            $fault_table = getUrlReports($this->url_report . '/dashboard/api-fault/details?filter='.$time );
+        }
  
         return view('admin.dashboard.table.api_fault_overtime',compact('fault_table'));
     }   

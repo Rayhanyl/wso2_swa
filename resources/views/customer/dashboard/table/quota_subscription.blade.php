@@ -8,7 +8,6 @@
                 style="width:100%">
                 <thead class="table-orange">
                     <tr>
-                        <th>Customer</th>
                         <th>Subscription</th>
                         <th>Type</th>
                         <th>Quota</th>
@@ -18,7 +17,6 @@
                 <tbody>
                     @foreach ($quota_subs->data->content as $item)
                     <tr>
-                        <td class="text-capitalize">{{ $item->organization ?? 'No organization' }} - ({{ $item->applicationOwner }})</td>
                         <td class="text-capitalize">{{ $item->apiName }}</td>
                         <td>
                             @if ($item->typeSubscription == 'quota')
@@ -53,16 +51,14 @@
     </div>
 </div>
 
-@push('script')
-    <script>
-        $(document).ready(function () {
-            $('#data-table-dashboard-quota-subscription').DataTable({
-                responsive: true,
-                lengthMenu: [
-                    [5, 25, 50, -1],
-                    [10, 25, 50, 'All'],
-                ],
-            });
+<script>
+    $(document).ready(function () {
+        $('#data-table-dashboard-quota-subscription').DataTable({
+            responsive: true,
+            lengthMenu: [
+                [5, 25, 50, -1],
+                [10, 25, 50, 'All'],
+            ],
         });
-    </script>
-@endpush
+    });
+</script>
