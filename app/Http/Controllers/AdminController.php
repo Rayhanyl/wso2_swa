@@ -498,7 +498,7 @@ class AdminController extends Controller
         }
     
         $response_code = getUrlReports($this->url_report . '/dashboard/percentage-report?byResponseCode=true&top='.$top );
-        if ($api_usage->data->byApi == []) {
+        if ($response_code->data->byResponseCode == []) {
             $response_name = ['No Data Available'];
             $response_count = ['1'];
         } else {
@@ -506,15 +506,20 @@ class AdminController extends Controller
             $response_count = collect($response_code->data->byResponseCode)->pluck('rowCount')->all();
         }
 
-        $response_code = getUrlReports($this->url_report . '/dashboard/percentage-report?byApplication=true&top='.$top );
-        if ($api_usage->data->byApi == []) {
+        $application = getUrlReports($this->url_report . '/dashboard/percentage-report?byApplication=true&top='.$top );
+        if ($application->data->byApplication == []) {
             $application_name = ['No Data Available'];
             $application_count = ['1'];
         } else {
-            $application_name = collect($response_code->data->byApplication)->pluck('applicationName')->all();
-            $application_count = collect($response_code->data->byApplication)->pluck('rowCount')->all();
+            $application_name = collect($application->data->byApplication)->pluck('applicationName')->all();
+            $application_count = collect($application->data->byApplication)->pluck('rowCount')->all();
         }
+ 
+        return view('admin.dashboard.index',compact('data_report','apiname','usage_count','response_name','response_count','application_name','application_count','color','bordercolor'));
+    }
 
+    public function admin_table_quota_subscription(Request $request){
+         
         $quota_subs = getUrlReports($this->url_report . '/report/subscriptions/remaining?size=99999' );
         foreach ($quota_subs->data->content as $item) {
             if ($item->remaining > 0) {
@@ -522,12 +527,133 @@ class AdminController extends Controller
             } else {
                 $item->percentage = 100;
             }
-        }     
-        
-
-        $top_api_usage = getUrlReports($this->url_report . '/dashboard/api-usage?filter=month&top=10' );
- 
-        return view('admin.dashboard.index',compact('data_report','apiname','usage_count','response_name','response_count','application_name','application_count','color','quota_subs','bordercolor'));
+        }    
+        return view('admin.dashboard.table.quota_subscription',compact('quota_subs'));
     }
 
+    public function admin_bar_chart_top_usage(Request $request){
+
+        $top_api_usage = getUrlReports($this->url_report . '/dashboard/api-usage?filter=year&top=10' );
+        $color = [
+            'rgb(255, 99, 132,1)',
+            'rgb(54, 162, 235,1)',
+            'rgb(255, 205, 86,1)',
+            'rgb(150, 149, 237,1)',
+            'rgb(46, 139, 87,1)',
+            'rgb(255, 165, 0,1)',
+            'rgb(218, 112, 214,1)',
+            'rgb(0, 128, 128,1)',
+            'rgb(255, 192, 203,1)',
+            'rgb(70, 130, 180,1)',
+        ];
+        
+        $bordercolor = [
+            'rgb(255, 99, 132, 0.5)',
+            'rgb(54, 162, 235, 0.5)',
+            'rgb(255, 205, 86, 0.5)',
+            'rgb(150, 149, 237, 0.5)',
+            'rgb(46, 139, 87, 0.5)',
+            'rgb(255, 165, 0, 0.5)',
+            'rgb(218, 112, 214, 0.5)',
+            'rgb(0, 128, 128, 0.5)',
+            'rgb(255, 192, 203, 0.5)',
+            'rgb(70, 130, 180, 0.5)',
+        ];
+        
+        if (empty($top_api_usage->data)) {
+            $x_data_api_usage = ['No Data'];
+            $count_data = [1];
+            $datasets_api_usage = [
+                [
+                    'label' => 'No Data',
+                    'data' => $count_data,
+                    'backgroundColor' => [$color[0]],
+                    'borderColor' => [$bordercolor[0]],
+                    'borderWidth' => 3,
+                ]
+            ];
+        } else {
+            $top_api_names = collect($top_api_usage->data)->pluck('apiName')->all();
+            $x_data_api_usage = collect($top_api_usage->data[0]->data)->pluck('x')->all();
+        
+            $datasets_api_usage = collect($top_api_usage->data)->map(function ($item, $index) use ($top_api_names, $color, $bordercolor) {
+                $count_data = collect($item->data)->pluck('totalUsage')->all();
+                return [
+                    'label' => $top_api_names[$index],
+                    'data' => $count_data,
+                    'backgroundColor' => [$color[$index]],
+                    'borderColor' => [$bordercolor[$index]],
+                    'borderWidth' => 3,
+                ];
+            })->all();
+        }
+
+        return view('admin.dashboard.bar.api_usage',compact('x_data_api_usage','datasets_api_usage'));
+    }
+
+    public function admin_bar_chart_fault_overtime(Request $request){
+        
+        $fault_overtime_chart = getUrlReports($this->url_report . '/dashboard/api-fault?filter=year' );
+        $color = [
+            'rgb(255, 99, 132,1)',
+            'rgb(54, 162, 235,1)',
+            'rgb(255, 205, 86,1)',
+            'rgb(150, 149, 237,1)',
+            'rgb(46, 139, 87,1)',
+            'rgb(255, 165, 0,1)',
+            'rgb(218, 112, 214,1)',
+            'rgb(0, 128, 128,1)',
+            'rgb(255, 192, 203,1)',
+            'rgb(70, 130, 180,1)',
+        ];
+        
+        $bordercolor = [
+            'rgb(255, 99, 132, 0.5)',
+            'rgb(54, 162, 235, 0.5)',
+            'rgb(255, 205, 86, 0.5)',
+            'rgb(150, 149, 237, 0.5)',
+            'rgb(46, 139, 87, 0.5)',
+            'rgb(255, 165, 0, 0.5)',
+            'rgb(218, 112, 214, 0.5)',
+            'rgb(0, 128, 128, 0.5)',
+            'rgb(255, 192, 203, 0.5)',
+            'rgb(70, 130, 180, 0.5)',
+        ];
+        
+        if (empty($fault_overtime_chart->data)) {
+            $x_data_fault_overtime = ['No Data'];
+            $count_data = [1];
+            $datasets_fault_overtime = [
+                [
+                    'label' => 'No Data',
+                    'data' => $count_data,
+                    'backgroundColor' => [$color[0]],
+                    'borderColor' => [$bordercolor[0]],
+                    'borderWidth' => 3,
+                ]
+            ];
+        } else {
+            $top_api_names = collect($fault_overtime_chart->data)->pluck('apiName')->all();
+            $x_data_fault_overtime = collect($fault_overtime_chart->data[0]->data)->pluck('x')->all();
+        
+            $datasets_fault_overtime = collect($fault_overtime_chart->data)->map(function ($item, $index) use ($top_api_names, $color, $bordercolor) {
+                $count_data = collect($item->data)->pluck('totalFault')->all();
+                return [
+                    'label' => $top_api_names[$index],
+                    'data' => $count_data,
+                    'backgroundColor' => [$color[$index]],
+                    'borderColor' => [$bordercolor[$index]],
+                    'borderWidth' => 3,
+                ];
+            })->all();
+        }
+
+        return view('admin.dashboard.bar.api_fault_overtime',compact('x_data_fault_overtime','datasets_fault_overtime'));
+    }
+
+    public function admin_table_fault_overtime(Request $request){
+        $fault_table = getUrlReports($this->url_report . '/dashboard/api-fault/details?filter=year' );
+ 
+        return view('admin.dashboard.table.api_fault_overtime',compact('fault_table'));
+    }   
 }

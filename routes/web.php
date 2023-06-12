@@ -112,10 +112,13 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/AdminErrorSummary', [AdminController::class, 'admin_error_summary_page'])->name('admin.error.summary.page');
     Route::get('/AdminDownloadPDFErrorSummary', [AdminController::class, 'admin_error_summary_pdf'])->name('admin.error.summary.pdf');
     Route::get('/AdminDashboardPage', [AdminController::class, 'admin_dashboard_page'])->name('admin.dashboard.page');
+    Route::get('/AdminTableQuotaSubscription', [AdminController::class, 'admin_table_quota_subscription'])->name('admin.table.quota.subscription');
+    Route::get('/AdminBarChartTopApiUsage', [AdminController::class, 'admin_bar_chart_top_usage'])->name('admin.bar.chart.top.usage');
+    Route::get('/AdminBarChartTopFaultOvertime', [AdminController::class, 'admin_bar_chart_fault_overtime'])->name('admin.bar.chart.fault.overtime');
+    Route::get('/AdminTableTopFaultOvertime', [AdminController::class, 'admin_table_fault_overtime'])->name('admin.table.fault.overtime');
     Route::get('/AdminInvoicePage', [AdminController::class, 'admin_invoice_page'])->name('admin.invoice.page');
     Route::get('/AdminCreateInvoicePage', [AdminController::class, 'admin_create_invoice_page'])->name('admin.create.invoice.page');
     Route::get('/AdminPaymentPage', [AdminController::class, 'admin_payment_page'])->name('admin.payment.page');
-    
     Route::get('/ErrorPage', [AdminController::class, 'error_page'])->name('error.page');
 });
 

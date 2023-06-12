@@ -53,14 +53,16 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $('#data-table-dashboard-quota-subscription').DataTable({
-            responsive: true,
-            lengthMenu: [
-                [5, 25, 50, -1],
-                [10, 25, 50, 'All'],
-            ],
+@push('script')
+    <script>
+        $(document).ready(function () {
+            $('#data-table-dashboard-quota-subscription').DataTable({
+                responsive: true,
+                lengthMenu: [
+                    [5, 25, 50, -1],
+                    [10, 25, 50, 'All'],
+                ],
+            });
         });
-    });
-</script>
+    </script>
+@endpush

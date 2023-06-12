@@ -99,12 +99,126 @@
                 @include('admin.dashboard.doughnut.api_usage')   
                 @include('admin.dashboard.doughnut.response_count')   
                 @include('admin.dashboard.doughnut.application_usage')   
-                @include('admin.dashboard.table.quota_subscription')   
-                @include('admin.dashboard.bar.api_usage')
-                @include('admin.dashboard.bar.api_fault_overtime')
-                @include('admin.dashboard.table.api_fault_overtime')
+                <div class="col-12" id="table-quota-subscription">      
+                </div>   
+                <div class="col-12" id="bar-api-top-10-usage">
+                </div>
+                <div class="col-12">
+                    <div class="card card-shadow-app rounded-4">
+                        <div class="card-body">
+                            <div class="row p-2">
+                                <div class="col-12" id="bar-fault-overtime">
+                                </div>
+                                <hr class="my-5">
+                                <div class="col-12" id="table-fault-overtime">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+@push('script')
+    <script>
+
+    $(document).ready(function () {
+        getTopApiUsage();
+        getFaultOvertimeChart();
+        getFaultOvertimeTable();
+        getQuotaSubscriptionTable();
+    });
+
+    function getTopApiUsage(params) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('admin.bar.chart.top.usage') }}",
+            dataType: 'html',
+            data: {
+            },
+            beforeSend: function() {
+                $('#bar-api-top-10-usage').html('');
+            },
+            success: function(data) {
+                $('#bar-api-top-10-usage').html(data);
+            },
+            complete: function() {
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                $('#bar-api-top-10-usage').html(pesan);
+            },
+        });
+    }
+
+    function getFaultOvertimeChart(params) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('admin.bar.chart.fault.overtime') }}",
+            dataType: 'html',
+            data: {
+            },
+            beforeSend: function() {
+                $('#bar-fault-overtime').html('');
+            },
+            success: function(data) {
+                $('#bar-fault-overtime').html(data);
+            },
+            complete: function() {
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                $('#bar-fault-overtime').html(pesan);
+            },
+        });
+    }
+
+    function getFaultOvertimeTable(params) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('admin.table.fault.overtime') }}",
+            dataType: 'html',
+            data: {
+            },
+            beforeSend: function() {
+                $('#table-fault-overtime').html('');
+            },
+            success: function(data) {
+                $('#table-fault-overtime').html(data);
+            },
+            complete: function() {
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                $('#table-fault-overtime').html(pesan);
+            },
+        });
+    }
+
+    function getQuotaSubscriptionTable(params) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('admin.table.quota.subscription') }}",
+            dataType: 'html',
+            data: {
+            },
+            beforeSend: function() {
+                $('#table-quota-subscription').html('');
+            },
+            success: function(data) {
+                $('#table-quota-subscription').html(data);
+            },
+            complete: function() {
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                $('#table-quota-subscription').html(pesan);
+            },
+        });
+    }
+    </script>
+@endpush    
+
 @endsection

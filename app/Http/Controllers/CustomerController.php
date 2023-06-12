@@ -279,9 +279,78 @@ class CustomerController extends Controller
 
     public function customer_dashboard_page(){
 
-        $total_report = getUrlReports($this->url_report .'/dashboard/total-report?username='.session('name'));
-        $usage_api = getUrlReports($this->url_report .'/dashboard/api-usage?filter=year');
-        return view('customer.dashboard.index',compact('total_report'));
+        $top = 10;
+        $color =[
+            'rgb(255, 99, 132,1)',
+            'rgb(54, 162, 235,1)',
+            'rgb(255, 205, 86,1)',
+            'rgb(150, 149, 237,1)',
+            'rgb(46, 139, 87,1)',
+            'rgb(255, 165, 0,1)',
+            'rgb(218, 112, 214,1)',
+            'rgb(0, 128, 128,1)',
+            'rgb(255, 192, 203,1)',
+            'rgb(70, 130, 180,1)',
+        ];
+
+        $bordercolor =[
+            'rgb(255, 99, 132, 0.2)',
+            'rgb(54, 162, 235, 0.2)',
+            'rgb(255, 205, 86, 0.2)',
+            'rgb(150, 149, 237, 0.2)',
+            'rgb(46, 139, 87, 0.2)',
+            'rgb(255, 165, 0, 0.2)',
+            'rgb(218, 112, 214, 0.2)',
+            'rgb(0, 128, 128, 0.2)',
+            'rgb(255, 192, 203, 0.2)',
+            'rgb(70, 130, 180, 0.2)',
+        ];
+
+        $username = session('username');
+        $total_report = getUrlReports($this->url_report . '/dashboard/total-report?username='.$username );
+        $data_report = $total_report->data;
+
+        $api_usage = getUrlReports($this->url_report . '/dashboard/percentage-report?byApi=true&top='.$top.'&username='.$username );
+        if ($api_usage->data->byApi == []) {
+            $apiname = ['No Data Available'];
+            $usage_count = ['1'];
+        } else {
+            $apiname = collect($api_usage->data->byApi)->pluck('apiName')->all();
+            $usage_count = collect($api_usage->data->byApi)->pluck('rowCount')->all();
+        }
+    
+        $response_code = getUrlReports($this->url_report . '/dashboard/percentage-report?byResponseCode=true&top='.$top.'&username='.$username );
+        if ($api_usage->data->byApi == []) {
+            $response_name = ['No Data Available'];
+            $response_count = ['1'];
+        } else {
+            $response_name = collect($response_code->data->byResponseCode)->pluck('proxyResponseCode')->all();
+            $response_count = collect($response_code->data->byResponseCode)->pluck('rowCount')->all();
+        }
+
+        $response_code = getUrlReports($this->url_report . '/dashboard/percentage-report?byApplication=true&top='.$top.'&username='.$username );
+        if ($api_usage->data->byApi == []) {
+            $application_name = ['No Data Available'];
+            $application_count = ['1'];
+        } else {
+            $application_name = collect($response_code->data->byApplication)->pluck('applicationName')->all();
+            $application_count = collect($response_code->data->byApplication)->pluck('rowCount')->all();
+        }
+
+        $quota_subs = getUrlReports($this->url_report . '/report/subscriptions/remaining?size=99999&username='.$username );
+        foreach ($quota_subs->data->content as $item) {
+            if ($item->remaining > 0) {
+                $item->percentage = $item->remaining / $item->quota * 100;
+            } else {
+                $item->percentage = 100;
+            }
+        }     
+        
+
+        $top_api_usage = getUrlReports($this->url_report . '/dashboard/api-usage?filter=month&top=10&username='.$username );
+
+
+        return view('customer.dashboard.index',compact('data_report','apiname','usage_count','response_name','response_count','application_name','application_count','color','quota_subs','bordercolor'));
     }
 
     public function customer_payment_page(){
