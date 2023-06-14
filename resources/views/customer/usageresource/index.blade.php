@@ -118,7 +118,7 @@
                                 <td>{{ $item->apiMethod }}</td>
                                 <td>{{ $item->requestCount }}</td>
                                 <td>
-                                    <a href="{{ route ('customer.detail.logs.usage') }}??api_id={{ $item->apiId }}&resource={{ $item->resource }}&year={{ $year }}&month={{ $month }}" class="btn btn-primary btn-sm" >Details</a>
+                                    <a class="btn btn-primary btn-sm" href="{{ route ('customer.detail.logs.usage') }}?year={{ $year }}&month={{ $month }}&resource={{ $item->resource }}&api_id={{ $item->apiId }}">Details</a>
                                 </td>
                             </tr>
                             @empty

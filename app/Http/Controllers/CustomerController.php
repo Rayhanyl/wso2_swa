@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use PhpParser\Node\Stmt\Return_;
@@ -93,7 +94,8 @@ class CustomerController extends Controller
                 }
 
                 $data['year'] = $request->year;
-                $data['month'] = $request->month;
+                $month = $request->month;
+                $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
                 $data['username'] = session('username');
                 $data['total'] = $montlysummary->data->totalApis;
                 $data['count'] = $montlysummary->data->requestCount;
@@ -139,7 +141,8 @@ class CustomerController extends Controller
         $data['ok'] = $detail->data->requestOK;
         $data['nok'] = $detail->data->requestNOK;
         $data['year'] = $request->year;
-        $data['month'] = $request->month;
+        $month = $request->month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         $data['username'] = $username;
         $data['data'] = $datas;
         $pdf = PDF::loadView('customer.reportapi.table_detail',$data,['orientation' => 'portrait']);
@@ -192,7 +195,7 @@ class CustomerController extends Controller
         
 
         $data['year'] = $year;
-        $data['month'] = $month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         $data['resources'] = $resources;
         $data['api_id'] = $api_id;
         $username = session('username');
@@ -240,15 +243,22 @@ class CustomerController extends Controller
         return response()->json(['status' => 'success', 'data' => $years]);
     }
 
+    private function encodeCurlyBraces($url){
+        $encodedUrl = str_replace(['{', '}'], ['%7B', '%7D'], $url);
+        return $encodedUrl;
+    }
+    
     public function customer_detail_logs_usage(Request $request){
-
-        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?username='.session('username').'&resource='.$request->resource.'&apiId='.$request->api_id );
+        
+        $resources = $this->encodeCurlyBraces($request->resource);
+        $username = session('username');
+        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?username='.$username.'&resource='.$resources.'&apiId='.$request->api_id );
         $data  = $resources->data->content;
         $resources = $request->resource;
         $year = $request->year;
         $month = $request->month;
         $api_id = $request->api_id;
-        
+
         if(count($data) >= 1){
             $api_name = $data[0]->apiName;
         }else{
@@ -259,14 +269,16 @@ class CustomerController extends Controller
     }
 
     public function customer_detail_logs_usage_pdf(Request $request){
-
-        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?resource='.$request->resources.'&apiId='.$request->api_id.'&username='.session('username') );
-        $datas = $resources->data->content;;
+        $resources = $this->encodeCurlyBraces($request->resources);
+        $username = session('username');    
+        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?username='.$username.'&resource='.$resources.'&apiId='.$request->api_id );
+        $datas = $resources->data->content;
         $data['data']  = $datas;
+        $month = $request->month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         $data['resources'] = $request->resources;
         $data['year'] = $request->year;
-        $data['month'] = $request->month;
-        $data['username'] = session('username');        
+        $data['username'] = session('username');    
         if(count($datas) >= 1){
             $data['api_name'] = $datas[0]->apiName;
         }
@@ -274,16 +286,15 @@ class CustomerController extends Controller
         $pdf = PDF::loadView('customer.usageresource.table_detail',$data,['orientation' => 'portrait']);
         $pdf->setPaper('A4', 'portrait');
         return $pdf->download('REPORT_API_RESOURCE_SUMMARY_DETAIL.pdf');
-
     }
 
     public function customer_dashboard_page(Request $request){
 
         $periode = [
-            'year',
-            'month',
-            'week',
-            'today',
+            'year' => 'Recent Year',
+            'month' => 'This Month',
+            'week' => 'This Week',
+            'today'=> 'Today',
         ];
         $total_report = getUrlReports($this->url_report . '/dashboard/total-report?username='.session('username') );
         $data_report = $total_report->data;
@@ -421,7 +432,7 @@ class CustomerController extends Controller
         
         if (empty($top_api_usage->data)) {
             $x_data_api_usage = ['No Data'];
-            $count_data = [1];
+            $count_data = [0];
             $datasets_api_usage = [
                 [
                     'label' => 'No Data',
@@ -487,7 +498,7 @@ class CustomerController extends Controller
     
         if (empty($fault_overtime_chart->data)) {
             $x_data_fault_overtime = ['No Data'];
-            $count_data = [1];
+            $count_data = [0];
             $datasets_fault_overtime = [
                 [
                     'label' => 'No Data',

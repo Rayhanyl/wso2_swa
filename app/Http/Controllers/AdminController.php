@@ -87,7 +87,7 @@ class AdminController extends Controller
     public function admin_monthly_report_summary_pdf(Request $request, $year,$month,$customer,$api_name){
 
         $data['year'] = $year;
-        $data['month'] = $month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         $data['customer'] = $customer;
         $data['api_name'] = $api_name;
 
@@ -138,7 +138,7 @@ class AdminController extends Controller
         
         $data['detail'] = $datas;
         $data['year'] = $year;
-        $data['month'] = $month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
 
         $pdf = PDF::loadView('admin.reportapi.table_detail',$data,['orientation' => 'portrait']);
         $pdf->setPaper('A4', 'portrait');
@@ -169,29 +169,42 @@ class AdminController extends Controller
         
         } else {     
             
-            if ( $api_id == 'All' && $resources == 'All' ) {
-                $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?year='.$year.'&month='.$month);
-            } elseif ($resources == 'All') {
-                $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?apiId='.$api_id.'&year='.$year.'&month='.$month);
-            } elseif ($api_id == 'All'){
-                $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?resource='.$resources.'&year='.$year.'&month='.$month);
-            } else {
-                $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?apiId='.$api_id.'&resource='.$resources.'&year='.$year.'&month='.$month);
-            }
-
-            if ($resourcesummary->status == 'success' ) {
-                $total = $resourcesummary->data->totalApis;
-                $count = $resourcesummary->data->requestCount;
-                $data  = $resourcesummary->data->details->content;
+            try {
+             
+                if ( $api_id == 'All' && $resources == 'All' ) {
+                    $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?year='.$year.'&month='.$month);
+                } elseif ($resources == 'All') {
+                    $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?apiId='.$api_id.'&year='.$year.'&month='.$month);
+                } elseif ($api_id == 'All'){
+                    $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?resource='.$resources.'&year='.$year.'&month='.$month);
+                } else {
+                    $resourcesummary = getUrlReports($this->url_report . '/report/resource-summary?apiId='.$api_id.'&resource='.$resources.'&year='.$year.'&month='.$month);
+                }
+    
+                if (empty($resourcesummary) || $resourcesummary->status == 'success') {
+                    $total = $resourcesummary->data->totalApis;
+                    $count = $resourcesummary->data->requestCount;
+                    $data  = $resourcesummary->data->details->content;
+                }else{
+                    dd('Data kosong');
+                }
+                
+            } catch (\Throwable $e) {
+                dd($e);
             }
         }
 
         return view('admin.usageresource.index',compact('years','year','apis','api_id','total','count','data','month','resources'));
     }
 
-    public function admin_detail_logs_usage(Request $request){
+    private function encodeCurlyBraces($url){
+        $encodedUrl = str_replace(['{', '}'], ['%7B', '%7D'], $url);
+        return $encodedUrl;
+    }
 
-        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?resource='.$request->resource.'&apiId='.$request->api_id );
+    public function admin_detail_logs_usage(Request $request){
+        $path = $this->encodeCurlyBraces($request->resource);
+        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?resource='.$path.'&apiId='.$request->api_id );
         $data  = $resources->data->content;
         $resources = $request->resource;
         $year = $request->year;
@@ -207,11 +220,9 @@ class AdminController extends Controller
 
     public function admin_api_resource_usage_summary_pdf(Request $request, $year,$month,$resources,$api_id){
         
-
         $data['year'] = $year;
-        $data['month'] = $month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         $data['resources'] = $resources;
-        $data['api_id'] = $api_id;
 
         if ($year == null && $month == null) {
 
@@ -232,6 +243,10 @@ class AdminController extends Controller
             }
 
             if ($resourcesummary->status == 'success' ) {
+                $datas = $resourcesummary->data->details->content;
+                if (count($datas) >= 1) {
+                    $data['api_id'] = $datas[0]->apiName; 
+                }
                 $data['total'] = $resourcesummary->data->totalApis;
                 $data['count'] = $resourcesummary->data->requestCount;
                 $data['data']  = $resourcesummary->data->details->content;
@@ -245,13 +260,14 @@ class AdminController extends Controller
     }
 
     public function admin_detail_logs_usage_pdf(Request $request){
-        
-        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?resource='.$request->resources.'&apiId='.$request->api_id );
+        $path = $this->encodeCurlyBraces($request->resources);
+        $resources = getUrlReports($this->url_report . '/report/resource-summary/details?resource='.$path.'&apiId='.$request->api_id );
         $datas = $resources->data->content;;
         $data['data']  = $datas;
         $data['resources'] = $request->resources;
         $data['year'] = $request->year;
-        $data['month'] = $request->month;
+        $month = $request->month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         
         if(count($datas) >= 1){
             $data['api_name'] = $datas[0]->apiName;
@@ -357,7 +373,8 @@ class AdminController extends Controller
 
         $data['api_name'] = $request->api_name;
         $data['year'] = $request->year;
-        $data['month'] = $request->month;
+        $month = $request->month;
+        $data['month']  = Carbon::createFromDate(null, $month, 1)->format('F');
         $data['owner'] = $request->owner;
         $api = $request->api;
 
@@ -459,10 +476,10 @@ class AdminController extends Controller
     public function admin_dashboard_page(Request $request){
 
         $periode = [
-            'year',
-            'month',
-            'week',
-            'today',
+            'year' => 'Recent Year',
+            'month' => 'This Month',
+            'week' => 'This Week',
+            'today'=> 'Today',
         ];
         $total_report = getUrlReports($this->url_report . '/dashboard/total-report' );
         $data_report = $total_report->data;

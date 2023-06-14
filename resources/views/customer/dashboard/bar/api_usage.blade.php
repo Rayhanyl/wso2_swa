@@ -22,7 +22,15 @@
                     display: true,
                     text: 'TOP 10 API USAGE'
                 }
-            }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    ticks: {
+                    stepSize: 1,
+                    }
+                }
+            },
         }
     });
 </script>

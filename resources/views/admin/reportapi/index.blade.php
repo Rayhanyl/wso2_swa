@@ -185,6 +185,7 @@
                         const select = months == item.monthNumber ? 'selected':'' ;
                         month += `<option value='${item.monthNumber}' ${select}>${item.monthName}</option>`;  
                     });
+                    $('#month-usage').html(month);
                 },
                 complete: function() {
                 },

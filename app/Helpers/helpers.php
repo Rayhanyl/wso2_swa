@@ -9,7 +9,8 @@ function getToken()
     return session()->get('token');
 }
 
-function getUrlApi(){
+function getUrlApi()
+{
     $url_api = env('API');
     return $url_api;
 }

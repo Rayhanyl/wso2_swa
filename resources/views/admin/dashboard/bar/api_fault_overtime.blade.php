@@ -22,7 +22,15 @@
                     display: true,
                     text: 'API Fault Overtime'
                 }
-            }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    ticks: {
+                    stepSize: 1,
+                    }
+                }
+            },
         }
     });
 </script>

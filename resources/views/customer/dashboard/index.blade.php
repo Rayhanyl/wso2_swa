@@ -96,13 +96,31 @@
         </div>
         <div class="col-12 my-5" id="data-chart-customer">
             <div class="row g-5">
-                <div class="col-12 col-lg-4" id="doughnut-api-usage">
+                <div class="col-12 col-lg-4">
+                    <div class="col-12">
+                        <div id="doughnut-api-usage">
+                        </div>
+                        <div class="text-center" id="loader-doughnut-api-usage">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12 col-lg-4" id="doughnut-application-usage">
+                <div class="col-12 col-lg-4">
+                    <div id="doughnut-application-usage">
+                    </div>
+                    <div id="loader-doughnut-application-usage">
+                    </div>
                 </div>
-                <div class="col-12 col-lg-4" id="doughnut-response-count">
+                <div class="col-12 col-lg-4">
+                    <div id="doughnut-response-count">
+                    </div>
+                    <div id="loader-doughnut-response-count">
+                    </div>
                 </div>
-                <div class="col-12" id="table-quota-subscription">      
+                <div class="col-12">      
+                    <div id="table-quota-subscription">
+                    </div>
+                    <div id="loader-table-quota-subscription">
+                    </div>
                 </div>
                 <div class="col-12">
                     <div class="card card-shadow-app rounded-4">
@@ -110,12 +128,14 @@
                             <div class="my-2">
                                 <label class="my-2 fw-bold" for="period_top_10"><i class='bx bxs-calendar'></i> Period</label>
                                 <select class="form-control text-capitalize" name="period_top_10" id="period_top_10">
-                                    @foreach ($periode as $item)
-                                        <option class="text-capitalize" value="{{ $item }}">{{ $item }}</option>
+                                    @foreach ($periode as $idx => $item)
+                                        <option class="text-capitalize" value="{{ $idx }}">{{ $item }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div id="bar-api-top-10-usage">
+                            </div>
+                            <div id="loader-bar-api-top-10-usage">
                             </div>
                         </div>
                     </div>
@@ -127,14 +147,18 @@
                                 <div class="my-2">
                                     <label class="my-2 fw-bold" for="period_fault_overtime"><i class='bx bxs-calendar'></i> Period</label>
                                     <select class="form-control text-capitalize" name="period_fault_overtime" id="period_fault_overtime">
-                                        @foreach ($periode as $item)
-                                            <option class="text-capitalize" value="{{ $item }}">{{ $item }}</option>
-                                        @endforeach
+                                        @foreach ($periode as $idx => $item)
+                                        <option class="text-capitalize" value="{{ $idx }}">{{ $item }}</option>
+                                    @endforeach
                                     </select>
+                                </div>
+                                <div id="loader-bar-fault-overtime">
                                 </div>
                                 <div class="col-12" id="bar-fault-overtime">
                                 </div>
                                 <hr class="my-5">
+                                <div class="col-12" id="loader-table-fault-overtime">
+                                </div>
                                 <div class="col-12" id="table-fault-overtime">
                                 </div>
                             </div>
@@ -168,9 +192,11 @@
                 },
                 beforeSend: function() {
                     $('#doughnut-api-usage').html('');
+                    $('#loader-doughnut-api-usage').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
                     $('#doughnut-api-usage').html(data);
+                    $('#loader-doughnut-api-usage').html('');
                 },
                 complete: function() {
                 },
@@ -190,9 +216,11 @@
                 },
                 beforeSend: function() {
                     $('#doughnut-application-usage').html('');
+                    $('#loader-doughnut-application-usage').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
                     $('#doughnut-application-usage').html(data);
+                    $('#loader-doughnut-application-usage').html('');
                 },
                 complete: function() {
                 },
@@ -212,9 +240,11 @@
                 },
                 beforeSend: function() {
                     $('#doughnut-response-count').html('');
+                    $('#loader-doughnut-response-count').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
                     $('#doughnut-response-count').html(data);
+                    $('#loader-doughnut-response-count').html('');
                 },
                 complete: function() {
                 },
@@ -234,9 +264,11 @@
                 },
                 beforeSend: function() {
                     $('#table-quota-subscription').html('');
+                    $('#loader-table-quota-subscription').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
                     $('#table-quota-subscription').html(data);
+                    $('#loader-table-quota-subscription').html('');
                 },
                 complete: function() {
                 },
@@ -258,9 +290,11 @@
                 },
                 beforeSend: function() {
                     $('#bar-api-top-10-usage').html('');
+                    $('#loader-bar-api-top-10-usage').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
                     $('#bar-api-top-10-usage').html(data);
+                    $('#loader-bar-api-top-10-usage').html('');
                 },
                 complete: function() {
                 },
@@ -282,9 +316,11 @@
                 },
                 beforeSend: function() {
                     $('#bar-fault-overtime').html('');
+                    $('#loader-bar-fault-overtime').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
-                    $('#bar-fault-overtime').html(data);  
+                    $('#bar-fault-overtime').html(data);
+                    $('#loader-bar-fault-overtime').html('');
                 },
                 complete: function() {
                 },
@@ -306,9 +342,11 @@
                 },
                 beforeSend: function() {
                     $('#table-fault-overtime').html('');
+                    $('#loader-table-fault-overtime').html('<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>');
                 },
                 success: function(data) {
                     $('#table-fault-overtime').html(data);
+                    $('#loader-table-fault-overtime').html('');
                 },
                 complete: function() {
                 },
