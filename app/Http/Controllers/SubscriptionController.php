@@ -11,6 +11,7 @@ class SubscriptionController extends Controller
 
     public function __construct(){
         $this->url = getUrlApi();
+        $this->url_report = getUrlReport();
     }
 
     public function subscription_page(Request $request,$id){
@@ -70,7 +71,7 @@ class SubscriptionController extends Controller
                 session()->forget('token');
                 return redirect(route('login.page'));
             }
-    
+            
             $apilist = getUrl($this->url . '/apis'); 
             $publishapi = collect($apilist->list)->where('lifeCycleStatus', 'PUBLISHED')->all();
             $subscription = getUrl($this->url . '/subscriptions?applicationId='. $request->id_app);
@@ -88,11 +89,23 @@ class SubscriptionController extends Controller
         return abort(404);
     }
 
+    public function get_apilist_by_typesubs(Request $request){    
+        $typesubs = $request->type_subscription;
+        if ($typesubs == 'prepaid') {
+            $typesubs = 1;
+        }else{
+            $typesubs = 2;
+        }  
+        $api = getUrlReports($this->url_report . '/plan?subsTypeId='.$typesubs );
+        return response()->json(['status' => 'success', 'data' => $api]);
+    }
+
     public function store_subscription(Request $request){
         $validator = Validator::make($request->all(), [
             'applicationid'      => 'required',
             'apiid'              => 'required',
             'status'             => 'required',
+            'subs_type'          => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -114,9 +127,8 @@ class SubscriptionController extends Controller
                 ])
                 ->withBody(json_encode($payloads),'application/json')
                 ->post($this->url. '/subscriptions');
-
                 $data = json_decode($response->getBody()->getContents());
-
+                $data->subs_types = $request->subs_type;
                 return response()->json(['status' => 'success', 'data' => $data]);
 
             } catch (\Exception $e) {
@@ -176,7 +188,7 @@ class SubscriptionController extends Controller
     
             if($response->status() == 200)
             {   
-                Alert::success('Successfully deleted subscription', 'success');
+                Alert::toast('Successfully deleted subscription', 'success');
                 // Alert::success('Success', 'Berhasil menghapus subscription');
                 return back()->with('success', 'Successful Delete Subscription!');
             } 

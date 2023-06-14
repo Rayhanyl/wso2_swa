@@ -58,6 +58,7 @@ Route::middleware(['haslogin'])->group(function () {
     Route::post('/UpdateApplication/{id}', [ApplicationController::class, 'update_application'])->name('update.application');
     Route::get('/DeleteApplication/{id}', [ApplicationController::class, 'delete_application'])->name('delete.application');
     Route::get('/SubscriptionPage/{id}', [SubscriptionController::class, 'subscription_page'])->name('subscription.page');
+    Route::get('/GetApiByTypesubs', [SubscriptionController::class, 'get_apilist_by_typesubs'])->name('get.apilist.by.typesubs');
     // Route::get('/CreateSubscription/{id}', [SubscriptionController::class, 'create_subscription_page'])->name('create.subscription.page');
     Route::post('/StoreSubscription', [SubscriptionController::class, 'store_subscription'])->name('store.subscription');
     Route::get('/EditSubscription', [SubscriptionController::class, 'edit_subscription'])->name('edit.subscription');

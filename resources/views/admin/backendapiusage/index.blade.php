@@ -112,7 +112,6 @@
                 ],
             });
             getMonth($('#year').val());
-
         });
 
         function  getMonth(params) {
@@ -146,7 +145,6 @@
                 },
             });
         }
-
 
         $(document).on('change', '#year', function(e) {
             e.preventDefault();
