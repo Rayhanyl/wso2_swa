@@ -104,8 +104,8 @@
 
             $(document).on('click', '#btn-get-detail-invoice-data', function (){
                 modalGetDetailInvoice.show();
-                jqmodalGetDetailInvoice.find('.modal-title').html('Detail Invoice');
                 var id_invoice = $(this).data('id');
+                jqmodalGetDetailInvoice.find('.modal-title').html('Detail Invoice');
                 $.ajax({
                     type: "GET",
                     url: "{{ route('admin.modal.detail.invoice') }}",
