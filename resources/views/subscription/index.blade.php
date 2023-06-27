@@ -196,19 +196,19 @@
                                             <i class='bx bx-trash'></i>
                                         </a>
                                         @elseif($items->status == 'UNBLOCKED')
-                                        <button type="button" class="btn btn-warning btn-edit-subs rounded-4"
+                                        {{-- <button type="button" class="btn btn-warning btn-edit-subs rounded-4"
                                             data-subs-id="{{ $items->subscriptionId }}">
                                             <i class='bx bx-edit-alt' style="color: white;"></i>
-                                        </button>
-                                        <a class="btn btn-danger btn-deletesubs rounded-4"
-                                            href="{{ route ('delete.subscription',$items->subscriptionId) }}">
-                                            <i class='bx bx-trash'></i>
-                                        </a>
+                                        </button> --}}
                                         <a class="btn btn-primary rounded-4" type="button"
                                             href="{{ route ('tryout.page',$application->applicationId) }}"
                                             id="btn-tryout" data-api-id="{{ $items->apiId }}">
                                             Tryout
                                             <i class="bi bi-link"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-deletesubs rounded-4"
+                                        href="{{ route ('delete.subscription',$items->subscriptionId) }}">
+                                            <i class='bx bx-trash'></i>
                                         </a>
                                         @endif
                                     </td>
@@ -339,8 +339,8 @@ $(document).on('click', '.btn-deletesubs', function (e) {
     }).then((result) => {
         if (result.value) {
             Swal.fire({
-                icon: 'success',
-                title: 'Item deleted successfully',
+                icon: 'warning',
+                title: 'The item is being deleted',
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,

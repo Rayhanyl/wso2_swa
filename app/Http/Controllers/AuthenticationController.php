@@ -266,6 +266,8 @@ class AuthenticationController extends Controller
 
     public function logout(Request $request){
         $request->session()->forget('token');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect(route('home.page'));
     }
 

@@ -12,22 +12,21 @@
         <div class="col-12 my-3">
             <div class="card card-shadow-app rounded-4">
                 <div class="card-body">
-                    <form class="row g-4" action="#">
-                        <div class="col-12">
-                            <label class="fw-bold my-2" for="">Invoice Number</label>
-                            <input class="form-control" type="text" value="INV-XYZ-0212" disabled>
-                        </div>
+                    <form class="row g-4" action="{{ route ('admin.create.invoice.page') }}">
                         <div class="col-12 col-lg-6">
                             <label class="fw-bold my-2" for="">Issue date</label>
-                            <input class="form-control" type="date">
+                            <input class="form-control" type="date" name="issue_date" value="{{ now()->format('Y-m-d') }}">
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label class="fw-bold my-2" for="">Due date</label>
-                            <input class="form-control" type="date">
+                            <label class="fw-bold my-2" for="customer_name">Customer name</label>
+                            <select id="customer_name" name="customer_name" class="form-select">
+                            @foreach ($customers->data as $item)
+                                <option class="text-capitalize" value="{{ $item->username }}" {{ $username == $item->username ? 'selected':'' }}>{{ $item->username }} - ({{ $item->organizationName }})</option>
+                            @endforeach
+                        </select>
                         </div>
-                        <div class="col-12">
-                            <label class="fw-bold my-2" for="">Customer Name</label>
-                            <input class="form-control" type="text">
+                        <div class="col-12 d-grid gap-2">
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -35,79 +34,114 @@
         </div>
         <div class="col-12 my-3">
             <div class="card card-shadow-app rounded-4">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-12 text-end">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#additemmodal">Add item</button>
-                        </div>
-                    </div>
-                </div>
                 <div class="card-body">
                     <table class="table table-striped" id="create-invoice-admin-table" style="width:100%">
                         <thead class="table-orange">
                             <tr>
+                                <th>#</th>
                                 <th>API Name</th>
-                                <th>Business Plan</th>
-                                <th>QTY Req</th>
-                                <th>QTY Resp OK</th>
-                                <th>QTY Resp NOK</th>
+                                <th>Response Success</th>
                                 <th>Price</th>
                                 <th>Discount</th>
                                 <th>TAX</th>
                                 <th>Amount</th>
-                                <th>Action</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 10; $i++) <tr>
-                                <td>Pizzahack</td>
-                                <td>Unlimited</td>
-                                <td>500</td>
-                                <td>450</td>
-                                <td>30</td>
-                                <td>Rp.550.000.00</td>
-                                <td>10%</td>
-                                <td>
-                                    <select class="form-control" name="#" id="">
-                                        <option value="#">10%</option>
-                                        <option value="#">11%</option>
-                                        <option value="#">12%</option>
-                                        <option value="#">13%</option>
-                                    </select>
-                                </td>
-                                <td>Rp.500.000.00</td>
-                                <td><button class="btn btn-primary btn-sm">Details</button></td>
+                            @forelse ($data as $item)
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="pick_api" id="pick_api_{{ $loop->iteration }}" value="{{ $item->subsId }}">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{ $item->apiName }} <br>
+                                        ( {{ $item->subsName }} )
+                                    </td>
+                                    <td class="qty">
+                                        {{ $item->qtyOK }}
+                                    </td>
+                                    <td class="price">
+                                        {{ $item->price }}
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control" name="discount" min="1" max="100">
+                                    </td>
+                                    <td>
+                                        <select class="form-control" name="tax_api">
+                                            <option value="10">10%</option>
+                                            <option value="11">11%</option>
+                                            <option value="12">12%</option>
+                                        </select>
+                                    </td>
+                                    <td class="amount">
+                                        {{ $item->price * $item->qtyOK }}
+                                    </td>
+                                    <td class="startdate">
+                                        {{ $item->periodStartDate }}
+                                    </td>
+                                    <td class="enddate">
+                                        {{ $item->periodEndDate }}
+                                    </td>
                                 </tr>
-                                @endfor
+                            @empty
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <div class="col-12 my-3">
-            <form class="row" action="#">
+            <form class="row" action="{{ route ('admin.create.invoice') }}" method="POST">
+                @csrf
+                <div class="col-12 data-api">
+                    <input type="hidden" name="username" id="username" value="{{ $username }}">
+                    <input type="hidden" name="issue" id="issue" value="{{ $issue }}">
+                    <input type="hidden" name="amount_total_form" id="amount_total_form">
+                    <input type="hidden" name="amount_form" id="amount_form">
+                    <input type="hidden" name="subs_id_form" id="subs_id">
+                    <input type="hidden" name="tax" id="tax">
+                    <input type="hidden" name="discount" id="discount">
+                    <input type="hidden" name="price_form" id="price_form">
+                    <input type="hidden" name="qty_form" id="qty_form">
+                    <input type="hidden" name="startdate_form" id="startdate_form">
+                    <input type="hidden" name="enddate_form" id="enddate_form">
+                </div>
                 <div class="col-5">
                     <label class="fw-bold my-2" for="">Notes:</label>
-                    <textarea class="form-control" name="#" id="" cols="30" rows="10"></textarea>
+                    <textarea class="form-control" name="notes" id="" cols="30" rows="10"></textarea>
                 </div>
                 <div class="col-2">
                     <label class="fw-bold my-2" for="">Notifikasi</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="notif[]" value="EMAIL" id="email-notif">
+                        <label class="form-check-label" for="email-notif">
                             Email
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
+                        <input class="form-check-input" type="checkbox" name="notif[]" value="WA" id="wa-notif">
+                        <label class="form-check-label" for="wa-notif">
                             WhatsApp
                         </label>
                     </div>
                 </div>
                 <div class="col-5 text-end my-auto">
-                    <p>Sub total : <span class="text-primary fw-bold">Rp.91.800</span></p>
+                    <p>Sub total: <span id="subtotal" class="text-primary fw-bold"></span></p>
                     <button class="my-2 btn btn-primary">Simpan Transaksi</button>
                 </div>
             </form>
@@ -115,63 +149,7 @@
     </div>
 </div>
 
-{{-- Modal Add Item --}}
-
-<div class="modal fade" id="additemmodal" tabindex="-1" aria-labelledby="additem" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="additem">Add items</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row" action="#">
-                    <div class="col-12">
-                        <p class="">Invoce :&nbsp;<span class="text-primary fw-bold">INV.230032</span></p>
-                        <p class="">Period :&nbsp;<span class="text-primary fw-bold">jan 17 - Feb 19</span></p>
-                        <p class="">Customer :&nbsp;<span class="text-primary fw-bold">PT.XZR</span></p>
-                    </div>
-                    <hr>
-                    <div class="col-12">
-                        <table class="table table-striped" id="items-add-admin-table" style="width:100%">
-                            <thead class="table-orange">
-                                <tr>
-                                    <th></th>
-                                    <th>API Name</th>
-                                    <th>Business Plan</th>
-                                    <th>QTY Req</th>
-                                    <th>QTY Resp OK</th>
-                                    <th>QTY Resp NOK</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for ($i = 0; $i < 10; $i++) <tr>
-                                    <td>
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                    </td>
-                                    <td>Pizzahack</td>
-                                    <td>Unlimited</td>
-                                    <td>500</td>
-                                    <td>450</td>
-                                    <td>30</td>
-                                    </tr>
-                                    @endfor
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-grid gap-2 my-2">
-                        <button class="btn btn-warning text-white fw-bold w-50 mx-auto" type="button">OK</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-{{-- Modal Add Item --}}
-
 @push('script')
-
 <script>
     $(document).ready(function () {
         $('#create-invoice-admin-table').DataTable({
@@ -182,17 +160,64 @@
             ],
         });
 
-        $('#items-add-admin-table').DataTable({
-            responsive: true,
-            lengthMenu: [
-                [5, 25, 50, -1],
-                [10, 25, 50, 'All'],
-            ],
+        $('input[type="radio"][name="pick_api"]').on('change', function () {
+            calculateSubtotal($(this));
         });
+
+        $('input[name="discount"], select[name="tax_api"]').on('change', function () {
+            calculateSubtotal($('input[type="radio"][name="pick_api"]:checked'));
+        });
+
+        function calculateSubtotal(selectedApi) {
+            let price = parseFloat(selectedApi.closest('tr').find('.price').text());
+            let startDate = selectedApi.closest('tr').find('.startdate').text();
+            let endDate = selectedApi.closest('tr').find('.enddate').text();
+            let quantity = parseFloat(selectedApi.closest('tr').find('.qty').text());
+            let discount = parseFloat($('input[name="discount"]').val()) || 0;
+            let tax = parseFloat($('select[name="tax_api"]').val()) || 0;
+            
+            let subtotal = price * quantity;
+
+            if (discount) {
+                let discountAmount = subtotal * (discount / 100);
+                subtotal -= discountAmount;
+            }
+
+            if (tax) {
+                let taxAmount = subtotal * (tax / 100);
+                subtotal += taxAmount;
+            }
+
+            selectedApi.closest('tr').find('.amount').text(subtotal.toFixed(2));
+
+            let amountTotal = 0;
+            let amount = 0;
+            let qty = 0;
+
+            $('input[type="radio"][name="pick_api"]:checked').each(function () {
+                amountTotal += parseFloat($(this).closest('tr').find('.amount').text());
+                amount += parseFloat($(this).closest('tr').find('.amount').text());
+                qty += parseFloat($(this).closest('tr').find('.qty').text());
+            });
+
+            $('#amount_total_form').val(amountTotal.toFixed(2));
+            $('#amount_form').val(amount.toFixed(2));
+            $('#price_form').val(price);
+            $('#qty_form').val(qty);
+            $('#subs_id').val(selectedApi.val());
+            $('#tax').val(tax);
+            $('#startdate_form').val(startDate);
+            $('#enddate_form').val(endDate);
+            $('#discount').val(discount);
+            $('#subtotal').text(formatCurrency(subtotal.toFixed(2)));
+
+            function formatCurrency(amount) {
+                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
+            }
+        }
+
     });
 
 </script>
-
 @endpush
-
 @endsection

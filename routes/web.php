@@ -15,6 +15,7 @@ use App\Http\Controllers\{
     ManageKeysController,
     CustomerController,
     AdminController,
+    PaymentController,
 };
 
 /*
@@ -99,8 +100,12 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/CustomerBarChartTopFaultOvertime', [CustomerController::class, 'customer_bar_chart_fault_overtime'])->name('customer.bar.chart.fault.overtime');
     Route::get('/CustomerTableTopFaultOvertime', [CustomerController::class, 'customer_table_fault_overtime'])->name('customer.table.fault.overtime');
     Route::get('/CustomerPaymentPage', [CustomerController::class, 'customer_payment_page'])->name('customer.payment.page');
+    Route::post('/CustomerCreatePayment', [CustomerController::class, 'customer_create_payment'])->name('customer.create.payment');
     Route::get('/CustomerPaymentHistoryPage', [CustomerController::class, 'customer_payment_history_page'])->name('customer.payment.history.page');
-
+    Route::get('/CustomerInvoicePage', [CustomerController::class, 'customer_invoice_page'])->name('customer.invoice.page');
+    Route::get('/CustomerHistoryWaiting', [CustomerController::class, 'customer_history_waiting'])->name('customer.history.waiting');
+    Route::get('/CustomerHistoryAccepted', [CustomerController::class, 'customer_history_accepted'])->name('customer.history.accepted');
+    Route::get('/CustomerHistoryRejected', [CustomerController::class, 'customer_history_rejected'])->name('customer.history.rejected');
     
     Route::get('/AdminMonthlyReportSummary', [AdminController::class, 'admin_monthly_report_summary_page'])->name('admin.monthly.report.summary.page');
     Route::get('/AdminReportDetail/{app}/{api}/{month}/{year}', [AdminController::class, 'admin_detail_logs_report'])->name('admin.detail.logs.report');
@@ -129,7 +134,16 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/AdminTableTopFaultOvertime', [AdminController::class, 'admin_table_fault_overtime'])->name('admin.table.fault.overtime');
     Route::get('/AdminInvoicePage', [AdminController::class, 'admin_invoice_page'])->name('admin.invoice.page');
     Route::get('/AdminCreateInvoicePage', [AdminController::class, 'admin_create_invoice_page'])->name('admin.create.invoice.page');
+    Route::post('/AdminCreateInvoice', [AdminController::class, 'admin_create_invoice'])->name('admin.create.invoice');
     Route::get('/AdminPaymentPage', [AdminController::class, 'admin_payment_page'])->name('admin.payment.page');
+    Route::get('/AdminHistoryWaiting', [AdminController::class, 'admin_history_waiting'])->name('admin.history.waiting');
+    Route::get('/AdminModalConfirmationPayment', [AdminController::class, 'modal_confimation_payment'])->name('admin.modal.confirmation.payment');
+    Route::get('/AdminModalTrackPayment', [AdminController::class, 'modal_track_payment'])->name('admin.modal.track.payment');
+    Route::get('/AdminModalGetDetailInvoice', [AdminController::class, 'modal_get_detail_invoice'])->name('admin.modal.detail.invoice');
+    Route::put('/AdminConfirmationPayment', [AdminController::class, 'confirmation_payment'])->name('admin.confirmation.payment');
+    Route::get('/AdminHistoryAccepted', [AdminController::class, 'admin_history_accepted'])->name('admin.history.accepted');
+    Route::get('/AdminHistoryRejected', [AdminController::class, 'admin_history_rejected'])->name('admin.history.rejected');
+    Route::get('/AdminDownloadInvoicePDF', [AdminController::class, 'download_pdf_invoice'])->name('download.pdf.invoice');
     Route::get('/ErrorPage', [AdminController::class, 'error_page'])->name('error.page');
 });
 

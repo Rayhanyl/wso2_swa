@@ -12,6 +12,7 @@ class SubscriptionController extends Controller
     public function __construct(){
         $this->url = getUrlApi();
         $this->url_report = getUrlReport();
+        $this->url_billing = getUrlBilling();
     }
 
     public function subscription_page(Request $request,$id){
@@ -39,34 +40,11 @@ class SubscriptionController extends Controller
         return view('subscription.index', compact('application','subscription','approved_count','rejected_count','created_count'));
     }
 
-    // public function create_subscription_page(Request $request, $id){        
-    //     $application = getUrl($this->url .'/applications/'. $id);
-
-    //     if ($application->applicationId == null) {
-    //         session()->forget('token');
-    //         return redirect(route('login.page'));
-    //     }
-
-    //     $apilist = getUrl($this->url . '/apis'); 
-    //     $publishapi = collect($apilist->list)->where('lifeCycleStatus', 'PUBLISHED')->all();
-    //     $subscription = getUrl($this->url . '/subscriptions?applicationId='. $id);
-    //     $filltersubscription = collect($subscription->list)->pluck('apiId')->all();
-                
-    //     $notsubscription = [];
-    //     foreach ($publishapi as $key => $value) {
-    //         if(!in_array($value->id, $filltersubscription)){
-    //             $notsubscription[] = $value;
-    //         }
-    //     }
-
-    //     return view('subscription.create_subscription', compact('application','notsubscription'));
-    // }
-
     public function add_subscription(Request $request){
         if($request->ajax()){
 
             $application = getUrl($this->url .'/applications/'. $request->id_app);
-
+            $id_app = $request->id_app;
             if ($application->applicationId == null) {
                 session()->forget('token');
                 return redirect(route('login.page'));
@@ -75,29 +53,30 @@ class SubscriptionController extends Controller
             $apilist = getUrl($this->url . '/apis'); 
             $publishapi = collect($apilist->list)->where('lifeCycleStatus', 'PUBLISHED')->all();
             $subscription = getUrl($this->url . '/subscriptions?applicationId='. $request->id_app);
-            $filltersubscription = collect($subscription->list)->pluck('apiId')->all();
-                    
+            $filltersubscription = collect($subscription->list)->pluck('apiId')->all();                    
             $notsubscription = [];
             foreach ($publishapi as $key => $value) {
                 if(!in_array($value->id, $filltersubscription)){
                     $notsubscription[] = $value;
                 }
             }
-    
-            return view('subscription.modal.add_subs', compact('application','notsubscription'));
+            return view('subscription.modal.add_subs', compact('application','notsubscription','id_app'));
         }
         return abort(404);
     }
 
-    public function get_apilist_by_typesubs(Request $request){    
+    public function get_apilist_by_typesubs(Request $request){ 
         $typesubs = $request->type_subscription;
+        $app_id = $request->id_app;
+        $id_api = $request->id_api;
         if ($typesubs == 'prepaid') {
             $typesubs = 1;
         }else{
             $typesubs = 2;
         }  
-        $api = getUrlReports($this->url_report . '/plan?subsTypeId='.$typesubs );
-        return response()->json(['status' => 'success', 'data' => $api]);
+        $api = getUrlReports($this->url_report . '/plan?subsTypeId='.$typesubs.'&apiId='.$id_api);
+        $api->apiId = $id_api;
+        return response()->json(['status' => 'success', 'plan' => $api]);
     }
 
     public function store_subscription(Request $request){
@@ -114,7 +93,7 @@ class SubscriptionController extends Controller
             
             try {
 
-                $payloads = [
+                $payloads1 = [
                     'applicationId' => $request->applicationid,
                     'apiId' => $request->apiid,
                     'throttlingPolicy' => $request->status,
@@ -125,10 +104,36 @@ class SubscriptionController extends Controller
                 ->withHeaders([
                     'Authorization' => 'Bearer '.$request->session()->get('token'),
                 ])
-                ->withBody(json_encode($payloads),'application/json')
+                ->withBody(json_encode($payloads1),'application/json')
                 ->post($this->url. '/subscriptions');
                 $data = json_decode($response->getBody()->getContents());
                 $data->subs_types = $request->subs_type;
+                if (!empty($data)) {
+                    if ($request->subs_type == 'prepaid') {
+                        $typesubs = 1;
+                    }else{
+                        $typesubs = 2;
+                    } 
+                    $payloads2 = [
+                        'tierId' => $request->status,
+                        'subscriptionId' => $data->subscriptionId,
+                        'appId' => $data->applicationId,
+                        'apiId' => $data->apiId,
+                        'subsTypeId' => $typesubs,
+                    ]; 
+                    $responses = Http::withOptions(['verify' => false])
+                    ->withHeaders([
+                        'Authorization' => 'Bearer '.$request->session()->get('token'),
+                    ])
+                    ->withBody(json_encode($payloads2),'application/json')
+                    ->post($this->url_billing. '/subscriptions');    
+                    $subs = json_decode($responses->getBody()->getContents());
+                    if ($typesubs == 1) {
+                        $data->invoiceID = $subs->data->invoiceId;
+                    } elseif ($subs->status == 'error') {
+                        dd($subs);
+                    }
+                }
                 return response()->json(['status' => 'success', 'data' => $data]);
 
             } catch (\Exception $e) {
@@ -136,7 +141,7 @@ class SubscriptionController extends Controller
             }
         }
     }
-
+    
     public function edit_subscription(Request $request){
         if($request->ajax()){
 

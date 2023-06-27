@@ -7,12 +7,16 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use PhpParser\Node\Stmt\Return_;
+use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Log;
+use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Stmt\TryCatch;
-
-use function GuzzleHttp\Promise\all;
+use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
@@ -198,7 +202,7 @@ class AdminController extends Controller
     }
 
     private function encodeCurlyBraces($url){
-        $encodedUrl = str_replace(['{', '}'], ['%7B', '%7D'], $url);
+        $encodedUrl = str_replace(['{', '}','/'], ['%7B', '%7D', '%2F'], $url);
         return $encodedUrl;
     }
 
@@ -458,21 +462,6 @@ class AdminController extends Controller
         // return view('admin.errorsummary.table_index');
     }
 
-    public function admin_invoice_page(){
-
-        $invoices = getUrlBillings($this->url_billing .'/invoices' );
-        return view('admin.transaction.invoice.index',compact('invoices'));
-    }
-
-    public function admin_create_invoice_page(){
-        return view('admin.transaction.invoice.create_invoice');
-    }
-
-    public function admin_payment_page(){
-
-        return view('admin.transaction.payment.index');
-    }
-
     public function admin_dashboard_page(Request $request){
 
         $periode = [
@@ -716,5 +705,166 @@ class AdminController extends Controller
         }
  
         return view('admin.dashboard.table.api_fault_overtime',compact('fault_table'));
-    }   
+    } 
+    
+    public function admin_invoice_page(){
+        $invoices = getUrlBillings($this->url_billing .'/invoices' );
+        return view('admin.transaction.invoice.index',compact('invoices'));
+    }
+
+    public function admin_create_invoice_page(Request $request){
+
+        $username = $request->customer_name;
+        $issue = $request->issue_date;
+        $customers = getUrlReports($this->url_report . '/report/customers' );
+        if (empty($username)) {
+            $username = '';
+            $issue = '';
+            $data = [];   
+        } else {
+            $billing = getUrlBillings($this->url_billing .'/invoices/subscription-item?username='.$username );   
+            $data = $billing->data; 
+        }
+        
+        return view('admin.transaction.invoice.create_invoice',compact('customers','username','issue','data'));
+    }
+
+    public function admin_create_invoice(Request $request){
+        
+        try {
+            $notif = $request->notif;
+            $payload = [
+                'invoice' => [
+                    "periodStartDate" => $request->startdate_form,
+                    "periodEndDate" => $request->enddate_form,
+                    "dueDate" => $request->enddate_form,
+                    "customerId" => $request->username,
+                    "totalAmount" => $request->amount_total_form,
+                    "notes" => $request->notes,
+                    "notifyList" => $notif,
+                ],
+                'invoiceItems' => [
+                    [
+                        "amount" => $request->amount_form,
+                        "subscriptionId" => $request->subs_id_form,
+                        "tax" => $request->tax,
+                        "discount" => $request->discount,
+                        "price" => $request->price_form,
+                        "qty" => $request->qty_form,
+                    ],
+                ],
+            ];
+    
+            $response = Http::withBody(json_encode($payload), 'application/json')
+            ->post($this->url_billing . '/invoices');
+            $data = json_decode($response->getBody()->getContents());
+            Alert::toast('Invoice created successfully', 'success');
+            return redirect(route('admin.invoice.page'));
+        } catch (\Throwable $e) {
+            dd($e);
+        }
+    }
+    
+    public function admin_payment_page(){
+
+        return view('admin.transaction.payment.index');
+    }
+
+    public function admin_history_waiting(Request $request){
+
+        $waiting = getUrlBillings($this->url_billing .'/payments?status=1' );
+        return view('admin.transaction.payment.history.waiting',compact('waiting'));
+    }
+
+    public function admin_history_accepted(Request $request){
+
+        $accepted = getUrlBillings($this->url_billing .'/payments?status=2' );
+        return view('admin.transaction.payment.history.accepted', compact('accepted'));
+    }
+
+    public function admin_history_rejected(Request $request){
+
+        $rejected = getUrlBillings($this->url_billing .'/payments?status=3' );
+        return view('admin.transaction.payment.history.rejected', compact('rejected'));
+    }
+
+    public function modal_confimation_payment(Request $request){
+        $payment_id = $request->payment_id;
+        return view('admin.transaction.payment.modal.confirmation',compact('payment_id'));
+    }
+
+    public function confirmation_payment(Request $request){
+        if ($request->status == 1) {
+
+            $notif = $request->notif;
+            $payment = $this->encodeCurlyBraces($request->payment_id);
+            try {
+
+                $payloads = [
+                    'notes' => $request->notes,
+                    'notifyList' => $notif,
+                ];
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer '.$request->session()->get('token'),
+                ])
+                ->withBody(json_encode($payloads),'application/json')
+                ->put($this->url_billing . '/payments/confirm?paymentId='. $payment);
+                $data =json_decode($response->getBody()->getContents());
+                return redirect()->back();
+            } catch (\Throwable $e) {
+                dd($e);
+            }
+
+        }else{
+            $notif = $request->notif;
+            $payment = $this->encodeCurlyBraces($request->payment_id);
+            try {
+
+                $payloads = [
+                    'notes' => $request->notes,
+                    'notifyList' => $notif,
+                ];
+                $response = Http::withHeaders([
+                    'Authorization' => 'Bearer '.$request->session()->get('token'),
+                ])
+                ->withBody(json_encode($payloads),'application/json')
+                ->put($this->url_billing . '/payments/reject?paymentId='. $payment);
+                $data =json_decode($response->getBody()->getContents());
+                return redirect()->back();
+            } catch (\Throwable $e) {
+                dd($e);
+            }
+
+        }
+    
+    }
+
+    public function modal_track_payment(Request $request){
+        $payment_id = $request->payment_id;
+        $payments = $this->encodeCurlyBraces($payment_id);
+        $trackpayment = getUrlBillings($this->url_billing .'/payments/track?paymentId='. $payments );
+        return view('admin.transaction.payment.modal.trackpayment',compact('payment_id', 'trackpayment'));
+    }
+
+    public function modal_get_detail_invoice(Request $request){
+
+        $invoiceID = $this->encodeCurlyBraces($request->invoice_id);
+        $dataInvoice = getUrlBillings($this->url_billing .'/invoices/detail?invoiceId='.$invoiceID );
+        $invoice = $dataInvoice->data->invoice;
+        $items = $dataInvoice->data->invoiceItems;
+        return view('admin.transaction.payment.modal.detailinvoice',compact('dataInvoice','invoice','items'));
+    }
+
+    public function download_pdf_invoice(Request $request){
+
+        $invoiceID = $this->encodeCurlyBraces($request->invoiceId);
+        $detailInvoice = getUrlBillings($this->url_billing .'/invoices/detail?invoiceId='.$invoiceID );
+        
+        $data['invoice'] = $detailInvoice;
+        $pdf = PDF::loadView('admin.transaction.invoice.pdfinvoice',$data,['orientation' => 'portrait']);
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->download('INVOICE_'.$request->invoiceId.'.pdf');
+        // return view('admin.transaction.invoice.pdfinvoice');
+    }
+
 }

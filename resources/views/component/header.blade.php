@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Swamedia Informatika - WSO2</title>
+        <title>Swamedia Informatika - X10S</title>
         <link rel="stylesheet" href="{{ asset ('assets/bootstrap.5.2.3/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset ('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset ('assets/css/aos/aos.css') }}">
@@ -85,7 +85,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-describedby="dropdownTransactionLink">
                                 <li class="dropdown-item">
-                                    <a class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
+                                    <a href="{{ route ('admin.payment.page') }}" class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
                                 </li>
                                 <li class="dropdown-item">
                                     <a href="{{ route ('admin.invoice.page') }}"
@@ -113,11 +113,11 @@
                             </a>
                             <ul class="dropdown-menu" aria-describedby="dropdownTransactionLink">
                                 <li class="dropdown-item">
-                                    <a href="{{ route ('customer.payment.page') }}"
+                                    <a href="{{ route ('customer.payment.history.page') }}"
                                         class="nav-item nav-link nav-font mx-2 reset-local-storage">Payment</a>
                                 </li>
                                 <li class="dropdown-item">
-                                    <a class="nav-item nav-link nav-font mx-2 reset-local-storage">Invoice</a>
+                                    <a href="{{ route ('customer.invoice.page') }}" class="nav-item nav-link nav-font mx-2 reset-local-storage">Invoice</a>
                                 </li>
                             </ul>
                         </div>

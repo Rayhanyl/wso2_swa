@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use stdClass;
+use Svg\Tag\Rect;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use PhpParser\Node\Stmt\Return_;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
-use Svg\Tag\Rect;
+use GuzzleHttp\Exception\RequestException;
+
+
 
 class CustomerController extends Controller
 {
 
     public function __construct(){   
+        $this->url_billing = getUrlBilling();
         $this->url_report = getUrlReport();
         $this->url = getUrlApi();
     }
@@ -244,7 +249,7 @@ class CustomerController extends Controller
     }
 
     private function encodeCurlyBraces($url){
-        $encodedUrl = str_replace(['{', '}'], ['%7B', '%7D'], $url);
+        $encodedUrl = str_replace(['{', '}', '/'], ['%7B', '%7D', '%2F'], $url);
         return $encodedUrl;
     }
     
@@ -539,14 +544,105 @@ class CustomerController extends Controller
         return view('customer.dashboard.table.api_fault_overtime',compact('fault_table'));
     }   
 
-    public function customer_payment_page(){
-
-        return view('customer.transaction.payment.index');
+    public function customer_payment_page(Request $request){
+        $invoiceID = $this->encodeCurlyBraces($request->invoiceId);
+        $payment = getUrlBillings($this->url_billing .'/invoices/detail?invoiceId='.$invoiceID );
+        return view('customer.transaction.payment.index',compact('payment'));
     }
 
+    public function customer_create_payment(Request $request){
+        // dd($request->all());
+        $notify = $request->notify;
+        $notify = str_replace(['[',']'],'', $notify);
+        $notify = explode(',', $notify);
+        $email = isset($notify[0]) ? $notify[0] : null;
+        $wa = isset($notify[1]) ? $notify[1] : null;
+        if (empty($email)) {
+            $list = [$wa];
+        } elseif (empty($wa)) {
+            $list = [$email];
+        } else {
+            $list = [$email,$wa];
+        }
+
+        $validator = Validator::make($request->all(), [
+            'attachement_payment_slip' => 'required|file|mimes:jpeg,png,pdf|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            Alert::warning('Failed', $validator);
+            return redirect()->back()->withErrors($validator)->withInput();
+        } else {
+            try {
+
+                $client = new Client();
+                $attachment = $request->file('attachement_payment_slip');
+                $multipart = [
+                    [
+                        'name' => 'invoiceId',
+                        'contents' => $request->invoice_id
+                    ],
+                    [
+                        'name' => 'notes',
+                        'contents' => $request->berita_acara
+                    ],
+                    [
+                        'name' => 'attachment',
+                        'contents' => fopen($attachment->getPathname(), 'r'),
+                        'filename' => $attachment->getClientOriginalName()
+                    ],
+                ];
+
+                foreach ($list as $item) {
+                    $multipart[] = [
+                        'name' => 'notifyList[]',
+                        'contents' => $item
+                    ];
+                }
+
+                $response = $client->request('POST', $this->url_billing . '/payments', [
+                    'multipart' => $multipart,
+                ]);
+
+                $data = json_decode($response->getBody()->getContents());
+                Alert::toast('Thank you for paying', 'success');
+                return redirect(route('customer.payment.history.page'));
+            } catch (RequestException $e) {
+                dd($e->getMessage());
+            }
+        }
+    }
+    
     public function customer_payment_history_page(){
 
         return view('customer.transaction.payment.payment_history');
+    }
+
+    public function customer_history_waiting(Request $request){
+
+        $username = session('username');
+        $waiting = getUrlBillings($this->url_billing .'/payments?username='.$username.'&status=1' );
+        return view('customer.transaction.payment.history.waiting',compact('waiting'));
+    }
+
+    public function customer_history_accepted(Request $request){
+
+        $username = session('username');
+        $accepted = getUrlBillings($this->url_billing .'/payments?username='.$username.'&status=2' );
+        return view('customer.transaction.payment.history.accepted', compact('accepted'));
+    }
+
+    public function customer_history_rejected(Request $request){
+
+        $username = session('username');
+        $rejected = getUrlBillings($this->url_billing .'/payments?username='.$username.'&status=3' );
+        return view('customer.transaction.payment.history.rejected', compact('rejected'));
+    }
+
+    public function customer_invoice_page(Request $request){
+        $username = session('username');
+        $invoices = getUrlBillings($this->url_billing .'/invoices?username='.$username );
+        return view('customer.transaction.invoice.index',compact('invoices'));
     }
     
 }
