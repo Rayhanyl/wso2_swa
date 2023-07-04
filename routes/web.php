@@ -144,6 +144,8 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/AdminHistoryAccepted', [AdminController::class, 'admin_history_accepted'])->name('admin.history.accepted');
     Route::get('/AdminHistoryRejected', [AdminController::class, 'admin_history_rejected'])->name('admin.history.rejected');
     Route::get('/AdminDownloadInvoicePDF', [AdminController::class, 'download_pdf_invoice'])->name('download.pdf.invoice');
+    Route::get('/AdminBlockUnblockApi', [AdminController::class, 'block_unblock_api'])->name('block.unblock.api');
+    Route::post('/AdminBlockUnblockApiAction', [AdminController::class, 'block_unblock_api_action'])->name('block.unblock.api.action');
     Route::get('/ErrorPage', [AdminController::class, 'error_page'])->name('error.page');
 });
 

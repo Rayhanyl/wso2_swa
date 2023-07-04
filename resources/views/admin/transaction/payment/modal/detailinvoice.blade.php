@@ -10,83 +10,40 @@
     </div>
     <hr>
     <div class="col-12">
-        <div class="row g-3">
+        <table class="table">
             @foreach ($items as $item)
-                <div class="col-4">
-                    <label class="fw-bold my-2" for="#">API Name</label>
-                    <input class="form-control" type="text" value="{{ $item->apiName }}" readonly>
-                    {{-- <p>{{ $item->apiName }}</p> --}}
-                </div>
-                <div class="col-4">
-                    <label class="fw-bold  my-2" for="#">Application Name</label>
-                    <input class="form-control" type="text" value="{{ $item->applicationName }}" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="fw-bold  my-2" for="#">Business Plan</label>
-                    <input class="form-control" type="text" value="{{ $item->tierId }}" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="fw-bold  my-2" for="#">Qty Response</label>
-                    <input class="form-control" type="text" value="{{ $item->qty }}" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="fw-bold  my-2" for="#">Response OK</label>
-                    <input class="form-control" type="text" value="{{ $item->reqQtyOK }}" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="fw-bold  my-2" for="#">Response NOK</label>
-                    <input class="form-control" type="text" value="{{ $item->reqQtyNOK }}" readonly>
-                </div>
-                <div class="col-3">
-                    <label class="fw-bold  my-2" for="#">Price</label>
-                    <input class="form-control" type="text" value="Rp. {{ number_format($item->price, 0, ',', '.') }}" readonly>
-                </div>
-                <div class="col-3">
-                    <label class="fw-bold  my-2" for="#">Discount</label>
-                    <input class="form-control" type="text" value="{{ $item->discount }} %" readonly>
-                </div>
-                <div class="col-3">
-                    <label class="fw-bold my-2" for="#">Tax</label>
-                    <input class="form-control" type="text" value="{{ $item->tax }} %" readonly>
-                </div>
-                <div class="col-3">
-                    <label class="fw-bold my-2" for="#">Amount</label>
-                    <input class="form-control" type="text" value="Rp. {{ number_format($item->grandTotal, 0, ',', '.') }}" readonly>
-                </div>
+            <tr>
+                <th class="table-secondary">API Name</th>
+                <td class="table-light">{{ $item->apiName }}</td>
+                <th class="table-secondary">Qty Response</th>
+                <td class="table-light">{{ $item->qty }}</td>
+            </tr>
+            <tr>
+                <th class="table-secondary">Application Name</th>
+                <td class="table-light">{{ $item->applicationName }}</td>
+                <th class="table-secondary">Response OK</th>
+                <td class="table-light">{{ $item->reqQtyOK }}</td>
+            </tr>
+            <tr>
+                <th class="table-secondary">Business Plan</th>
+                <td class="table-light">{{ $item->tierId }}</td>
+                <th class="table-secondary">Response NOK</th>
+                <td class="table-light">{{ $item->reqQtyNOK }}</td>
+            </tr>
+            <tr>
+                <th class="table-secondary">Price</th>
+                <td class="table-light">Rp. {{ number_format($item->price, 0, ',', '.') }}</td>
+                <th class="table-secondary">Discount</th>
+                <td class="table-light">{{ $item->discount }} %</td> 
+            </tr>
+            <tr>
+                <th class="table-secondary">Tax</th>
+                <td class="table-light">{{ $item->tax }} %</td>
+                <th class="table-secondary">Total Amount</th>
+                <td class="table-light">Rp. {{ number_format($item->grandTotal, 0, ',', '.') }}</td>
+            </tr>
             @endforeach
-        </div>
-        {{-- <table class="table table-striped" id="data-table-detail-invoice" style="width:100%">
-            <thead class="table-orange">
-                <tr>
-                    <th>API Name</th>
-                    <th>Application Name</th>
-                    <th>Business Plan</th>
-                    <th>Qty Response</th>
-                    <th>Response OK</th>
-                    <th>Response NOK</th>
-                    <th>Price</th>
-                    <th>Discount</th>
-                    <th>Tax</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($items as $item)
-                <tr>
-                    <td>{{ $item->apiName }}</td>
-                    <td>{{ $item->applicationName }}</td>
-                    <td>{{ $item->tierId }}</td>
-                    <td>{{ $item->qty }}</td>
-                    <td>{{ $item->reqQtyOK }}</td>
-                    <td>{{ $item->reqQtyNOK }}</td>
-                    <td>{{ $item->price }}</td>
-                    <td>{{ $item->discount }}</td>
-                    <td>{{ $item->tax }}</td>
-                    <td>{{ $item->grandTotal }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table> --}}
+        </table>
     </div>
 </div>
 

@@ -46,11 +46,13 @@
                                 </td>
                                 {{-- <td class="text-primary">{{ $item->dueDate }}</td> --}}
                                 <td>
-                                    @if($item->paid == 'true')
-                                    <a class="btn btn-outline-primary btn-sm text-success" href=""><i class='bx bx-play'></i></a>
-                                    @else
-                                    <a class="btn btn-outline-primary btn-sm text-danger" href=""><i class='bx bx-stop-circle' ></i></a>
-                                    @endif
+                                    <a class="btn btn-outline-primary btn-sm" id="btn-blockunblock-api" data-id="{{ $item->subscriptionId }}">
+                                        @if($item->subscriptionState === 'UNBLOCKED')
+                                            <i class='bx bx-play text-success'></i>
+                                        @else
+                                            <i class='bx bx-stop-circle text-danger'></i>
+                                        @endif
+                                    </a>
                                     <a type="button" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" id="btn-download-pdf-invoice"><i class='bx bx-download'></i></a>
                                 </td>
                             </tr>
@@ -65,6 +67,7 @@
 
 {{-- Modal --}}
 @include('admin.transaction.payment.modal.modalgetdetailinvoice')
+@include('admin.transaction.payment.modal.modalblockunblockapi')
 {{-- Modal --}}
 
 @push('script')
@@ -130,6 +133,40 @@
                 error: function (xhr, ajaxOptions, thrownError) {
                     var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
                     contentGetDetailInvoice.html(pesan);
+                },
+            });
+        });
+
+        var modalGetBlockUnblockApi = new bootstrap.Modal(document.getElementById('modal-blockandunblock-api'));
+        var jqmodalGetBlockUnblockApi  = $('#modal-blockandunblock-api');
+        var loaderGetBlockUnblockApi  = $('#modalLoaderBlockUnblockapi');
+        var contentGetBlockUnblockApi  = $('#modalContentBlockUnblockapi');
+        $(document).on('click', '#btn-blockunblock-api', function (){
+            modalGetBlockUnblockApi.show();
+            jqmodalGetBlockUnblockApi.find('.modal-title').html('Setting access API');
+            var id_subscription = $(this).data('id');
+            $.ajax({
+                type: "GET",
+                url: "{{ route('block.unblock.api') }}",
+                dataType: 'html',
+                data: {
+                    subscription_id : id_subscription,
+                },
+                beforeSend: function () {
+                    contentGetBlockUnblockApi.html('');
+                    loaderGetBlockUnblockApi.html(
+                        '<div class="d-flex justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                    );
+                },
+                success: function (data) {
+                    contentGetBlockUnblockApi.html(data);
+                },
+                complete: function () {
+                    loaderGetBlockUnblockApi.html('');
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var pesan = xhr.status + " " + thrownError + "\n" + xhr.responseText;
+                    contentGetBlockUnblockApi.html(pesan);
                 },
             });
         });

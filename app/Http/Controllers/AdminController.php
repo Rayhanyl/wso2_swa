@@ -859,12 +859,46 @@ class AdminController extends Controller
 
         $invoiceID = $this->encodeCurlyBraces($request->invoiceId);
         $detailInvoice = getUrlBillings($this->url_billing .'/invoices/detail?invoiceId='.$invoiceID );
-        
         $data['invoice'] = $detailInvoice;
         $pdf = PDF::loadView('admin.transaction.invoice.pdfinvoice',$data,['orientation' => 'portrait']);
         $pdf->setPaper('A4', 'portrait');
         return $pdf->download('INVOICE_'.$request->invoiceId.'.pdf');
         // return view('admin.transaction.invoice.pdfinvoice');
+    }
+
+    public function block_unblock_api(Request $request){
+        $id_subs = $request->subscription_id;
+        return view('admin.transaction.payment.modal.blockunblockapi', compact('id_subs'));
+    }
+
+    public function block_unblock_api_action(Request $request){
+        if ($request->option_block === "1") {
+            
+            try {
+
+                $response = Http::put($this->url_billing. '/subscriptions/block/'.$request->id_subs);
+                $block =json_decode($response->getBody()->getContents());
+                Alert::toast('Berhasil memblokir API','success');
+                return redirect()->back();
+
+            } catch (\Throwable $e) {
+                dd($e);
+            }
+
+        }else{
+
+            try {
+                
+                $response = Http::put($this->url_billing. '/subscriptions/unblock/'.$request->id_subs);
+                $unblock =json_decode($response->getBody()->getContents());
+                Alert::toast('Berhasil membuka blokir API','success');
+                return redirect()->back();
+
+            } catch (\Throwable $e) {
+                dd($e);
+            }
+
+        }
     }
 
 }
