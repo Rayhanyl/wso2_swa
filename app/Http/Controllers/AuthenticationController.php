@@ -67,12 +67,12 @@ class AuthenticationController extends Controller
                     'grant_type' => 'password',
                     'username' => $request->username,
                     'password' => $request->password,
-                    'scope' => 'apim:admin apim:api_key apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe openid apim:subscribe'
+                    'scope' => 'apim:admin apim:api_key apim:api_view apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe apim:subscription_manage apim:subscription_view internal_login internal_user_association_view openid'
                 ];
 
                 $response = Http::withOptions(['verify' => false])
                 ->withHeaders([
-                    'Authorization' => 'Basic ckJpNTJRa1QyT0dTUjk5a0R6TTVPMGtRT253YToxdXY5UmI4UjBRZWZLaEVkSExDaDBNbUZUamNh',
+                    'Authorization' => 'Basic VGhJSzhRQXg4WWZVN25TZEZLeHRsa1RWZElVYTpZamxJaXdObzNmNF9BR1pidmFOYTVma3l5NDBh',
                 ])
                 ->withBody(json_encode($payloads),'application/json')
                 ->post($this->url_login. '/oauth2/token');
