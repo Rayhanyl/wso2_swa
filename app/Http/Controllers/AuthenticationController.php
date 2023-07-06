@@ -42,12 +42,12 @@ class AuthenticationController extends Controller
 
         $data = collect($userinfo->basic);
         $exploded = explode(',', $data['http://wso2.org/claims/role']);
-        if (in_array('Internal/admin',$exploded)) {
+        if (in_array('admin',$exploded)) {
             $role = 'admin';
         }else{
             $role = 'customer';
         }
-         
+
         $validator = Validator::make($request->all(), [
 
             'username'              => 'required',

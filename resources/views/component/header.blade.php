@@ -37,7 +37,7 @@
                             class="nav-item nav-link nav-font mx-2 reset-local-storage">Home</a>
                         @endif
                         @if (getToken())
-                        @if (session('role') == 'admin')
+                        @if (session('role') === 'admin')
                         <a href="{{ route ('admin.dashboard.page') }}"
                             class="nav-item nav-link nav-font mx-2 reset-local-storage">Dashboard</a>
                         @else
