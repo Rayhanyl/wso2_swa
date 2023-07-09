@@ -83,7 +83,7 @@
                               <span class="text-danger">{{ $message }}</span>
                             @enderror
                           </div>
-                          <div class="col-12 text-center">
+                          <div class="col-12 d-grid gap-2">
                             <button type="submit" class="btn btn-warning rounded-4 text-white fw-bold px-5 py-2">Create your account</button>
                           </div>
                         </form>

@@ -166,6 +166,14 @@
                                                     src="{{ asset ('assets/images/application/reject.png') }}"
                                                     alt="Rejected"> </span>
                                         </p>
+                                        @elseif ($items->status == 'BLOCKED')
+                                        <p class="text-danger fw-semibold" data-toggle="tooltip" data-placement="left"
+                                        title="Blocked">
+                                        {{$items->status}} <span class="subs-status-icon"> <img width="17"
+                                                height="17"
+                                                src="{{ asset ('assets/images/application/reject.png') }}"
+                                                alt="Rejected"> </span>
+                                    </p>
                                         @else
                                         <p class="text-primary fw-semibold" data-toggle="tooltip" data-placement="left"
                                             title="Approved">
@@ -178,10 +186,10 @@
                                     </td>
                                     <td>
                                         @if ($items->status == 'REJECTED')
-                                        <button type="button" class="btn btn-warning btn-edit-subs rounded-4"
+                                        {{-- <button type="button" class="btn btn-warning btn-edit-subs rounded-4"
                                             data-subs-id="{{ $items->subscriptionId }}" disabled>
                                             <i class='bx bx-edit-alt' style="color: white;"></i>
-                                        </button>
+                                        </button> --}}
                                         <a class="btn btn-danger btn-deletesubs rounded-4"
                                             href="{{ route ('delete.subscription',$items->subscriptionId) }}">
                                             <i class='bx bx-trash'></i>
@@ -208,6 +216,11 @@
                                         </a>
                                         <a class="btn btn-danger btn-deletesubs rounded-4"
                                         href="{{ route ('delete.subscription',$items->subscriptionId) }}">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
+                                        @elseif($items->status == 'BLOCKED')
+                                        <a class="btn btn-danger btn-deletesubs rounded-4"
+                                            href="{{ route ('delete.subscription',$items->subscriptionId) }}">
                                             <i class='bx bx-trash'></i>
                                         </a>
                                         @endif

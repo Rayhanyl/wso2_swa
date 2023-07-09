@@ -750,7 +750,7 @@ class AdminController extends Controller
                         "tax" => $request->tax,
                         "discount" => $request->discount,
                         "price" => $request->price_form,
-                        "qty" => $request->qty_form,
+                        "qty" => 1,
                     ],
                 ],
             ];

@@ -15,13 +15,13 @@
                     </div>
                     <div class="col-12 col-lg-8" data-aos="fade-left" data-aos-duration="1000">
                         <p class="font-hero-content text-end">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium fugit adipisci cupiditate expedita voluptatibus esse placeat rem quisquam odio quidem. Nihil ea doloribus placeat magnam, aliquid assumenda facere quo in a expedita veritatis harum ad. Repellat, quaerat ducimus sit harum commodi expedita quod similique eius magni! Officiis numquam accusamus quisquam?.
+                            SWA-API merupakan application programming interface (API) yang dikembangkan oleh BRI pada tahun 2018 dan didukung oleh ratusan talenta IT terbaik guna mewujudkan integrasi perbankan ynag aman dan mudah.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="section-bg-asabri pb-5">
+        {{-- <div class="section-bg-asabri pb-5">
             <div class="container" data-aos="fade-up" data-aos-duration="1000">
                 <div class="row d-flex justify-content-center px-5">
                     <div class="col-11">
@@ -33,10 +33,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="section-aboutus-asabriapi">
             <div class="container">
-                <div class="row px-5">
+                <div class="row pb-5">
                     <div class="col-12 col-lg-6 text-center" data-aos="fade-up-right" data-aos-duration="1000"> 
                         <img class="w-100" src="{{ asset ('assets/images/aboutus/asabriapi.png') }}" alt="Picture Asabri API">
                     </div>

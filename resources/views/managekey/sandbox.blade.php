@@ -69,8 +69,8 @@
                         @else
                         <div class="col-md-12 infoconsumer">
                             <p>Key and Secret <br>
-                                <mark class="text-danger"> Production Key and Secret is not
-                                    generated for this application
+                                <mark class="text-danger"> Production Key and Secret is not yet
+                                    generated for this application.
                                 </mark>
                             </p>
                         </div>

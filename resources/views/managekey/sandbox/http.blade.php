@@ -24,7 +24,7 @@
                     <div class="col-10 d-grid gap-2 mb-3">
                         <button class="btn btn-primary generate" type="button"
                         data-bs-toggle="modal" data-bs-target="#generateapikey" form="generateapikey">
-                        GENERATE KEY
+                        Generate Key
                         </button>
                     </div>
                     <div id="none" class="form-text">Use the Generate Key button to generate a self-contained JWT token.</div>

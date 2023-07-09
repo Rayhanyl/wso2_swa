@@ -3,7 +3,7 @@
         <tr>
             <th>Payment No</th>
             <th>Invoice No</th>
-            <th>Paid</th>
+            <th>Status</th>
             <th>Period</th>
             <th>Amount</th>
             <th>Action</th>
@@ -29,8 +29,8 @@
             <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d F') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d F') }}</td>
             <td>
                 <a class="btn btn-primary btn-sm disabled"><i class='bx bxs-pen'></i></a>
-                <a type="button" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" id="btn-track-payment"><i class='bx bxs-edit-location'></i></a>
-                <a type="button" class="btn btn-primary btn-sm" href="http://103.164.54.199:8088/payments/files?paymentId={{ $item->id }}"><i class='bx bx-download'></i></a>
+                <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Tracking" data-id="{{ $item->id }}" id="btn-track-payment"><i class='bx bxs-edit-location'></i></a>
+                <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Proof of payment" href="http://103.164.54.199:8088/payments/files?paymentId={{ $item->id }}"><i class='bx bx-download'></i></a>
             </td>
         </tr>
         @endforeach

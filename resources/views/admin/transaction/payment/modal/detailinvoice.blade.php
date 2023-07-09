@@ -6,7 +6,7 @@
     </div>
     <div class="col-12 col-lg-6">
         <p><b>Customer :</b> <span class="text-capitalize">{{ $invoice->customerId }}</span></p>
-        <p><b>Amount :</b> <span>Rp. {{ number_format($invoice->grandTotal, 0, ',', '.') }}</span></p>
+        <p><b>Total Amount :</b> <span>Rp. {{ number_format($invoice->grandTotal, 0, ',', '.') }}</span></p>
     </div>
     <hr>
     <div class="col-12">
@@ -39,7 +39,7 @@
             <tr>
                 <th class="table-secondary">Tax</th>
                 <td class="table-light">{{ $item->tax }} %</td>
-                <th class="table-secondary">Total Amount</th>
+                <th class="table-secondary">Amount</th>
                 <td class="table-light">Rp. {{ number_format($item->grandTotal, 0, ',', '.') }}</td>
             </tr>
             @endforeach

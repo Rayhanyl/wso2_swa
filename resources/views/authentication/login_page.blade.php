@@ -53,6 +53,7 @@
                         <div class="row">
                             <div class="col-7">
                                 <p>Don’t have an Account?
+                                    <br>
                                     <a href="{{ route ('register.page') }}" class="text-warning">
                                         Register Now!
                                     </a>
@@ -60,6 +61,7 @@
                             </div>
                             <div class="col-5 text-end">
                             <p>
+                                <br>
                                 <a href="{{ route ('forgot.password.page') }}" class="text-warning text-end">
                                     Forgot Password?    
                                 </a> 

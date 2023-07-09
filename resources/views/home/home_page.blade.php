@@ -7,7 +7,7 @@
                 <div class="col-12 col-lg-6 p-5" data-aos="fade-right" data-aos-duration="1000">
                     <p class="hero-head-font">Welcome to <strong class="hero-text">SWAMEDIA</strong>  API !</p>
                     <p class="hero-description-font">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa excepturi vero eveniet. Esse cupiditate illo architecto ratione nemo quaerat adipisci.
+                        SWA-APIs are Application Programming Interfaces (APIs) developed by SWAMEDIA to enable integration your application and SWA services. SWAMEDIA allows your company to facilitate the transaction experience for your customers.
                     </p>
                     <a href="{{ route ('register.page') }}" class="btn btn-warning btn-hero-daftar rounded-5 px-5 py-3">
                         Daftar Sekarang
@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="body-testimonial col-12" data-aos="fade-up" data-aos-duration="1000">
-                    <p class="testimonial-devider1-font">What SWAMEDIA customer are saying</p>
+                    <p class="testimonial-devider1-font">What are they saying about SWA-API?</p>
                     <p class="testimonial-devider2-font">Explore our API gallery and find out how our API fit to your business case.</p>
                 </div>
                 <div class="col-12 my-5 py-3">

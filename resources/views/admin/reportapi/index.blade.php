@@ -49,7 +49,7 @@
                                     </select>
                                 </div>
                                 <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary w-50">Generate</button>
+                                    <button type="submit" class="btn btn-primary w-50">Generate Report</button>
                                 </div>
                             </form>
                         </div>

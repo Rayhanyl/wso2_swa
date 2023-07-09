@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col-12 mb-2">
                             <h3 class="text-capitalize">Welcome, <span class="text-warning">{{ session('firstname') }} {{ session('lastname') }}</span> !</h3>
-                            <p class="fw-light">Explore our API gallery and find out how our API fit to your business case.</p>
+                            <p class="fw-light">Application.</p>
                         </div>
                         <div class="col-12 col-lg-12 my-3">
                             <div class="row px-4">
@@ -22,7 +22,7 @@
                                                 </div>
                                                 <div class="col-8 text-center">
                                                     <div class="fw-bold" style="font-size: 14px;">
-                                                        Application Total
+                                                        Application
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
                                                         {{ $application->count }}
@@ -41,7 +41,7 @@
                                                 </div>
                                                 <div class="col-8 text-center">
                                                     <div class="fw-bold" style="font-size: 13px;">
-                                                        Application Created
+                                                        Created
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
                                                         {{ $created_count }}
@@ -60,7 +60,7 @@
                                                 </div>
                                                 <div class="col-8 text-center">
                                                     <div class="fw-bold" style="font-size: 12px;">
-                                                        Application Approved
+                                                        Approved
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
                                                         {{ $approved_count }}
@@ -79,7 +79,7 @@
                                                 </div>
                                                 <div class="col-8 text-center">
                                                     <div class="fw-bold" style="font-size: 13px;">
-                                                        Application Rejected
+                                                        Rejected
                                                     </div>
                                                     <div class="fw-bold text-center" style="font-size: 24px;">
                                                         {{ $rejected_count }}
@@ -109,7 +109,7 @@
             <div class="card rounded-4">
                 <div class="card-body">
                     <h3>Application list</h3>
-                    <p>Creating a application is easy and straightforward. So why wait? Join the revolution today and start building your application.</p>
+                    <p>Below is a list of applications that you create. Please use it to subscribe to the API.</p>
                     <a href="{{ route ('create.application.page') }}" class="btn btn-primary rounded-4 add-icon-app">Create application</a>
                     <hr>
                     <div class="table-responsive">
@@ -152,7 +152,9 @@
                                             </p>
                                         </td>
                                         <td style="width:15%">{{$item->throttlingPolicy}}</td>
-                                        <td>{{$item->subscriptionCount}}</td>
+                                        <td>
+                                            {{$item->subscriptionCount == 0 ? 'empty' : $item->subscriptionCount}}
+                                        </td>
                                         <td>
                                             <p class="list-app-description">
                                                 {{$item->description}}

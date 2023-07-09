@@ -43,7 +43,8 @@
                                 <td class="text-primary">{{ \Carbon\Carbon::parse($item->dueDate)->format('d F Y') }}</td>
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{ route ('customer.payment.page') }}?invoiceId={{ $item->id }}"><i class='bx bx-wallet' ></i></a>
-                                    <a type="button" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" id="btn-download-pdf-invoice"><i class='bx bx-download'></i></a>
+                                    {{-- <a type="button" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" id="btn-download-pdf-invoice"><i class='bx bx-download'></i></a> --}}
+                                    <a class="btn btn-primary btn-sm" href="{{ route ('download.pdf.invoice') }}?invoiceId={{ $item->id }}" target="_blank"><i class='bx bx-download'></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -73,25 +74,25 @@
             
         });
 
-        $(document).on('click', '#btn-download-pdf-invoice', function() {
-            var id_invoice = $(this).data('id');
-            $.ajax({
-                type: "GET",
-                url: "{{ route ('download.pdf.invoice') }}",
-                dataType: 'html',
-                data: {
-                    invoiceId : id_invoice,
-                },
-                beforeSend: function() {
-                },
-                success: function(data) {
-                },
-                complete: function() {
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                },
-            });
-        });
+        // $(document).on('click', '#btn-download-pdf-invoice', function() {
+        //     var id_invoice = $(this).data('id');
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{ route ('download.pdf.invoice') }}",
+        //         dataType: 'html',
+        //         data: {
+        //             invoiceId : id_invoice,
+        //         },
+        //         beforeSend: function() {
+        //         },
+        //         success: function(data) {
+        //         },
+        //         complete: function() {
+        //         },
+        //         error: function(xhr, ajaxOptions, thrownError) {
+        //         },
+        //     });
+        // });
 
         var modalGetDetailInvoice = new bootstrap.Modal(document.getElementById('modal-get-detail-invoice'));
         var jqmodalGetDetailInvoice  = $('#modal-get-detail-invoice');

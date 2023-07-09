@@ -35,8 +35,8 @@
     @foreach ($trackpayment->data->paymentLogs as $item)
     <div class="row g-0">
         <div class="col-12 row my-2">
-            <div class="col-2">
-                {{ \Carbon\Carbon::parse($item->createdTime)->format('d M H:i') }}
+            <div class="col-3">
+                {{ \Carbon\Carbon::parse($item->createdTime)->format('d M y H:i') }}
             </div>
             <div class="col-1 d-flex align-items-center">
                 <h6 class="text-primary">

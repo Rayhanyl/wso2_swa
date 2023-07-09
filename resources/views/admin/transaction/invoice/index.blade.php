@@ -41,19 +41,24 @@
                                     @if ($item->paid == 'true')
                                         <span class="fw-bold text-success">Paid</span>
                                     @else
-                                    <span class="fw-bold text-warning">Unpaid</span>
+                                        <span class="fw-bold text-warning">Unpaid</span>
                                     @endif
                                 </td>
                                 {{-- <td class="text-primary">{{ $item->dueDate }}</td> --}}
                                 <td>
                                     <a class="btn btn-outline-primary btn-sm" id="btn-blockunblock-api" data-id="{{ $item->subscriptionId }}">
                                         @if($item->subscriptionState === 'UNBLOCKED')
-                                            <i class='bx bx-play text-success'></i>
+                                            <i class='bx bx-stop-circle text-danger' data-toggle="tooltip-run" data-placement="top" title="Shutdown API"></i>
+                                        @elseif ($item->subscriptionState === 'BLOCKED')
+                                            <i class='bx bx-play text-success' data-toggle="tooltip-shutdown1" data-placement="top" title="Active API"></i>
+                                        @elseif($item->subscriptionState === 'ON_HOLD')
+                                            <i class='bx bx-play text-success' data-toggle="tooltip-shutdown1" data-placement="top" title="Active API"></i>
                                         @else
-                                            <i class='bx bx-stop-circle text-danger'></i>
+                                            <i class='bx bx-play text-success' data-toggle="tooltip-shutdown2" data-placement="top" title="Active API"></i>
                                         @endif
                                     </a>
-                                    <a type="button" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" id="btn-download-pdf-invoice"><i class='bx bx-download'></i></a>
+                                    {{-- <a type="button" class="btn btn-primary btn-sm" data-id="{{ $item->id }}" id="btn-download-pdf-invoice"><i class='bx bx-download'></i></a> --}}
+                                    <a class="btn btn-primary btn-sm" href="{{ route ('download.pdf.invoice') }}?invoiceId={{ $item->id }}" target="_blank"><i class='bx bx-download'></i></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -81,27 +86,31 @@
                     [10, 25, 50, 'All'],
                 ],
             });
+
+            $('[data-toggle="tooltip-run"]').tooltip();
+            $('[data-toggle="tooltip-shutdown1"]').tooltip();
+            $('[data-toggle="tooltip-shutdown2"]').tooltip();
         });
 
-        $(document).on('click', '#btn-download-pdf-invoice', function() {
-            var id_invoice = $(this).data('id');
-            $.ajax({
-                type: "GET",
-                url: "{{ route ('download.pdf.invoice') }}",
-                dataType: 'html',
-                data: {
-                    invoiceId : id_invoice,
-                },
-                beforeSend: function() {
-                },
-                success: function(data) {
-                },
-                complete: function() {
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                },
-            });
-        });
+        // $(document).on('click', '#btn-download-pdf-invoice', function() {
+        //     var id_invoice = $(this).data('id');
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "{{ route ('download.pdf.invoice') }}",
+        //         dataType: 'html',
+        //         data: {
+        //             invoiceId : id_invoice,
+        //         },
+        //         beforeSend: function() {
+        //         },
+        //         success: function(data) {
+        //         },
+        //         complete: function() {
+        //         },
+        //         error: function(xhr, ajaxOptions, thrownError) {
+        //         },
+        //     });
+        // });
 
         var modalGetDetailInvoice = new bootstrap.Modal(document.getElementById('modal-get-detail-invoice'));
         var jqmodalGetDetailInvoice  = $('#modal-get-detail-invoice');

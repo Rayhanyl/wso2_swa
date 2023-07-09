@@ -847,14 +847,14 @@ hr.style-2 {
 
     .font-hero-title1 {
         font-family: "Raleway-Bold";
-        font-size: 70px;
+        font-size: 40px;
         line-height: 20px;
         color: #38386e;
     }
 
     .font-hero-title2 {
         font-family: "Raleway-Black";
-        font-size: 78px;
+        font-size: 55px;
         color: #38386e;
     }
 
@@ -898,7 +898,7 @@ hr.style-2 {
     }
 
     .font-widget-content1 {
-        font-size: 24px;
+        font-size: 22px;
         font-family: "Poppins-medium-italic";
     }
 
