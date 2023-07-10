@@ -65,7 +65,7 @@
                                     On Hold
                                 </div>
                                 <div class="fw-bold text-center" style="font-size: 24px;">
-                                    {{ $created_count }}
+                                    {{ $total_count }}
                                 </div>
                             </div>
                         </div>

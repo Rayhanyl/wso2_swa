@@ -36,8 +36,11 @@ class SubscriptionController extends Controller
         $rejected_count = count($rejected);
         $created = collect($subscription->list)->where('status','ON_HOLD')->all();
         $created_count = count($created);
+        $block = collect($subscription->list)->where('status','BLOCKED')->all();
+        $block_count = count($block);
+        $total_count = $block_count + $created_count;
 
-        return view('subscription.index', compact('application','subscription','approved_count','rejected_count','created_count'));
+        return view('subscription.index', compact('application','subscription','approved_count','rejected_count','created_count','total_count'));
     }
 
     public function add_subscription(Request $request){
@@ -107,6 +110,7 @@ class SubscriptionController extends Controller
                 ->withBody(json_encode($payloads1),'application/json')
                 ->post($this->url. '/subscriptions');
                 $data = json_decode($response->getBody()->getContents());
+                dd($data);
                 $data->subs_types = $request->subs_type;
                 if (!empty($data)) {
                     if ($request->subs_type == 'prepaid') {
