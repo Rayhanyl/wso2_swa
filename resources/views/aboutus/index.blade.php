@@ -100,10 +100,10 @@
                 </div>
                 <div class="col-12 my-5">
                     <div class="row g-3">
-                        <div class="col-12">
+                        <div class="col-12" data-aos="fade-right" data-aos-duration="1000">
                             <p class="fw-bold" style="font-size:30px;">Several industries have adopted <b class="text-warning">X</b><b style="color:rgb(18, 0, 177);">10S</b> services</p>
                         </div>
-                        <div class="col-12">
+                        <div class="col-12" data-aos="flip-up" data-aos-duration="1000">
                             <div class="row">
                                 <div class="col-12 col-lg-3 text-center zoom">
                                     <img class="w-50" src="{{ asset ('assets/images/aboutus/Education.png') }}" alt="Icon Industry">
