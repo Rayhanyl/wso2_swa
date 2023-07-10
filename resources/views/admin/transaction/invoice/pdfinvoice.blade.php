@@ -179,7 +179,7 @@
     </div>
     <div class="section">
         <div class="section-content">
-            <p><b>Additional Comments</b> : Mohon melakukan pembayaran dalam waktu (sisa hari) hari </p>
+            <p><b>Additional Comments</b> : Mohon melakukan pembayaran dalam waktu ({{ $days }}) hari </p>
         </div>
         <div class="w-50" style="margin-top: 30px; margin-bottom:30px;">
             <p style="font-weight:bold; font-size:18px;">Swamedia <span style="color:#FFA41C;">X</span><span style="color:#003399;">10S</span></p>

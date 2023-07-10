@@ -12,23 +12,27 @@
         <div class="col-12 my-3">
             <div class="card card-shadow-app rounded-4">
                 <div class="card-body">
-                    <form class="row g-4" action="{{ route ('admin.create.invoice.page') }}">
-                        <div class="col-12 col-lg-6">
-                            <label class="fw-bold my-2" for="">Issue date</label>
-                            <input class="form-control" type="date" name="issue_date" value="{{ now()->format('Y-m-d') }}">
+                    <div class="row p-3">
+                        <div class="col-12 d-flex justify-content-center">
+                            <form class="row g-4" action="{{ route ('admin.create.invoice.page') }}">
+                                <div class="col-12 col-lg-12">
+                                    <label class="fw-bold my-2" for="">Issue date</label>
+                                    <input class="form-control" type="date" name="issue_date" value="{{ now()->format('Y-m-d') }}">
+                                </div>
+                                <div class="col-12 col-lg-12">
+                                    <label class="fw-bold my-2" for="customer_name">Customer name</label>
+                                    <select id="customer_name" name="customer_name" class="form-select">
+                                    @foreach ($customers->data as $item)
+                                        <option class="text-capitalize" value="{{ $item->username }}" {{ $username == $item->username ? 'selected':'' }}>{{ $item->username }} - ({{ $item->organizationName }})</option>
+                                    @endforeach
+                                </select>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary" type="submit">Get List Subscription</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <label class="fw-bold my-2" for="customer_name">Customer name</label>
-                            <select id="customer_name" name="customer_name" class="form-select">
-                            @foreach ($customers->data as $item)
-                                <option class="text-capitalize" value="{{ $item->username }}" {{ $username == $item->username ? 'selected':'' }}>{{ $item->username }} - ({{ $item->organizationName }})</option>
-                            @endforeach
-                        </select>
-                        </div>
-                        <div class="col-12 d-grid gap-2">
-                            <button class="btn btn-primary" type="submit">Get List Subscription</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

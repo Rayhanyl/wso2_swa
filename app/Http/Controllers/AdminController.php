@@ -859,6 +859,10 @@ class AdminController extends Controller
 
         $invoiceID = $this->encodeCurlyBraces($request->invoiceId);
         $detailInvoice = getUrlBillings($this->url_billing .'/invoices/detail?invoiceId='.$invoiceID );
+        $dueDate = $detailInvoice->data->invoice->dueDate;
+        $currentDate = Carbon::now();
+        $difference = $currentDate->diff($dueDate);
+        $data['days'] = $difference->days;
         $data['invoice'] = $detailInvoice;
         $pdf = PDF::loadView('admin.transaction.invoice.pdfinvoice',$data,['orientation' => 'portrait']);
         $pdf->setPaper('A4', 'portrait');
