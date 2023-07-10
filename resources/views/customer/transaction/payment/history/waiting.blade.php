@@ -4,8 +4,8 @@
             <th>Payment No</th>
             <th>Invoice No</th>
             <th>Status</th>
-            <th>Period</th>
             <th>Amount</th>
+            <th>Period</th>
             <th>Action</th>
         </tr>
     </thead>

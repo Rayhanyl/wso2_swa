@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-12 col-lg-8" data-aos="fade-left" data-aos-duration="1000">
                         <p class="font-hero-content text-end">
-                            SWA-API merupakan application programming interface (API) yang dikembangkan oleh BRI pada tahun 2018 dan didukung oleh ratusan talenta IT terbaik guna mewujudkan integrasi perbankan ynag aman dan mudah.
+                            SWAMEDIA API adalah solusi satu atap untuk semua kebutuhan keuangan Anda. Dengan API kami, Anda dapat mengakses berbagai layanan keuangan, termasuk pembayaran, transfer, dan lainnya. API kami dirancang agar mudah digunakan, aman, dan andal, sehingga Anda dapat berfokus pada hal terbaik yang Anda lakukan.
                         </p>
                     </div>
                 </div>

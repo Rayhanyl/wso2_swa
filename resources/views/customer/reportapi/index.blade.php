@@ -172,7 +172,7 @@
                 let apis = '';
                 apis += `<option>All</option>`
                 api_list.forEach(item => {
-                    apis += `<option value='${item.apiId}' ${select}>${item.apiInfo.name}</option>`;  
+                    apis += `<option value='${item.apiId}'>${item.apiInfo.name}</option>`;  
                 });
                 $('#api_name').html(apis);
 

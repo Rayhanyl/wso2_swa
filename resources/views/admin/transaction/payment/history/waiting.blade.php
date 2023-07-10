@@ -4,8 +4,8 @@
             <th>Payment No</th>
             <th>Invoice No</th>
             <th>Status</th>
-            <th>Period</th>
             <th>Amount</th>
+            <th>Period</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -15,8 +15,9 @@
             <td>{{ $item->id }}</td>
             <td>
                 <a class="text-primary" type="button" data-id="{{ $item->invoiceId }}" id="btn-get-detail-invoice-data">
-                    {{ $item->invoiceId }}</td>
+                    {{ $item->invoiceId }}
                 </a>
+            </td>
             <td>
                 @if ($item->paid == 'true')
                     <span class="fw-bold text-success">Paid</span>
@@ -24,8 +25,8 @@
                 <span class="fw-bold text-warning">Unpaid</span>
                 @endif
             </td>
-            <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d F') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d F') }}</td>
             <td>Rp. {{ number_format($item->totalAmount, 0, ',', '.') }}</td>
+            <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d F') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d F') }}</td>
             <td>
                 <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Approval" data-id="{{ $item->id }}" id="btn-confirmation-payment">
                     <i class='bx bxs-pen'></i>
