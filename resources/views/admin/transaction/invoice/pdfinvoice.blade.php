@@ -93,7 +93,6 @@
 <body>
     <div class="header">
         <div class="header-logo">
-        <img src="#" alt="Logo">
         </div>
         <h1 style="color:#FFF;">INVOICE</h1>
         <h2 style="color:#FFF;">{{ $invoice->data->invoice->id }}</h2>

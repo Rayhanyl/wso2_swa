@@ -26,7 +26,7 @@
                 @endif
             </td>
             <td>Rp. {{ number_format($item->totalAmount, 0, ',', '.') }}</td>
-            <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d F') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d F') }}</td>
+            <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d F y') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d F y') }}</td>
             <td>
                 <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Tracking" data-id="{{ $item->id }}" id="btn-track-payment"><i class='bx bxs-edit-location'></i></a>
                 <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Proof of Payment" href="http://103.164.54.199:8088/payments/files?paymentId={{ $item->id }}"><i class='bx bx-download'></i></a>
