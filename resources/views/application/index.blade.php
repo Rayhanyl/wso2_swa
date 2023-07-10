@@ -96,8 +96,8 @@
                                 <div class="col-6">
                                     <img width="550" height="450" src="{{ asset ('assets/images/application/list-overview.png') }}" alt="Overview">
                                 </div>
-                                <div class="col-6">
-                                    <img width="520" height="460" src="{{ asset ('assets/images/application/application-overview.png') }}" alt="List">
+                                <div class="col-6 text-center">
+                                    <img width="400" height="460" src="{{ asset ('assets/images/application/application-overview.png') }}" alt="List">
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                         </td>
                                         <td style="width:15%">{{$item->throttlingPolicy}}</td>
                                         <td>
-                                            {{$item->subscriptionCount == 0 ? 'empty' : $item->subscriptionCount}}
+                                            {{$item->subscriptionCount == 0 ? 'N/A' : $item->subscriptionCount}}
                                         </td>
                                         <td>
                                             <p class="list-app-description">
