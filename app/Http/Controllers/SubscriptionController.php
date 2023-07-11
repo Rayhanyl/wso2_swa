@@ -110,7 +110,6 @@ class SubscriptionController extends Controller
                 ->withBody(json_encode($payloads1),'application/json')
                 ->post($this->url. '/subscriptions');
                 $data = json_decode($response->getBody()->getContents());
-                dd($data);
                 $data->subs_types = $request->subs_type;
                 if (!empty($data)) {
                     if ($request->subs_type == 'prepaid') {

@@ -219,6 +219,9 @@
                                             <i class='bx bx-trash'></i>
                                         </a>
                                         @elseif($items->status == 'BLOCKED')
+                                        <a class="btn btn-primary btn-renewal rounded-4">
+                                            Renewal
+                                        </a>
                                         <a class="btn btn-danger btn-deletesubs rounded-4"
                                             href="{{ route ('delete.subscription',$items->subscriptionId) }}">
                                             <i class='bx bx-trash'></i>
@@ -369,6 +372,41 @@ $(document).on('click', '.btn-deletesubs', function (e) {
         }
     });
 });
+
+$(document).on('click', '.btn-renewal', function (e) {
+    e.preventDefault();
+    let href = $(this).attr('href');
+    Swal.fire({
+        title: 'Renewal API',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        toast: true,
+        position: 'top-end',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, renewal'
+    }).then((result) => {
+        if (result.value) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Waiting',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: function (toast) {
+                    toast.addEventListener('mouseenter', Swal.stopTimer);
+                    toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+            }).then(() => {
+                window.location.href = href;
+            });
+        }
+    });
+});
+
 
 function loadImg(params) {
     $.ajax({
