@@ -226,6 +226,11 @@
                                             href="{{ route ('delete.subscription',$items->subscriptionId) }}">
                                             <i class='bx bx-trash'></i>
                                         </a>
+                                        @elseif ($items->status == 'DELETE_PENDING')
+                                        <a class="btn btn-danger btn-deletesubs rounded-4"
+                                        href="{{ route ('delete.subscription',$items->subscriptionId) }}">
+                                            <i class='bx bx-trash'></i>
+                                        </a>
                                         @endif
                                     </td>
                                 </tr>
