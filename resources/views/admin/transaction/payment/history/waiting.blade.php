@@ -22,11 +22,11 @@
                 @if ($item->paid == 'true')
                     <span class="fw-bold text-success">Paid</span>
                 @else
-                <span class="fw-bold text-warning">Unpaid</span>
+                    <span class="fw-bold text-warning">Unpaid</span>
                 @endif
             </td>
             <td>Rp. {{ number_format($item->totalAmount, 0, ',', '.') }}</td>
-            <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d F y') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d F y') }}</td>
+            <td class="text-primary">{{ \Carbon\Carbon::parse($item->periodStartDate)->format('d M y') }} - {{ \Carbon\Carbon::parse($item->periodEndDate)->format('d M y') }}</td>
             <td>
                 <a type="button" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Approval" data-id="{{ $item->id }}" id="btn-confirmation-payment">
                     <i class='bx bxs-pen'></i>
