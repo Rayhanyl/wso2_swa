@@ -25,7 +25,7 @@
                                     Subscription
                                 </div>
                                 <div class="fw-bold text-center" style="font-size: 24px;">
-                                    {{ $subscription->count }}
+                                    {{ $subscription->data->count }}
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
             </div>
         </div>
         <div class="col-12 my-5">
-            @if ($subscription->list == null)
+            @if ($subscription->data->list == null)
             <div class="">
                 <h4 class="fw-bold text-warning">No subscriptions are available for this Application <i
                         class="bi bi-exclamation-diamond"></i></h4>
@@ -128,11 +128,12 @@
                                     <th class="text-center">Lifecycle State</th>
                                     <th class="text-center">Business Plan</th>
                                     <th class="text-center">Subscription Status</th>
+                                    <th class="text-center">Subscription Type</th>
                                     <th class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($subscription->list as $items)
+                                @foreach ($subscription->data->list as $items)
 
                                 <tr>
                                     <td>
@@ -150,6 +151,13 @@
                                     <td>{{$items->apiInfo->name}} - {{$items->apiInfo->version}} </td>
                                     <td>{{$items->apiInfo->lifeCycleStatus}}</td>
                                     <td>{{$items->throttlingPolicy}}</td>
+                                    <td>
+                                        @if ($items->subsTypeId == '1')
+                                            PrePaid
+                                        @else
+                                            PostPaid
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($items->status == 'ON_HOLD')
                                         <p class="text-warning fw-semibold" data-toggle="tooltip" data-placement="left"
@@ -208,7 +216,7 @@
                                             data-subs-id="{{ $items->subscriptionId }}">
                                             <i class='bx bx-edit-alt' style="color: white;"></i>
                                         </button> --}}
-                                        <a class="btn btn-primary btn-renewal rounded-4" data-id="{{ $items->subscriptionId }}">
+                                        <a class="btn btn-primary btn-renewal rounded-4" href="{{ route ('renewal.subscription')}}?idsubs={{ $items->subscriptionId }}">
                                             Renewal
                                         </a>
                                         <a class="btn btn-primary rounded-4" type="button"
@@ -222,7 +230,7 @@
                                             <i class='bx bx-trash'></i>
                                         </a>
                                         @elseif($items->status == 'BLOCKED')
-                                        <a class="btn btn-primary btn-renewal rounded-4" href="{{ route ('renewal.subscription',$items->subscriptionId) }}">
+                                        <a class="btn btn-primary btn-renewal rounded-4" href="{{ route ('renewal.subscription')}}?idsubs={{ $items->subscriptionId }}">
                                             Renewal
                                         </a>
                                         <a class="btn btn-danger btn-deletesubs rounded-4"

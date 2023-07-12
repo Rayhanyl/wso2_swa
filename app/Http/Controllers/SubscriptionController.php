@@ -29,17 +29,25 @@ class SubscriptionController extends Controller
             return redirect(route('login.page'));
         }
 
-        $subscription = getUrl($this->url .'/subscriptions?applicationId='. $id);
-        $approved = collect($subscription->list)->where('status','UNBLOCKED')->all();
+        // $subscription = getUrl($this->url .'/subscriptions?applicationId='. $id);
+
+        $response = Http::withOptions(['verify' => false])
+        ->withHeaders([
+            'Authorization' => 'Bearer '.session()->get('token'),
+            'Accept' => 'application/json',
+        ])
+        ->get($this->url_billing. '/subscriptions?applicationId='. $id);
+        $subscription = json_decode($response->getBody()->getContents());        
+        
+        $approved = collect($subscription->data->list)->where('status','UNBLOCKED')->all();
         $approved_count = count($approved);
-        $rejected = collect($subscription->list)->where('status','REJECTED')->all();
+        $rejected = collect($subscription->data->list)->where('status','REJECTED')->all();
         $rejected_count = count($rejected);
-        $created = collect($subscription->list)->where('status','ON_HOLD')->all();
+        $created = collect($subscription->data->list)->where('status','ON_HOLD')->all();
         $created_count = count($created);
-        $block = collect($subscription->list)->where('status','BLOCKED')->all();
+        $block = collect($subscription->data->list)->where('status','BLOCKED')->all();
         $block_count = count($block);
         $total_count = $block_count + $created_count;
-        // dd($subscription);
 
         return view('subscription.index', compact('application','subscription','approved_count','rejected_count','created_count','total_count'));
     }
@@ -227,7 +235,7 @@ class SubscriptionController extends Controller
         return "<img class='img-thumbnail rounded mx-auto d-block' width='50' height='50' src=$img alt='ok' >";
     }
 
-    public function renewalApi(Request $request, $id){
+    public function renewalApi(Request $request){
 
         try {
 
@@ -235,13 +243,22 @@ class SubscriptionController extends Controller
             ->withHeaders([
                 'Authorization' => 'Bearer '.$request->session()->get('token'),
             ])
-            ->post($this->url_billing. '/subscriptions/renewal?subscriptionId='.$id);    
+            ->post($this->url_billing. '/subscriptions/renewal?subscriptionId='.$request->idsubs);    
             $renewal = json_decode($responses->getBody()->getContents());
 
             if ($renewal->status == 'success') {
+                
+                if ($renewal->data->subsTypeId == '1') {
 
-                Alert::toast($renewal->message, 'success');
-                return redirect()->route('customer.payment.page',['invoiceId'=>$renewal->data->invoiceId]);    
+                    Alert::toast($renewal->message, 'success');
+                    return redirect()->route('customer.payment.page',['invoiceId'=>$renewal->data->invoiceId]);    
+                
+                }else{
+
+                    Alert::toast($renewal->message, 'success');
+                    return back()->with('success', $renewal->message);   
+
+                }
 
             }else{
                 
