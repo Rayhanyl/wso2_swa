@@ -5,7 +5,7 @@
             "id":"1",
             "order":"flush-headingOne",
             "order_flush":"flush-collapseOne",
-            "question":"Apa itu asabri ?",
+            "question":"Apa itu SWA-API ?",
             "answere": "lorem ipsum dollor sit",
             "created_at":"09-04-2023"
         },
@@ -21,7 +21,7 @@
             "id":"3",
             "order":"flush-headingThree",
             "order_flush":"flush-collapseThree",
-            "question":"Ada fitur apa saja di API ASABRI ?",
+            "question":"Ada fitur apa saja di SWA-API ?",
             "answere":null,
             "created_at":"09-04-2023"
         },
@@ -29,7 +29,7 @@
             "id":"4",
             "order":"flush-headingFour",
             "order_flush":"flush-collapseFour",
-            "question":"Bagaimana cara menggunakan API ASABRI",
+            "question":"Bagaimana cara menggunakan SWA-API",
             "answere":null,
             "created_at":"09-04-2023"
         }
