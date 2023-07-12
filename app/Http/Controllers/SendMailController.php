@@ -36,7 +36,7 @@ class SendMailController extends Controller
         ];
 
         $response = Http::withOptions(['verify' => false])
-        ->withBasicAuth('admin', 'admin')
+        ->withBasicAuth('admin', 'Adm1nSWA')
         ->withHeaders([
             'Authorization' => 'Basic YWRtaW46YWRtaW4=',
             'Accept' => '*/*',

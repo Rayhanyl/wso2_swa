@@ -195,10 +195,10 @@
                                             <i class='bx bx-trash'></i>
                                         </a>
                                         @elseif($items->status == 'ON_HOLD')
-                                        <button type="button" class="btn btn-warning btn-edit-subs rounded-4"
+                                        {{-- <button type="button" class="btn btn-warning btn-edit-subs rounded-4"
                                             data-subs-id="{{ $items->subscriptionId }}" disabled>
                                             <i class='bx bx-edit-alt' style="color: white;"></i>
-                                        </button>
+                                        </button> --}}
                                         <a class="btn btn-danger btn-deletesubs rounded-4"
                                             href="{{ route ('delete.subscription',$items->subscriptionId) }}">
                                             <i class='bx bx-trash'></i>
@@ -208,6 +208,9 @@
                                             data-subs-id="{{ $items->subscriptionId }}">
                                             <i class='bx bx-edit-alt' style="color: white;"></i>
                                         </button> --}}
+                                        <a class="btn btn-primary btn-renewal rounded-4" data-id="{{ $items->subscriptionId }}">
+                                            Renewal
+                                        </a>
                                         <a class="btn btn-primary rounded-4" type="button"
                                             href="{{ route ('tryout.page',$application->applicationId) }}"
                                             id="btn-tryout" data-api-id="{{ $items->apiId }}">
@@ -219,7 +222,7 @@
                                             <i class='bx bx-trash'></i>
                                         </a>
                                         @elseif($items->status == 'BLOCKED')
-                                        <a class="btn btn-primary btn-renewal rounded-4">
+                                        <a class="btn btn-primary btn-renewal rounded-4" href="{{ route ('renewal.subscription',$items->subscriptionId) }}">
                                             Renewal
                                         </a>
                                         <a class="btn btn-danger btn-deletesubs rounded-4"

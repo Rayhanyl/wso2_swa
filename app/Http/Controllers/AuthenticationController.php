@@ -32,7 +32,7 @@ class AuthenticationController extends Controller
 
         $username = base64_encode($request->username);
         $userinfo =  getUrlEmails($this->url_email .'/pi-info/'. $username);
-
+        dd($userinfo);
         if ($userinfo != null) {
             $user = (array) $userinfo->basic;
         }else{
@@ -67,7 +67,7 @@ class AuthenticationController extends Controller
                     'grant_type' => 'password',
                     'username' => $request->username,
                     'password' => $request->password,
-                    'scope' => 'apim:admin apim:api_key apim:api_view apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe apim:subscription_manage apim:subscription_view internal_login internal_user_association_view openid'
+                    'scope' => 'apim:admin apim:api_key apim:app_import_export apim:app_manage apim:store_settings apim:sub_alert_manage apim:sub_manage apim:subscribe openid apim:subscribe apim:api_view apim:subscription_view apim:subscription_manage internal_login internal_user_association_view'
                 ];
 
                 $response = Http::withOptions(['verify' => false])
@@ -171,7 +171,7 @@ class AuthenticationController extends Controller
                         ]
                 ];
 
-                $response = Http::withBasicAuth('admin', 'admin')
+                $response = Http::withBasicAuth('admin', 'Adm1nSWA')
                 ->withOptions(['verify' => false])
                 ->withBody(json_encode($payloads),'application/json')
                 ->post($this->url_register. '/identity/user/v1.0/me');
@@ -207,7 +207,7 @@ class AuthenticationController extends Controller
         ];
 
         $response = Http::withOptions(['verify' => false])
-        ->withBasicAuth('admin', 'admin')
+        ->withBasicAuth('admin', 'Adm1nSWA')
         ->withHeaders([
             'Authorization' => 'Basic YWRtaW46YWRtaW4=',
             'Accept' => '*/*',
@@ -244,7 +244,7 @@ class AuthenticationController extends Controller
             ];
     
             $response = Http::withOptions(['verify' => false])
-            ->withBasicAuth('admin', 'admin')
+            ->withBasicAuth('admin', 'Adm1nSWA')
             ->withHeaders([
                 'Authorization' => 'Basic YWRtaW46YWRtaW4=',
                 'Accept' => '*/*',

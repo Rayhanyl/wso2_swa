@@ -39,6 +39,7 @@ class SubscriptionController extends Controller
         $block = collect($subscription->list)->where('status','BLOCKED')->all();
         $block_count = count($block);
         $total_count = $block_count + $created_count;
+        // dd($subscription);
 
         return view('subscription.index', compact('application','subscription','approved_count','rejected_count','created_count','total_count'));
     }
@@ -224,6 +225,36 @@ class SubscriptionController extends Controller
         $img = ('data:' . $mime . ';base64,' . $base64);
                 
         return "<img class='img-thumbnail rounded mx-auto d-block' width='50' height='50' src=$img alt='ok' >";
+    }
+
+    public function renewalApi(Request $request, $id){
+
+        try {
+
+            $responses = Http::withOptions(['verify' => false])
+            ->withHeaders([
+                'Authorization' => 'Bearer '.$request->session()->get('token'),
+            ])
+            ->post($this->url_billing. '/subscriptions/renewal?subscriptionId='.$id);    
+            $renewal = json_decode($responses->getBody()->getContents());
+
+            if ($renewal->status == 'success') {
+
+                Alert::toast($renewal->message, 'success');
+                return redirect()->route('customer.payment.page',['invoiceId'=>$renewal->data->invoiceId]);    
+
+            }else{
+                
+                Alert::toast($renewal->message, 'danger');
+                return back()->with('error', 'Failed Renewal Subscription');
+
+            }
+
+        } catch (\Throwable $e) {
+            dd($e);
+        }
+
+
     }
 
 }

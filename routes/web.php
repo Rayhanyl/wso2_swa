@@ -66,6 +66,7 @@ Route::middleware(['haslogin'])->group(function () {
     Route::get('/AddSubscription', [SubscriptionController::class, 'add_subscription'])->name('add.subscription');
     Route::post('/UpdateSubscription', [SubscriptionController::class, 'update_subscription'])->name('update.subscription');
     Route::get('/DeleteSubscription/{id}', [SubscriptionController::class, 'delete_subscription'])->name('delete.subscription');
+    Route::get('/RenewalApi/{id}', [SubscriptionController::class, 'renewalApi'])->name('renewal.subscription');
     Route::get('/LoadImgApi', [SubscriptionController::class, 'loadimgapi'])->name('loadimgapi');
     Route::get('/TryOut/{id}/',[TryoutController::class, 'tryout_page'])->name('tryout.page');
     Route::get('/TryOutModalSandbox',[TryoutController::class, 'sandbox_form'])->name('sandbox.form');
