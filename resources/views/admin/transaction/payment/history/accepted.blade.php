@@ -15,7 +15,7 @@
             <td>{{ $item->id }}</td>
             <td>
                 <a class="text-primary" type="button" data-id="{{ $item->invoiceId }}" id="btn-get-detail-invoice-data">
-                    {{ $item->invoiceId }}</td>
+                    {{ $item->invoiceId }}
                 </a>
             </td>
             <td>
