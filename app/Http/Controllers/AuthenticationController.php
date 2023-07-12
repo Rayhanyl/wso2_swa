@@ -32,7 +32,6 @@ class AuthenticationController extends Controller
 
         $username = base64_encode($request->username);
         $userinfo =  getUrlEmails($this->url_email .'/pi-info/'. $username);
-        dd($userinfo);
         if ($userinfo != null) {
             $user = (array) $userinfo->basic;
         }else{
